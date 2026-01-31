@@ -58,6 +58,8 @@ class OddsWebSocketClient:
         self.prefetch = prefetch
         self.ws = None
         self.should_reconnect = True
+        self.reconnect_attempts = 0
+        self.max_reconnect_attempts = 10
 
         # In-memory odds store (event_id -> bookmaker -> markets)
         self.odds_store = {}
@@ -198,12 +200,19 @@ class OddsWebSocketClient:
     def on_close(self, ws, close_status_code, close_msg):
         print(f"Disconnected (code: {close_status_code})")
         if self.should_reconnect:
-            print("Reconnecting in 5 seconds...")
-            time.sleep(5)
+            self.reconnect_attempts += 1
+            if self.reconnect_attempts > self.max_reconnect_attempts:
+                print(f"Max reconnect attempts ({self.max_reconnect_attempts}) reached. Giving up.")
+                return
+            # Exponential backoff: 1s, 2s, 4s, 8s... capped at 30s
+            delay = min(2 ** (self.reconnect_attempts - 1), 30)
+            print(f"Reconnecting in {delay}s (attempt {self.reconnect_attempts}/{self.max_reconnect_attempts})...")
+            time.sleep(delay)
             self._start_ws()
 
     def on_open(self, ws):
         print("WebSocket connection opened")
+        self.reconnect_attempts = 0  # Reset on successful connection
 
     def _start_ws(self):
         """Start WebSocket connection in background thread."""
@@ -214,7 +223,11 @@ class OddsWebSocketClient:
             on_error=self.on_error,
             on_close=self.on_close
         )
-        ws_thread = threading.Thread(target=self.ws.run_forever)
+        # ping_interval keeps the connection alive and detects dead connections
+        ws_thread = threading.Thread(
+            target=self.ws.run_forever,
+            kwargs={"ping_interval": 30, "ping_timeout": 10}
+        )
         ws_thread.daemon = True
         ws_thread.start()
 
