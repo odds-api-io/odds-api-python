@@ -261,7 +261,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Need help? We're here for you:
 
-- 📧 **Email**: markus@odds-api.io
+- 📧 **Email**: hello@odds-api.io
 - 📚 **Documentation**: [docs.odds-api.io](https://docs.odds-api.io)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/odds-api-io/odds-api-python/issues)
 - ⏱️ **Response Time**: Usually within 24 hours

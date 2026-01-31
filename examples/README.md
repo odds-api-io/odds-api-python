@@ -92,4 +92,4 @@ python odds_tracking.py
 - 📚 [Full Documentation](https://docs.odds-api.io)
 - 🌐 [Odds-API.io Website](https://odds-api.io)
 - 🐛 [Report Issues](https://github.com/odds-api-io/odds-api-python/issues)
-- 📧 [Email Support](mailto:markus@odds-api.io)
+- 📧 [Email Support](mailto:hello@odds-api.io)

@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "Odds-API.io", email = "markus@odds-api.io"}
+    {name = "Odds-API.io", email = "hello@odds-api.io"}
 ]
 keywords = [
     "odds",
