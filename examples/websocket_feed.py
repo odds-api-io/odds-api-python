@@ -136,9 +136,23 @@ class OddsWebSocketClient:
         return f"{WS_URL}?{params}"
 
     def on_message(self, ws, message):
-        """Handle incoming WebSocket messages."""
+        """Handle incoming WebSocket messages.
+
+        The server may send multiple JSON objects in a single
+        WebSocket frame (one per line), so we split and parse each.
+        """
+        for line in message.strip().split('\n'):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                self._handle_parsed(json.loads(line))
+            except json.JSONDecodeError as e:
+                print(f"JSON parse error: {e}")
+
+    def _handle_parsed(self, data):
+        """Process a single parsed message."""
         try:
-            data = json.loads(message)
             msg_type = data.get('type')
 
             if msg_type == 'welcome':
