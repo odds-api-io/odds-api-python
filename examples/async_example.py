@@ -68,16 +68,15 @@ async def main():
         if live_basketball:
             print(f"Found {len(live_basketball)} live basketball games")
             for event in live_basketball[:3]:
-                home = event['participants'][0]['name']
-                away = event['participants'][1]['name']
+                home = event['home']
+                away = event['away']
                 print(f"🔴 LIVE: {away} @ {home}")
         else:
             print("No live basketball games at the moment")
         
         print("\n=== Value Bets ===")
         value_bets = await client.get_value_bets(
-            bookmaker="pinnacle",
-            include_event_details=True
+            bookmaker="Pinnacle"
         )
         print(f"Found {len(value_bets)} value betting opportunities")
 

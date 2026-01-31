@@ -59,8 +59,8 @@ def main():
         event = events[0]
         event_id = str(event['id'])
         
-        home = event['participants'][0]['name']
-        away = event['participants'][1]['name']
+        home = event['home']
+        away = event['away']
         
         print(f"\nTracking odds for: {away} @ {home}")
         print(f"Event ID: {event_id}\n")
@@ -69,7 +69,7 @@ def main():
         print("=== Current Odds ===")
         odds = client.get_event_odds(
             event_id=event_id,
-            bookmakers="pinnacle,bet365"
+            bookmakers="Pinnacle,Bet365"
         )
         
         if 'bookmakers' in odds:
@@ -86,7 +86,7 @@ def main():
         
         movements = client.get_odds_movement(
             event_id=event_id,
-            bookmaker="pinnacle",
+            bookmaker="Pinnacle",
             market="moneyline"
         )
         
@@ -101,7 +101,7 @@ def main():
         try:
             updated_odds = client.get_updated_odds_since_timestamp(
                 since=one_hour_ago,
-                bookmaker="pinnacle",
+                bookmaker="Pinnacle",
                 sport="basketball"
             )
             
@@ -112,8 +112,8 @@ def main():
                     print(f"\nUpdate #{i}:")
                     if 'event' in update:
                         event = update['event']
-                        home = event['participants'][0]['name']
-                        away = event['participants'][1]['name']
+                        home = event['home']
+                        away = event['away']
                         print(f"  Match: {away} @ {home}")
                     
                     if 'timestamp' in update:
@@ -133,7 +133,7 @@ def main():
             
             batch_odds = client.get_odds_for_multiple_events(
                 event_ids=event_ids,
-                bookmakers="pinnacle"
+                bookmakers="Pinnacle"
             )
             
             print(f"Fetched odds for {len(batch_odds)} events in one request")

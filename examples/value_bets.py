@@ -20,7 +20,7 @@ def main():
         # Find value bets from Pinnacle
         # Pinnacle is often used as the "sharp" bookmaker for true probability
         value_bets = client.get_value_bets(
-            bookmaker="pinnacle",
+            bookmaker="Pinnacle",
             include_event_details=True
         )
         
@@ -37,8 +37,8 @@ def main():
             # Event details
             if 'event' in bet:
                 event = bet['event']
-                home = event['participants'][0]['name']
-                away = event['participants'][1]['name']
+                home = event['home']
+                away = event['away']
                 print(f"Match: {away} @ {home}")
                 print(f"Sport: {event.get('sport', 'N/A')}")
                 print(f"League: {event.get('league', 'N/A')}")

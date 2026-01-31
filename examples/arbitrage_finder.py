@@ -29,7 +29,7 @@ def main():
         
         # Select the bookmakers you want to use for arbitrage
         # Free tier only allows 2 bookmakers, so we'll use Pinnacle and Bet365
-        selected_bookies = "pinnacle,bet365"
+        selected_bookies = "Pinnacle,Bet365"
         
         print(f"Using bookmakers: {selected_bookies}\n")
         
@@ -54,8 +54,8 @@ def main():
             # Display event details if available
             if 'event' in arb:
                 event = arb['event']
-                home = event['participants'][0]['name']
-                away = event['participants'][1]['name']
+                home = event['home']
+                away = event['away']
                 print(f"Match: {away} @ {home}")
                 print(f"Sport: {event['sport']}")
                 print(f"League: {event['league']}")

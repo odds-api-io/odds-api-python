@@ -44,8 +44,8 @@ def main():
         )
         
         for event in events[:5]:  # Show first 5
-            home = event['participants'][0]['name']
-            away = event['participants'][1]['name']
+            home = event['home']
+            away = event['away']
             start_time = event['startTime']
             print(f"{away} @ {home} - {start_time}")
         
@@ -56,8 +56,8 @@ def main():
         lakers_games = client.search_events(query="Lakers")
         
         for event in lakers_games[:3]:  # Show first 3
-            home = event['participants'][0]['name']
-            away = event['participants'][1]['name']
+            home = event['home']
+            away = event['away']
             print(f"{away} vs {home}")
         
         print(f"\nTotal: {len(lakers_games)} Lakers games found\n")
@@ -68,8 +68,8 @@ def main():
         
         if live_events:
             for event in live_events[:3]:  # Show first 3
-                home = event['participants'][0]['name']
-                away = event['participants'][1]['name']
+                home = event['home']
+                away = event['away']
                 print(f"🔴 LIVE: {away} vs {home}")
             print(f"\nTotal: {len(live_events)} live games")
         else:
@@ -79,7 +79,7 @@ def main():
         print("\n=== Available Bookmakers ===")
         bookmakers = client.get_bookmakers()
         for bookie in bookmakers[:10]:  # Show first 10
-            print(f"- {bookie['name']} ({bookie['slug']})")
+            print(f"- {bookie['name']}")
         
         print(f"\nTotal: {len(bookmakers)} bookmakers available")
 
