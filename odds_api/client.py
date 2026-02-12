@@ -91,8 +91,17 @@ class OddsAPIClient:
 
     @staticmethod
     def _build_params(**kwargs) -> Dict[str, Any]:
-        """Build parameter dictionary, excluding None values."""
-        return {k: v for k, v in kwargs.items() if v is not None}
+        """Build parameter dictionary, excluding None values and converting bools."""
+        params = {}
+        for k, v in kwargs.items():
+            if v is None:
+                continue
+            # Convert Python bools to lowercase strings for URL params
+            if isinstance(v, bool):
+                params[k] = str(v).lower()
+            else:
+                params[k] = v
+        return params
 
     # Sports & Leagues
 
