@@ -248,7 +248,7 @@ class AsyncOddsAPIClient:
         Example:
             >>> odds = await client.get_event_odds(
             ...     event_id="12345",
-            ...     bookmakers="pinnacle,bet365"
+            ...     bookmakers="singbet,bet365"
             ... )
         """
         params = self._build_params(eventId=event_id, bookmakers=bookmakers)
@@ -276,7 +276,7 @@ class AsyncOddsAPIClient:
         Example:
             >>> movements = await client.get_odds_movement(
             ...     event_id="12345",
-            ...     bookmaker="pinnacle",
+            ...     bookmaker="singbet",
             ...     market="moneyline"
             ... )
         """
@@ -304,7 +304,7 @@ class AsyncOddsAPIClient:
         Example:
             >>> odds = await client.get_odds_for_multiple_events(
             ...     event_ids="12345,67890",
-            ...     bookmakers="pinnacle,bet365"
+            ...     bookmakers="singbet,bet365"
             ... )
         """
         params = self._build_params(eventIds=event_ids, bookmakers=bookmakers)
@@ -327,7 +327,7 @@ class AsyncOddsAPIClient:
         Example:
             >>> updated = await client.get_updated_odds_since_timestamp(
             ...     since=1640000000,
-            ...     bookmaker="pinnacle",
+            ...     bookmaker="singbet",
             ...     sport="basketball"
             ... )
         """
@@ -411,7 +411,7 @@ class AsyncOddsAPIClient:
             Updated bookmaker selection
 
         Example:
-            >>> await client.select_bookmakers(bookmakers="pinnacle,bet365")
+            >>> await client.select_bookmakers(bookmakers="singbet,bet365")
         """
         params = self._build_params(bookmakers=bookmakers)
         return await self._put(Endpoints.SELECT_BOOKMAKERS, params)
@@ -449,7 +449,7 @@ class AsyncOddsAPIClient:
 
         Example:
             >>> arb_bets = await client.get_arbitrage_bets(
-            ...     bookmakers="pinnacle,bet365",
+            ...     bookmakers="singbet,bet365",
             ...     limit=10,
             ...     include_event_details=True
             ... )
@@ -478,7 +478,7 @@ class AsyncOddsAPIClient:
 
         Example:
             >>> value_bets = await client.get_value_bets(
-            ...     bookmaker="pinnacle",
+            ...     bookmaker="singbet",
             ...     include_event_details=True
             ... )
         """

@@ -17,10 +17,10 @@ def main():
         
         print("=== Finding Value Bets ===\n")
         
-        # Find value bets from Pinnacle
-        # Pinnacle is often used as the "sharp" bookmaker for true probability
+        # Find value bets from SingBet
+        # SingBet is often used as the "sharp" bookmaker for true probability
         value_bets = client.get_value_bets(
-            bookmaker="Pinnacle",
+            bookmaker="SingBet",
             include_event_details=True
         )
         
