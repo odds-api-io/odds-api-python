@@ -69,7 +69,7 @@ def main():
         print("=== Current Odds ===")
         odds = client.get_event_odds(
             event_id=event_id,
-            bookmakers="Pinnacle,Bet365"
+            bookmakers="SingBet,Bet365"
         )
         
         if 'bookmakers' in odds:
@@ -86,7 +86,7 @@ def main():
         
         movements = client.get_odds_movement(
             event_id=event_id,
-            bookmaker="Pinnacle",
+            bookmaker="SingBet",
             market="moneyline"
         )
         
@@ -101,7 +101,7 @@ def main():
         try:
             updated_odds = client.get_updated_odds_since_timestamp(
                 since=one_hour_ago,
-                bookmaker="Pinnacle",
+                bookmaker="SingBet",
                 sport="basketball"
             )
             
@@ -133,7 +133,7 @@ def main():
             
             batch_odds = client.get_odds_for_multiple_events(
                 event_ids=event_ids,
-                bookmakers="Pinnacle"
+                bookmakers="SingBet"
             )
             
             print(f"Fetched odds for {len(batch_odds)} events in one request")

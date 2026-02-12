@@ -63,7 +63,7 @@ live = client.get_live_events(sport="basketball")
 
 # Find arbitrage opportunities
 arb_bets = client.get_arbitrage_bets(
-    bookmakers="pinnacle,bet365",
+    bookmakers="singbet,bet365",
     limit=10,
     include_event_details=True
 )
@@ -89,7 +89,7 @@ async def main():
         
         # Find value bets
         value_bets = await client.get_value_bets(
-            bookmaker="pinnacle",
+            bookmaker="singbet",
             include_event_details=True
         )
         

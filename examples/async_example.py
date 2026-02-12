@@ -76,7 +76,7 @@ async def main():
         
         print("\n=== Value Bets ===")
         value_bets = await client.get_value_bets(
-            bookmaker="Pinnacle"
+            bookmaker="SingBet"
         )
         print(f"Found {len(value_bets)} value betting opportunities")
 
