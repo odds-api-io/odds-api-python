@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "odds-api-io"
-version = "1.0.0"
+version = "1.0.1"
 description = "Official Python SDK for Odds-API.io - Real-time sports betting odds from 250+ bookmakers"
 readme = "README.md"
 requires-python = ">=3.8"
