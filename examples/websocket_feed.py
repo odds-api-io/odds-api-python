@@ -45,7 +45,7 @@ BOOKMAKERS = "Bet365,SingBet"       # Bookmakers for initial fetch
 WS_URL = "wss://api.odds-api.io/v3/ws"
 
 # Batch size for multi-event odds fetch (max event IDs per request)
-PREFETCH_BATCH_SIZE = 50
+PREFETCH_BATCH_SIZE = 10
 # ─────────────────────────────────────────────────────────────────────
 
 
