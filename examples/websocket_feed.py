@@ -12,19 +12,27 @@ Usage:
     # With initial snapshot (recommended)
     python websocket_feed.py --prefetch
 
+    # Override config via environment variables
+    ODDS_API_KEY=abc123 python websocket_feed.py --prefetch
+
 Requirements:
     pip install websocket-client odds-api-io
 """
 
+import os
 import websocket
 import json
 import time
 import threading
 import argparse
+from datetime import datetime, timezone
+from urllib.parse import urlencode
 from odds_api import OddsAPIClient
 
 # ─── Configuration ────────────────────────────────────────────────────
-API_KEY = "your_api_key_here"
+# Set your API key via environment variable or replace the fallback below.
+# Keep your key out of version control (use a .env file or export it).
+API_KEY = os.environ.get("ODDS_API_KEY", "your_api_key_here")
 
 # WebSocket filters
 MARKETS = "ML,Spread,Totals"       # Required (max 20, comma-separated)
@@ -35,7 +43,15 @@ BOOKMAKERS = "Bet365,SingBet"       # Bookmakers for initial fetch
 
 # WebSocket endpoint
 WS_URL = "wss://api.odds-api.io/v3/ws"
+
+# Batch size for multi-event odds fetch (max event IDs per request)
+PREFETCH_BATCH_SIZE = 50
 # ─────────────────────────────────────────────────────────────────────
+
+
+def _timestamp():
+    """Return a human-readable UTC timestamp for log lines."""
+    return datetime.now(timezone.utc).strftime("%H:%M:%S")
 
 
 class OddsWebSocketClient:
@@ -60,14 +76,22 @@ class OddsWebSocketClient:
         self.should_reconnect = True
         self.reconnect_attempts = 0
         self.max_reconnect_attempts = 10
+        self._reconnect_timer = None
 
-        # In-memory odds store (event_id -> bookmaker -> markets)
+        # In-memory odds store: {event_id: {bookmaker: [markets]}}
         self.odds_store = {}
+
+    # WebSocket uses "prematch"/"live", REST API uses "pending"/"live"
+    WS_TO_REST_STATUS = {
+        "prematch": "pending",
+        "live": "live",
+    }
 
     def initial_fetch(self):
         """
-        Pre-fetch all current odds via REST API.
-        Populates self.odds_store with a complete snapshot.
+        Pre-fetch all current odds via REST API using batched
+        multi-event requests. Populates self.odds_store with a
+        complete snapshot.
         """
         print("=" * 60)
         print("INITIAL FETCH: Loading current odds via REST API...")
@@ -76,48 +100,72 @@ class OddsWebSocketClient:
         client = OddsAPIClient(api_key=self.api_key)
 
         try:
+            # Map WebSocket status to REST API status
+            rest_status = self.WS_TO_REST_STATUS.get(
+                self.status, self.status
+            ) if self.status else None
+
             # Get events for the configured sport/league
             events = client.get_events(
                 sport=self.sport or "football",
-                league=self.leagues or None
+                league=self.leagues or None,
+                status=rest_status
             )
 
-            # Filter by status if set
-            if self.status:
-                events = [e for e in events
-                          if e.get('status') == self.status]
+            event_ids = [str(e['id']) for e in events]
+            # Build a lookup for readable names
+            event_names = {
+                str(e['id']): f"{e.get('home', '?')} vs {e.get('away', '?')}"
+                for e in events
+            }
 
-            print(f"Found {len(events)} events. Fetching odds...\n")
+            print(f"Found {len(events)} events. "
+                  f"Fetching odds in batches of {PREFETCH_BATCH_SIZE}...\n")
 
-            for event in events:
-                event_id = event['id']
-                home = event.get('home', '?')
-                away = event.get('away', '?')
-
+            # Fetch odds in batches using the multi-event endpoint
+            for i in range(0, len(event_ids), PREFETCH_BATCH_SIZE):
+                batch = event_ids[i:i + PREFETCH_BATCH_SIZE]
                 try:
-                    odds_data = client.get_event_odds(
-                        event_id=event_id,
-                        bookmakers=self.bookmakers
+                    results = client.get_odds_for_multiple_events(
+                        event_ids=",".join(batch),
+                        bookmakers=self.bookmakers,
                     )
 
-                    bookmakers = odds_data.get('bookmakers', {})
-                    if bookmakers:
-                        self.odds_store[str(event_id)] = bookmakers
+                    for item in results:
+                        eid = str(item.get('id', ''))
+                        bookmakers = item.get('bookmakers', {})
+                        if bookmakers:
+                            # Normalise: ensure value is always
+                            # {bookie: [market, ...]}
+                            store_entry = {}
+                            for bookie, markets in bookmakers.items():
+                                store_entry[bookie] = (
+                                    markets if isinstance(markets, list)
+                                    else []
+                                )
+                            self.odds_store[eid] = store_entry
 
-                        # Print summary
-                        for bookie, markets in bookmakers.items():
-                            ml = next((m for m in markets if m['name'] == 'ML'), None)
-                            if ml and ml.get('odds'):
-                                o = ml['odds'][0]
-                                print(f"  {home} vs {away} [{bookie}]: "
-                                      f"H {o.get('home', '-')} | "
-                                      f"D {o.get('draw', '-')} | "
-                                      f"A {o.get('away', '-')}")
+                            # Print summary
+                            name = event_names.get(eid, eid)
+                            for bookie, mkts in store_entry.items():
+                                ml = next(
+                                    (m for m in mkts if m.get('name') == 'ML'),
+                                    None,
+                                )
+                                if ml and ml.get('odds'):
+                                    o = ml['odds'][0]
+                                    print(
+                                        f"  {name} [{bookie}]: "
+                                        f"H {o.get('home', '-')} | "
+                                        f"D {o.get('draw', '-')} | "
+                                        f"A {o.get('away', '-')}"
+                                    )
 
                 except Exception as e:
-                    print(f"  {home} vs {away}: Could not fetch odds ({e})")
+                    print(f"  Batch {i // PREFETCH_BATCH_SIZE + 1} failed: {e}")
 
-            print(f"\nInitial fetch complete: {len(self.odds_store)} events loaded")
+            print(f"\nInitial fetch complete: "
+                  f"{len(self.odds_store)} events loaded")
             print("=" * 60)
             print()
 
@@ -125,15 +173,15 @@ class OddsWebSocketClient:
             client.close()
 
     def build_url(self):
-        """Build WebSocket URL with query parameters."""
-        params = f"apiKey={self.api_key}&markets={self.markets}"
+        """Build WebSocket URL with properly encoded query parameters."""
+        params = {"apiKey": self.api_key, "markets": self.markets}
         if self.sport:
-            params += f"&sport={self.sport}"
+            params["sport"] = self.sport
         if self.leagues:
-            params += f"&leagues={self.leagues}"
+            params["leagues"] = self.leagues
         if self.status:
-            params += f"&status={self.status}"
-        return f"{WS_URL}?{params}"
+            params["status"] = self.status
+        return f"{WS_URL}?{urlencode(params)}"
 
     def on_message(self, ws, message):
         """Handle incoming WebSocket messages.
@@ -148,15 +196,16 @@ class OddsWebSocketClient:
             try:
                 self._handle_parsed(json.loads(line))
             except json.JSONDecodeError as e:
-                print(f"JSON parse error: {e}")
+                print(f"[{_timestamp()}] JSON parse error: {e}")
 
     def _handle_parsed(self, data):
         """Process a single parsed message."""
         try:
             msg_type = data.get('type')
+            ts = _timestamp()
 
             if msg_type == 'welcome':
-                print("Connected to Odds-API WebSocket")
+                print(f"[{ts}] Connected to Odds-API WebSocket")
                 print(f"  Bookmakers: {data.get('bookmakers', [])}")
                 print(f"  Sports: {data.get('sport_filter', [])}")
                 print(f"  Leagues: {data.get('leagues_filter', [])}")
@@ -166,17 +215,17 @@ class OddsWebSocketClient:
                 print("\nListening for real-time updates...\n")
 
             elif msg_type in ('created', 'updated'):
-                event_id = data.get('id', '?')
+                event_id = str(data.get('id', '?'))
                 bookie = data.get('bookie', '?')
                 label = "NEW" if msg_type == 'created' else "UPDATE"
 
-                # Update local store
+                # Update local store (always list of markets)
                 if event_id not in self.odds_store:
                     self.odds_store[event_id] = {}
                 self.odds_store[event_id][bookie] = data.get('markets', [])
 
                 # Print update
-                print(f"[{label}] Event {event_id} | {bookie}")
+                print(f"[{ts}] [{label}] Event {event_id} | {bookie}")
                 for market in data.get('markets', []):
                     odds = market.get('odds', [{}])[0]
                     name = market.get('name', '?')
@@ -195,37 +244,43 @@ class OddsWebSocketClient:
                 print()
 
             elif msg_type == 'deleted':
-                event_id = data.get('id', '?')
+                event_id = str(data.get('id', '?'))
                 bookie = data.get('bookie', '?')
-                print(f"[DELETED] Event {event_id} | {bookie}\n")
+                print(f"[{ts}] [DELETED] Event {event_id} | {bookie}\n")
                 # Remove from store
                 if event_id in self.odds_store:
                     self.odds_store[event_id].pop(bookie, None)
 
             elif msg_type == 'no_markets':
-                print(f"[NO MARKETS] Event {data.get('id', '?')}\n")
+                print(f"[{ts}] [NO MARKETS] Event {data.get('id', '?')}\n")
 
         except Exception as e:
-            print(f"Error handling message: {e}")
+            print(f"[{_timestamp()}] Error handling message: {e}")
 
     def on_error(self, ws, error):
-        print(f"WebSocket error: {error}")
+        print(f"[{_timestamp()}] WebSocket error: {error}")
 
     def on_close(self, ws, close_status_code, close_msg):
-        print(f"Disconnected (code: {close_status_code})")
+        print(f"[{_timestamp()}] Disconnected (code: {close_status_code})")
         if self.should_reconnect:
             self.reconnect_attempts += 1
             if self.reconnect_attempts > self.max_reconnect_attempts:
-                print(f"Max reconnect attempts ({self.max_reconnect_attempts}) reached. Giving up.")
+                print(f"Max reconnect attempts "
+                      f"({self.max_reconnect_attempts}) reached. Giving up.")
                 return
             # Exponential backoff: 1s, 2s, 4s, 8s... capped at 30s
             delay = min(2 ** (self.reconnect_attempts - 1), 30)
-            print(f"Reconnecting in {delay}s (attempt {self.reconnect_attempts}/{self.max_reconnect_attempts})...")
-            time.sleep(delay)
-            self._start_ws()
+            print(f"Reconnecting in {delay}s "
+                  f"(attempt {self.reconnect_attempts}"
+                  f"/{self.max_reconnect_attempts})...")
+            # Schedule reconnect on a separate timer thread so we don't
+            # block the WebSocket callback thread.
+            self._reconnect_timer = threading.Timer(delay, self._start_ws)
+            self._reconnect_timer.daemon = True
+            self._reconnect_timer.start()
 
     def on_open(self, ws):
-        print("WebSocket connection opened")
+        print(f"[{_timestamp()}] WebSocket connection opened")
         self.reconnect_attempts = 0  # Reset on successful connection
 
     def _start_ws(self):
@@ -237,7 +292,8 @@ class OddsWebSocketClient:
             on_error=self.on_error,
             on_close=self.on_close
         )
-        # ping_interval keeps the connection alive and detects dead connections
+        # ping_interval keeps the connection alive and detects dead
+        # connections
         ws_thread = threading.Thread(
             target=self.ws.run_forever,
             kwargs={"ping_interval": 30, "ping_timeout": 10}
@@ -253,12 +309,15 @@ class OddsWebSocketClient:
         if self.prefetch:
             self.initial_fetch()
 
-        print("Connecting to WebSocket for real-time updates...")
+        print(f"[{_timestamp()}] Connecting to WebSocket "
+              f"for real-time updates...")
         self._start_ws()
 
     def stop(self):
         """Stop the client."""
         self.should_reconnect = False
+        if self._reconnect_timer:
+            self._reconnect_timer.cancel()
         if self.ws:
             self.ws.close()
 
@@ -277,6 +336,11 @@ def main():
              'to WebSocket (recommended for complete data)'
     )
     args = parser.parse_args()
+
+    if API_KEY == "your_api_key_here":
+        print("ERROR: Set your API key via the ODDS_API_KEY environment "
+              "variable or edit API_KEY in this script.")
+        raise SystemExit(1)
 
     print("Odds-API.io Real-Time Feed")
     print("-" * 60)
