@@ -105,12 +105,21 @@ class OddsWebSocketClient:
                 self.status, self.status
             ) if self.status else None
 
-            # Get events for the configured sport/league
-            events = client.get_events(
-                sport=self.sport or "football",
-                league=self.leagues or None,
-                status=rest_status
+            # Get events for the configured sport/league(s).
+            # The REST API accepts a single league slug per request,
+            # so we iterate when multiple leagues are configured.
+            league_slugs = (
+                [l.strip() for l in self.leagues.split(",")]
+                if self.leagues else [None]
             )
+
+            events = []
+            for slug in league_slugs:
+                events.extend(client.get_events(
+                    sport=self.sport or "football",
+                    league=slug,
+                    status=rest_status,
+                ))
 
             event_ids = [str(e['id']) for e in events]
             # Build a lookup for readable names
