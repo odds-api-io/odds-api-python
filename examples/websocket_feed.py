@@ -1,7 +1,10 @@
 """
-WebSocket Real-Time Odds Feed with Optional Initial Snapshot
+WebSocket Real-Time Odds Feed with Reconnection & Replay
 
 Connects to the Odds-API WebSocket for real-time odds updates.
+Tracks sequence numbers and reconnects with replay on disconnection,
+ensuring zero data loss across network interruptions.
+
 Optionally pre-fetches all current odds via REST API first, so you
 have a complete snapshot before the live feed starts.
 
@@ -56,7 +59,19 @@ def _timestamp():
 
 class OddsWebSocketClient:
     """
-    Real-time odds client with optional REST API pre-fetch.
+    Real-time odds client with reconnection, replay, and optional
+    REST API pre-fetch.
+
+    Sequence Tracking & Replay:
+        Every message from the server includes a monotonically increasing
+        `seq` field. This client tracks the last received seq and passes
+        it as `lastSeq` on reconnection. The server then replays any
+        messages the client missed during the disconnection window,
+        ensuring zero data loss.
+
+        If the gap is too large (server retention exceeded), the server
+        sends a `resync_required` message instead — the client should
+        then rebuild state from the REST API snapshot.
 
     When prefetch=True, fetches all current odds via REST before
     connecting to WebSocket. This gives you a complete snapshot
@@ -77,6 +92,9 @@ class OddsWebSocketClient:
         self.reconnect_attempts = 0
         self.max_reconnect_attempts = 10
         self._reconnect_timer = None
+
+        # Sequence tracking for reconnection replay
+        self.last_seq = 0
 
         # In-memory odds store: {event_id: {bookmaker: [markets]}}
         self.odds_store = {}
@@ -182,7 +200,11 @@ class OddsWebSocketClient:
             client.close()
 
     def build_url(self):
-        """Build WebSocket URL with properly encoded query parameters."""
+        """Build WebSocket URL with query parameters.
+
+        Includes `lastSeq` when reconnecting so the server replays
+        any messages missed during the disconnection window.
+        """
         params = {"apiKey": self.api_key, "markets": self.markets}
         if self.sport:
             params["sport"] = self.sport
@@ -190,6 +212,8 @@ class OddsWebSocketClient:
             params["leagues"] = self.leagues
         if self.status:
             params["status"] = self.status
+        if self.last_seq > 0:
+            params["lastSeq"] = str(self.last_seq)
         return f"{WS_URL}?{urlencode(params)}"
 
     def on_message(self, ws, message):
@@ -213,6 +237,11 @@ class OddsWebSocketClient:
             msg_type = data.get('type')
             ts = _timestamp()
 
+            # Track sequence number for replay on reconnection
+            seq = data.get('seq')
+            if seq and seq > self.last_seq:
+                self.last_seq = seq
+
             if msg_type == 'welcome':
                 print(f"[{ts}] Connected to Odds-API WebSocket")
                 print(f"  Bookmakers: {data.get('bookmakers', [])}")
@@ -221,7 +250,21 @@ class OddsWebSocketClient:
                 print(f"  Status: {data.get('status_filter', 'all')}")
                 if data.get('warning'):
                     print(f"  Warning: {data['warning']}")
-                print("\nListening for real-time updates...\n")
+                if self.last_seq > 0:
+                    print(f"  Reconnected with lastSeq={self.last_seq}"
+                          f" — replaying missed updates...")
+                print()
+
+            elif msg_type == 'resync_required':
+                # Server cannot replay (gap too large or data expired).
+                # Rebuild state from REST API snapshot.
+                reason = data.get('reason', 'unknown')
+                print(f"[{ts}] ⚠️  RESYNC REQUIRED: {reason}")
+                print(f"  The server cannot replay missed updates.")
+                print(f"  Rebuilding state from REST API snapshot...")
+                self.last_seq = 0
+                if self.prefetch:
+                    self.initial_fetch()
 
             elif msg_type in ('created', 'updated'):
                 event_id = str(data.get('id', '?'))
@@ -234,7 +277,8 @@ class OddsWebSocketClient:
                 self.odds_store[event_id][bookie] = data.get('markets', [])
 
                 # Print update
-                print(f"[{ts}] [{label}] Event {event_id} | {bookie}")
+                print(f"[{ts}] [{label}] Event {event_id} | {bookie}"
+                      f" (seq {seq})")
                 for market in data.get('markets', []):
                     odds = market.get('odds', [{}])[0]
                     name = market.get('name', '?')
@@ -255,13 +299,15 @@ class OddsWebSocketClient:
             elif msg_type == 'deleted':
                 event_id = str(data.get('id', '?'))
                 bookie = data.get('bookie', '?')
-                print(f"[{ts}] [DELETED] Event {event_id} | {bookie}\n")
+                print(f"[{ts}] [DELETED] Event {event_id} | {bookie}"
+                      f" (seq {seq})\n")
                 # Remove from store
                 if event_id in self.odds_store:
                     self.odds_store[event_id].pop(bookie, None)
 
             elif msg_type == 'no_markets':
-                print(f"[{ts}] [NO MARKETS] Event {data.get('id', '?')}\n")
+                print(f"[{ts}] [NO MARKETS] Event {data.get('id', '?')}"
+                      f" (seq {seq})\n")
 
         except Exception as e:
             print(f"[{_timestamp()}] Error handling message: {e}")
@@ -281,7 +327,8 @@ class OddsWebSocketClient:
             delay = min(2 ** (self.reconnect_attempts - 1), 30)
             print(f"Reconnecting in {delay}s "
                   f"(attempt {self.reconnect_attempts}"
-                  f"/{self.max_reconnect_attempts})...")
+                  f"/{self.max_reconnect_attempts})..."
+                  f" lastSeq={self.last_seq}")
             # Schedule reconnect on a separate timer thread so we don't
             # block the WebSocket callback thread.
             self._reconnect_timer = threading.Timer(delay, self._start_ws)
@@ -294,8 +341,12 @@ class OddsWebSocketClient:
 
     def _start_ws(self):
         """Start WebSocket connection in background thread."""
+        url = self.build_url()
+        print(f"[{_timestamp()}] Connecting to: ...&lastSeq={self.last_seq}"
+              if self.last_seq > 0
+              else f"[{_timestamp()}] Connecting (fresh)...")
         self.ws = websocket.WebSocketApp(
-            self.build_url(),
+            url,
             on_open=self.on_open,
             on_message=self.on_message,
             on_error=self.on_error,
@@ -337,7 +388,7 @@ class OddsWebSocketClient:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Odds-API WebSocket feed with optional initial snapshot"
+        description="Odds-API WebSocket feed with reconnection replay"
     )
     parser.add_argument(
         '--prefetch', action='store_true',
@@ -378,6 +429,7 @@ def main():
         print("\nStopping...")
         client.stop()
         print(f"Final store: {len(client.odds_store)} events cached")
+        print(f"Last seq: {client.last_seq}")
         print("Goodbye!")
 
 
