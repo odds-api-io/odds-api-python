@@ -70,7 +70,7 @@ class OddsWebSocketClient:
         ensuring zero data loss.
 
         If the gap is too large (server retention exceeded), the server
-        sends a `resync_required` message instead — the client should
+        sends a `resync_required` message instead; the client should
         then rebuild state from the REST API snapshot.
 
     When prefetch=True, fetches all current odds via REST before
@@ -252,7 +252,7 @@ class OddsWebSocketClient:
                     print(f"  Warning: {data['warning']}")
                 if self.last_seq > 0:
                     print(f"  Reconnected with lastSeq={self.last_seq}"
-                          f" — replaying missed updates...")
+                          f", replaying missed updates...")
                 print()
 
             elif msg_type == 'resync_required':

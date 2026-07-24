@@ -5,13 +5,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-odds--api.io-blue.svg)](https://docs.odds-api.io)
 
-Official Python SDK for [**Odds-API.io**](https://odds-api.io) - Real-time sports betting odds from 250+ bookmakers.
+Official Python SDK for [**Odds-API.io**](https://odds-api.io) - Real-time sports betting odds from 265+ bookmakers.
+
+Building with AI? See the [AI and vibe coding guide](https://docs.odds-api.io/ai-vibe-coding). Prefer JavaScript? Check out the [Node.js SDK](https://github.com/odds-api-io/odds-api-node).
 
 ## 🚀 Features
 
 - ⚡ **Fast & Reliable** - Built on requests and aiohttp for both sync and async workflows
-- 🏀 **20+ Sports** - Basketball, football, tennis, baseball, and more
-- 📊 **250+ Bookmakers** - Comprehensive odds coverage from major sportsbooks worldwide
+- 🏀 **34 Sports** - Basketball, football, tennis, baseball, and more
+- 📊 **265+ Bookmakers** - Comprehensive odds coverage from major sportsbooks worldwide
 - 💰 **Arbitrage Detection** - Find risk-free betting opportunities across bookmakers
 - 📈 **Value Bets** - Identify positive expected value betting opportunities
 - 🔴 **Live Events** - Real-time in-play event tracking and odds
@@ -30,7 +32,7 @@ pip install odds-api-io
 **[Get your free API key here →](https://odds-api.io/#pricing)**
 
 Sign up at [**odds-api.io**](https://odds-api.io) to get started. Free tier includes:
-- 5,000 requests/hour
+- 100 requests/hour
 - Access to all endpoints
 - No credit card required
 
@@ -203,7 +205,7 @@ except OddsAPIError as e:
 
 ## 🌟 Why Odds-API.io?
 
-- **✅ Most Comprehensive Coverage** - 250+ bookmakers across 20+ sports
+- **✅ Most Comprehensive Coverage** - 265+ bookmakers across 34 sports and 12,000+ leagues
 - **✅ Near-Zero Latency** - Real-time odds updates with minimal delay
 - **✅ Direct Bet Links** - Deep links directly to bookmaker bet slips
 - **✅ Value Bet Detection** - Automatically calculated expected value
@@ -223,7 +225,7 @@ Build powerful betting tools and analytics:
 ## 🆓 Free Tier Limitations
 
 - Limited to 2 bookmakers selected at once
-- 5,000 requests per hour (shared across all plans)
+- 100 requests per hour
 - No WebSocket access on free tier
 
 [**Upgrade for more features →**](https://odds-api.io/#pricing)

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "odds-api-io"
-version = "1.0.1"
-description = "Official Python SDK for Odds-API.io - Real-time sports betting odds from 250+ bookmakers"
+version = "1.0.2"
+description = "Official Python SDK for Odds-API.io - Real-time sports betting odds from 265+ bookmakers"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
@@ -21,7 +21,9 @@ keywords = [
     "arbitrage",
     "value-bets",
     "bookmakers",
-    "sportsbook"
+    "sportsbook",
+    "betting-odds",
+    "sports-data"
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
