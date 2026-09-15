@@ -19,17 +19,19 @@ Usage:
     ODDS_API_KEY=abc123 python websocket_feed.py --prefetch
 
 Requirements:
-    pip install websocket-client odds-api-io
+    pip install websockets odds-api-io
+
+The API requires permessage-deflate compression on WebSocket connections.
+The `websockets` library negotiates it by default, so no extra setup is needed.
 """
 
 import os
-import websocket
+import asyncio
 import json
-import time
-import threading
 import argparse
 from datetime import datetime, timezone
 from urllib.parse import urlencode
+import websockets
 from odds_api import OddsAPIClient
 
 # ─── Configuration ────────────────────────────────────────────────────
@@ -91,7 +93,6 @@ class OddsWebSocketClient:
         self.should_reconnect = True
         self.reconnect_attempts = 0
         self.max_reconnect_attempts = 10
-        self._reconnect_timer = None
 
         # Sequence tracking for reconnection replay
         self.last_seq = 0
@@ -216,7 +217,7 @@ class OddsWebSocketClient:
             params["lastSeq"] = str(self.last_seq)
         return f"{WS_URL}?{urlencode(params)}"
 
-    def on_message(self, ws, message):
+    def on_message(self, message):
         """Handle incoming WebSocket messages.
 
         The server may send multiple JSON objects in a single
@@ -312,74 +313,66 @@ class OddsWebSocketClient:
         except Exception as e:
             print(f"[{_timestamp()}] Error handling message: {e}")
 
-    def on_error(self, ws, error):
-        print(f"[{_timestamp()}] WebSocket error: {error}")
-
-    def on_close(self, ws, close_status_code, close_msg):
-        print(f"[{_timestamp()}] Disconnected (code: {close_status_code})")
-        if self.should_reconnect:
-            self.reconnect_attempts += 1
-            if self.reconnect_attempts > self.max_reconnect_attempts:
-                print(f"Max reconnect attempts "
-                      f"({self.max_reconnect_attempts}) reached. Giving up.")
-                return
-            # Exponential backoff: 1s, 2s, 4s, 8s... capped at 30s
-            delay = min(2 ** (self.reconnect_attempts - 1), 30)
-            print(f"Reconnecting in {delay}s "
-                  f"(attempt {self.reconnect_attempts}"
-                  f"/{self.max_reconnect_attempts})..."
-                  f" lastSeq={self.last_seq}")
-            # Schedule reconnect on a separate timer thread so we don't
-            # block the WebSocket callback thread.
-            self._reconnect_timer = threading.Timer(delay, self._start_ws)
-            self._reconnect_timer.daemon = True
-            self._reconnect_timer.start()
-
-    def on_open(self, ws):
-        print(f"[{_timestamp()}] WebSocket connection opened")
-        self.reconnect_attempts = 0  # Reset on successful connection
-
-    def _start_ws(self):
-        """Start WebSocket connection in background thread."""
-        url = self.build_url()
-        print(f"[{_timestamp()}] Connecting to: ...&lastSeq={self.last_seq}"
-              if self.last_seq > 0
-              else f"[{_timestamp()}] Connecting (fresh)...")
-        self.ws = websocket.WebSocketApp(
-            url,
-            on_open=self.on_open,
-            on_message=self.on_message,
-            on_error=self.on_error,
-            on_close=self.on_close
-        )
-        # ping_interval keeps the connection alive and detects dead
-        # connections
-        ws_thread = threading.Thread(
-            target=self.ws.run_forever,
-            kwargs={"ping_interval": 30, "ping_timeout": 10}
-        )
-        ws_thread.daemon = True
-        ws_thread.start()
-
-    def start(self):
+    async def run(self):
         """
-        Start the client. If prefetch is enabled, loads all current
-        odds via REST API first, then connects to WebSocket.
+        Run the client. If prefetch is enabled, loads all current
+        odds via REST API first, then connects to WebSocket and
+        reconnects with exponential backoff until stop() is called.
         """
         if self.prefetch:
             self.initial_fetch()
 
         print(f"[{_timestamp()}] Connecting to WebSocket "
               f"for real-time updates...")
-        self._start_ws()
 
-    def stop(self):
+        while self.should_reconnect:
+            url = self.build_url()
+            print(f"[{_timestamp()}] Connecting to: ...&lastSeq={self.last_seq}"
+                  if self.last_seq > 0
+                  else f"[{_timestamp()}] Connecting (fresh)...")
+            close_code = None
+            try:
+                # ping_interval keeps the connection alive and detects dead
+                # connections
+                async with websockets.connect(
+                    url, ping_interval=30, ping_timeout=10
+                ) as ws:
+                    self.ws = ws
+                    print(f"[{_timestamp()}] WebSocket connection opened")
+                    self.reconnect_attempts = 0  # Reset on successful connection
+                    async for message in ws:
+                        self.on_message(message)
+                    close_code = ws.close_code
+            except websockets.ConnectionClosed as e:
+                close_code = e.rcvd.code if e.rcvd else None
+                print(f"[{_timestamp()}] WebSocket error: {e}")
+            except (OSError, websockets.WebSocketException) as e:
+                print(f"[{_timestamp()}] WebSocket error: {e}")
+            finally:
+                self.ws = None
+
+            print(f"[{_timestamp()}] Disconnected (code: {close_code})")
+            if not self.should_reconnect:
+                break
+
+            self.reconnect_attempts += 1
+            if self.reconnect_attempts > self.max_reconnect_attempts:
+                print(f"Max reconnect attempts "
+                      f"({self.max_reconnect_attempts}) reached. Giving up.")
+                break
+            # Exponential backoff: 1s, 2s, 4s, 8s... capped at 30s
+            delay = min(2 ** (self.reconnect_attempts - 1), 30)
+            print(f"Reconnecting in {delay}s "
+                  f"(attempt {self.reconnect_attempts}"
+                  f"/{self.max_reconnect_attempts})..."
+                  f" lastSeq={self.last_seq}")
+            await asyncio.sleep(delay)
+
+    async def stop(self):
         """Stop the client."""
         self.should_reconnect = False
-        if self._reconnect_timer:
-            self._reconnect_timer.cancel()
         if self.ws:
-            self.ws.close()
+            await self.ws.close()
 
     def get_odds(self, event_id):
         """Get current odds for an event from the local store."""
@@ -420,14 +413,11 @@ def main():
         prefetch=args.prefetch
     )
 
-    client.start()
-
     try:
-        while True:
-            time.sleep(1)
+        asyncio.run(client.run())
     except KeyboardInterrupt:
         print("\nStopping...")
-        client.stop()
+        asyncio.run(client.stop())
         print(f"Final store: {len(client.odds_store)} events cached")
         print(f"Last seq: {client.last_seq}")
         print("Goodbye!")
