@@ -1,5 +1,7 @@
 # Odds-API.io Python SDK
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22836643.svg)](https://doi.org/10.5281/zenodo.22836643)
+
 [![PyPI version](https://img.shields.io/pypi/v/odds-api-io.svg)](https://pypi.org/project/odds-api-io/)
 [![Python versions](https://img.shields.io/pypi/pyversions/odds-api-io.svg)](https://pypi.org/project/odds-api-io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
