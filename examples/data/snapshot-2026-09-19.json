@@ -1,0 +1,4511 @@
+{
+ "capturedAt": "2026-09-18T18:59:30+00:00",
+ "source": "frozen snapshot",
+ "events": [
+  {
+   "id": 72221272,
+   "home": "AFC Bournemouth",
+   "away": "Liverpool FC",
+   "homeId": 60,
+   "awayId": 44,
+   "date": "2026-09-20T13:00:00Z",
+   "status": "pending",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "urls": {
+    "1xbet": "https://1xbet.rs/en/line/football/750290792",
+    "Bet365": "https://www.bet365.com/#/AC/B1/C1/D8/E200549676/F3/I1/",
+    "Betfair Sportsbook": "https://www.betfair.com/betting/football/english-premier-league/bournemouth-v-liverpool/e-36036320",
+    "ON Sharp": "N/A",
+    "SingBet": "https://www.singbet.com",
+    "Unibet": "N/A"
+   },
+   "bookmakerIds": {
+    "1xbet": "750290792",
+    "Bet365": "200549676",
+    "Bet365_4": "200549676-bot365",
+    "Betfair Sportsbook": "36036320",
+    "SingBet": "11451170",
+    "Unibet": "1028072781"
+   },
+   "bookmakers": {
+    "1xbet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:23:47.773Z",
+      "odds": [
+       {
+        "home": "3.22",
+        "draw": "3.9",
+        "away": "2.228"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:35:05.352Z",
+      "odds": [
+       {
+        "hdp": -2,
+        "home": "12",
+        "away": "1.01"
+       },
+       {
+        "hdp": -1.75,
+        "home": "7.25",
+        "away": "1.047"
+       },
+       {
+        "hdp": -1.5,
+        "home": "5.65",
+        "away": "1.092"
+       },
+       {
+        "hdp": -1.25,
+        "home": "5.37",
+        "away": "1.118"
+       },
+       {
+        "hdp": -1,
+        "home": "5",
+        "away": "1.136"
+       },
+       {
+        "hdp": -0.75,
+        "home": "3.55",
+        "away": "1.26"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.739",
+        "away": "1.538"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.9",
+        "away": "1.84"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.521",
+        "away": "2.361"
+       },
+       {
+        "hdp": 1,
+        "home": "1.35",
+        "away": "2.94"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.279",
+        "away": "3.22"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.24",
+        "away": "3.5"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.141",
+        "away": "4.365"
+       },
+       {
+        "hdp": 2,
+        "home": "1.067",
+        "away": "5.95"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.048",
+        "away": "6.6"
+       }
+      ]
+     }
+    ],
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:53:59.208Z",
+      "odds": [
+       {
+        "home": "3.100",
+        "draw": "3.800",
+        "away": "2.150"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:25:43.122Z",
+      "odds": [
+       {
+        "hdp": -1.5,
+        "home": "5.900",
+        "away": "1.130"
+       },
+       {
+        "hdp": -1.25,
+        "home": "5.750",
+        "away": "1.140"
+       },
+       {
+        "hdp": -1,
+        "home": "5.250",
+        "away": "1.160"
+       },
+       {
+        "hdp": -0.75,
+        "home": "3.700",
+        "away": "1.260"
+       },
+       {
+        "hdp": -0.5,
+        "home": "3.000",
+        "away": "1.375"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.675",
+        "away": "1.450"
+       },
+       {
+        "hdp": 0,
+        "home": "2.300",
+        "away": "1.600"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.975",
+        "away": "1.875"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.700",
+        "away": "2.100"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.550",
+        "away": "2.375"
+       },
+       {
+        "hdp": 1,
+        "home": "1.375",
+        "away": "3.000"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.300",
+        "away": "3.450"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.260",
+        "away": "3.700"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.190",
+        "away": "4.500"
+       },
+       {
+        "hdp": 2,
+        "home": "1.105",
+        "away": "6.800"
+       }
+      ]
+     }
+    ],
+    "Betfair Sportsbook": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T15:29:49.914Z",
+      "odds": [
+       {
+        "home": "3.1",
+        "draw": "3.8",
+        "away": "2.2"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:43:22.266Z",
+      "odds": [
+       {
+        "home": "3.173",
+        "draw": "3.950",
+        "away": "2.190"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:47:30.258Z",
+      "odds": [
+       {
+        "hdp": -0.75,
+        "home": "4.139",
+        "away": "1.285"
+       },
+       {
+        "hdp": -0.5,
+        "home": "3.270",
+        "away": "1.400"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.839",
+        "away": "1.498"
+       },
+       {
+        "hdp": 0,
+        "home": "2.414",
+        "away": "1.651"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.999",
+        "away": "1.924"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.768",
+        "away": "2.201"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.583",
+        "away": "2.575"
+       },
+       {
+        "hdp": 1,
+        "home": "1.392",
+        "away": "3.317"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.325",
+        "away": "3.767"
+       }
+      ]
+     }
+    ],
+    "SingBet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T11:04:38.245Z",
+      "odds": [
+       {
+        "home": "3.15",
+        "draw": "3.90",
+        "away": "2.14"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:39:52.99Z",
+      "odds": [
+       {
+        "hdp": 0,
+        "home": "2.24",
+        "away": "1.64"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.01",
+        "away": "1.87"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.75",
+        "away": "2.13"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.58",
+        "away": "2.30"
+       }
+      ]
+     }
+    ],
+    "Unibet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T15:33:16.274Z",
+      "odds": [
+       {
+        "home": "3.15",
+        "draw": "3.75",
+        "away": "2.14"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T15:33:16.274Z",
+      "odds": [
+       {
+        "hdp": -1.5,
+        "home": "6.00",
+        "away": "1.12"
+       },
+       {
+        "hdp": -1.25,
+        "home": "5.60",
+        "away": "1.14"
+       },
+       {
+        "hdp": -1,
+        "home": "5.20",
+        "away": "1.16"
+       },
+       {
+        "hdp": -0.75,
+        "home": "3.75",
+        "away": "1.27"
+       },
+       {
+        "hdp": -0.5,
+        "home": "2.95",
+        "away": "1.35"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.70",
+        "away": "1.47"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.94",
+        "away": "1.85"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.73",
+        "away": "2.08"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.56",
+        "away": "2.40"
+       },
+       {
+        "hdp": 1,
+        "home": "1.38",
+        "away": "3.00"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.32",
+        "away": "3.35"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.24",
+        "away": "3.55"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.19",
+        "away": "4.60"
+       },
+       {
+        "hdp": 2,
+        "home": "1.11",
+        "away": "6.50"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.10",
+        "away": "7.00"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.06",
+        "away": "6.75"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72513206,
+   "home": "Bayer Leverkusen",
+   "away": "RB Leipzig",
+   "homeId": 2681,
+   "awayId": 36360,
+   "date": "2026-09-20T13:30:00Z",
+   "status": "pending",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "Germany - Bundesliga",
+    "slug": "germany-bundesliga"
+   },
+   "urls": {
+    "1xbet": "https://1xbet.rs/en/line/football/750605752",
+    "Bet365": "https://www.bet365.com/#/AC/B1/C1/D8/E200550961/F3/I1/",
+    "Betfair Sportsbook": "https://www.betfair.com/betting/football/german-bundesliga/leverkusen-v-rb-leipzig/e-36041068",
+    "ON Sharp": "N/A",
+    "SingBet": "https://www.singbet.com",
+    "Unibet": "N/A"
+   },
+   "bookmakerIds": {
+    "1xbet": "750605752",
+    "Bet365": "200550961",
+    "Bet365_4": "200550961-bot365",
+    "Betfair Sportsbook": "36041068",
+    "SingBet": "11451235",
+    "Unibet": "1028230311"
+   },
+   "bookmakers": {
+    "1xbet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:30:57.99Z",
+      "odds": [
+       {
+        "home": "2.032",
+        "draw": "4.255",
+        "away": "3.465"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:30:57.99Z",
+      "odds": [
+       {
+        "hdp": -3.5,
+        "home": "11.5",
+        "away": "1.01"
+       },
+       {
+        "hdp": -3,
+        "home": "9.3",
+        "away": "1.002"
+       },
+       {
+        "hdp": -2.5,
+        "home": "5.5",
+        "away": "1.091"
+       },
+       {
+        "hdp": -2.25,
+        "home": "5.27",
+        "away": "1.114"
+       },
+       {
+        "hdp": -2,
+        "home": "4.95",
+        "away": "1.13"
+       },
+       {
+        "hdp": -1.75,
+        "home": "3.76",
+        "away": "1.237"
+       },
+       {
+        "hdp": -1.5,
+        "home": "3.1",
+        "away": "1.33"
+       },
+       {
+        "hdp": -1.25,
+        "home": "2.921",
+        "away": "1.419"
+       },
+       {
+        "hdp": -1,
+        "home": "2.6",
+        "away": "1.51"
+       },
+       {
+        "hdp": -0.75,
+        "home": "2.14",
+        "away": "1.66"
+       },
+       {
+        "hdp": -0.25,
+        "home": "1.798",
+        "away": "2.178"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.38",
+        "away": "2.76"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.204",
+        "away": "3.73"
+       },
+       {
+        "hdp": 1,
+        "home": "1.108",
+        "away": "5.1"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.087",
+        "away": "5.4"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.074",
+        "away": "5.75"
+       },
+       {
+        "hdp": 2,
+        "home": "1.01",
+        "away": "11.5"
+       }
+      ]
+     }
+    ],
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:55:47.54Z",
+      "odds": [
+       {
+        "home": "1.950",
+        "draw": "4.200",
+        "away": "3.250"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T11:40:23.737Z",
+      "odds": [
+       {
+        "hdp": -2.5,
+        "home": "6.000",
+        "away": "1.125"
+       },
+       {
+        "hdp": -2.25,
+        "home": "5.750",
+        "away": "1.140"
+       },
+       {
+        "hdp": -2,
+        "home": "5.250",
+        "away": "1.160"
+       },
+       {
+        "hdp": -1.75,
+        "home": "3.800",
+        "away": "1.250"
+       },
+       {
+        "hdp": -1.5,
+        "home": "3.100",
+        "away": "1.350"
+       },
+       {
+        "hdp": -1.25,
+        "home": "2.850",
+        "away": "1.400"
+       },
+       {
+        "hdp": -1,
+        "home": "2.600",
+        "away": "1.475"
+       },
+       {
+        "hdp": -0.75,
+        "home": "2.150",
+        "away": "1.675"
+       },
+       {
+        "hdp": -0.5,
+        "home": "1.975",
+        "away": "1.875"
+       },
+       {
+        "hdp": -0.25,
+        "home": "1.725",
+        "away": "2.075"
+       },
+       {
+        "hdp": 0,
+        "home": "1.500",
+        "away": "2.500"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.400",
+        "away": "2.850"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.325",
+        "away": "3.300"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.240",
+        "away": "3.900"
+       },
+       {
+        "hdp": 1,
+        "home": "1.150",
+        "away": "5.500"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.130",
+        "away": "5.900"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.120",
+        "away": "6.250"
+       }
+      ]
+     }
+    ],
+    "Betfair Sportsbook": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T08:51:58.231Z",
+      "odds": [
+       {
+        "home": "1.95",
+        "draw": "4.2",
+        "away": "3.5"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:43:22.266Z",
+      "odds": [
+       {
+        "home": "1.993",
+        "draw": "4.335",
+        "away": "3.418"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:51:07.535Z",
+      "odds": [
+       {
+        "hdp": -1.5,
+        "home": "3.454",
+        "away": "1.369"
+       },
+       {
+        "hdp": -1.25,
+        "home": "3.094",
+        "away": "1.435"
+       },
+       {
+        "hdp": -1,
+        "home": "2.729",
+        "away": "1.530"
+       },
+       {
+        "hdp": -0.75,
+        "home": "2.272",
+        "away": "1.724"
+       },
+       {
+        "hdp": -0.5,
+        "home": "1.996",
+        "away": "1.927"
+       },
+       {
+        "hdp": -0.25,
+        "home": "1.765",
+        "away": "2.205"
+       },
+       {
+        "hdp": 0,
+        "home": "1.540",
+        "away": "2.699"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.420",
+        "away": "3.165"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.349",
+        "away": "3.587"
+       }
+      ]
+     }
+    ],
+    "SingBet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-17T12:53:56.968Z",
+      "odds": [
+       {
+        "home": "2.01",
+        "draw": "4.40",
+        "away": "3.15"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:39:52.99Z",
+      "odds": [
+       {
+        "hdp": -0.75,
+        "home": "2.20",
+        "away": "1.68"
+       },
+       {
+        "hdp": -0.5,
+        "home": "2.01",
+        "away": "1.87"
+       },
+       {
+        "hdp": -0.25,
+        "home": "1.78",
+        "away": "2.10"
+       },
+       {
+        "hdp": 0,
+        "home": "1.56",
+        "away": "2.32"
+       }
+      ]
+     }
+    ],
+    "Unibet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T14:18:02.288Z",
+      "odds": [
+       {
+        "home": "1.93",
+        "draw": "4.00",
+        "away": "3.30"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:33:43.586Z",
+      "odds": [
+       {
+        "hdp": -2.5,
+        "home": "6.00",
+        "away": "1.12"
+       },
+       {
+        "hdp": -2.25,
+        "home": "5.75",
+        "away": "1.14"
+       },
+       {
+        "hdp": -2,
+        "home": "5.30",
+        "away": "1.15"
+       },
+       {
+        "hdp": -1.75,
+        "home": "3.95",
+        "away": "1.24"
+       },
+       {
+        "hdp": -1.5,
+        "home": "3.05",
+        "away": "1.30"
+       },
+       {
+        "hdp": -1.25,
+        "home": "2.90",
+        "away": "1.40"
+       },
+       {
+        "hdp": -1,
+        "home": "2.60",
+        "away": "1.49"
+       },
+       {
+        "hdp": -0.75,
+        "home": "2.17",
+        "away": "1.68"
+       },
+       {
+        "hdp": -0.5,
+        "home": "1.92",
+        "away": "1.87"
+       },
+       {
+        "hdp": -0.25,
+        "home": "1.71",
+        "away": "2.12"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.41",
+        "away": "2.90"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.30",
+        "away": "3.05"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.24",
+        "away": "3.95"
+       },
+       {
+        "hdp": 1,
+        "home": "1.14",
+        "away": "5.50"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.13",
+        "away": "5.80"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.11",
+        "away": "6.25"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 71945280,
+   "home": "AS Roma",
+   "away": "Inter Milano",
+   "homeId": 2702,
+   "awayId": 2697,
+   "date": "2026-09-19T16:00:00Z",
+   "status": "pending",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "Italy - Serie A",
+    "slug": "italy-serie-a"
+   },
+   "urls": {
+    "1xbet": "https://1xbet.rs/en/line/football/750626714",
+    "Bet365": "https://www.bet365.com/#/AC/B1/C1/D8/E200553991/F3/I1/",
+    "Betfair Sportsbook": "https://www.betfair.com/betting/football/italian-serie-a/roma-v-inter/e-36041253",
+    "ON Sharp": "N/A",
+    "SingBet": "https://www.singbet.com",
+    "Unibet": "N/A"
+   },
+   "bookmakerIds": {
+    "1xbet": "750626714",
+    "Bet365": "200553991",
+    "Bet365_4": "200553991-bot365",
+    "Betfair Sportsbook": "36041253",
+    "SingBet": "11455587",
+    "Unibet": "1027911576"
+   },
+   "bookmakers": {
+    "1xbet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:15:03.743Z",
+      "odds": [
+       {
+        "home": "2.741",
+        "draw": "3.55",
+        "away": "2.71"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:55:23.071Z",
+      "odds": [
+       {
+        "hdp": -2.5,
+        "home": "9.7",
+        "away": "1.002"
+       },
+       {
+        "hdp": -2,
+        "home": "9",
+        "away": "1.01"
+       },
+       {
+        "hdp": -1.75,
+        "home": "6.23",
+        "away": "1.077"
+       },
+       {
+        "hdp": -1.5,
+        "home": "4.85",
+        "away": "1.133"
+       },
+       {
+        "hdp": -1.25,
+        "home": "4.52",
+        "away": "1.168"
+       },
+       {
+        "hdp": -1,
+        "home": "4.1",
+        "away": "1.2"
+       },
+       {
+        "hdp": -0.75,
+        "home": "3.08",
+        "away": "1.34"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.341",
+        "away": "1.7"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.64",
+        "away": "2.19"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.343",
+        "away": "3"
+       },
+       {
+        "hdp": 1,
+        "home": "1.21",
+        "away": "3.98"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.163",
+        "away": "4.38"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.137",
+        "away": "4.8"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.069",
+        "away": "6.01"
+       },
+       {
+        "hdp": 2,
+        "home": "1.012",
+        "away": "8.8"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.003",
+        "away": "9.6"
+       }
+      ]
+     }
+    ],
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:55:33.236Z",
+      "odds": [
+       {
+        "home": "2.700",
+        "draw": "3.400",
+        "away": "2.550"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:36:50.009Z",
+      "odds": [
+       {
+        "hdp": -1.75,
+        "home": "6.600",
+        "away": "1.110"
+       },
+       {
+        "hdp": -1.5,
+        "home": "5.000",
+        "away": "1.170"
+       },
+       {
+        "hdp": -1.25,
+        "home": "4.500",
+        "away": "1.190"
+       },
+       {
+        "hdp": -1,
+        "home": "4.150",
+        "away": "1.220"
+       },
+       {
+        "hdp": -0.75,
+        "home": "3.100",
+        "away": "1.350"
+       },
+       {
+        "hdp": -0.5,
+        "home": "2.600",
+        "away": "1.475"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.250",
+        "away": "1.625"
+       },
+       {
+        "hdp": 0,
+        "home": "1.950",
+        "away": "1.900"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.650",
+        "away": "2.200"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.500",
+        "away": "2.500"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.350",
+        "away": "3.100"
+       },
+       {
+        "hdp": 1,
+        "home": "1.230",
+        "away": "4.000"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.200",
+        "away": "4.400"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.175",
+        "away": "4.800"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.115",
+        "away": "6.400"
+       }
+      ]
+     }
+    ],
+    "Betfair Sportsbook": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T16:51:49.8Z",
+      "odds": [
+       {
+        "home": "2.63",
+        "draw": "3.5",
+        "away": "2.63"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:51:27.783Z",
+      "odds": [
+       {
+        "home": "2.689",
+        "draw": "3.614",
+        "away": "2.657"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:51:27.783Z",
+      "odds": [
+       {
+        "hdp": -1,
+        "home": "4.788",
+        "away": "1.233"
+       },
+       {
+        "hdp": -0.75,
+        "home": "3.408",
+        "away": "1.376"
+       },
+       {
+        "hdp": -0.5,
+        "home": "2.744",
+        "away": "1.525"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.356",
+        "away": "1.679"
+       },
+       {
+        "hdp": 0,
+        "home": "1.977",
+        "away": "1.945"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.695",
+        "away": "2.326"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.541",
+        "away": "2.695"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.383",
+        "away": "3.369"
+       },
+       {
+        "hdp": 1,
+        "home": "1.237",
+        "away": "4.720"
+       }
+      ]
+     }
+    ],
+    "SingBet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T15:05:31.066Z",
+      "odds": [
+       {
+        "home": "2.65",
+        "draw": "3.70",
+        "away": "2.55"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:39:58.85Z",
+      "odds": [
+       {
+        "hdp": -0.25,
+        "home": "2.19",
+        "away": "1.69"
+       },
+       {
+        "hdp": 0,
+        "home": "1.98",
+        "away": "1.90"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.68",
+        "away": "2.20"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.52",
+        "away": "2.36"
+       }
+      ]
+     }
+    ],
+    "Unibet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-17T12:45:36.176Z",
+      "odds": [
+       {
+        "home": "2.63",
+        "draw": "3.40",
+        "away": "2.50"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-17T12:45:36.176Z",
+      "odds": [
+       {
+        "hdp": -1.5,
+        "home": "5.10",
+        "away": "1.16"
+       },
+       {
+        "hdp": -1.25,
+        "home": "4.70",
+        "away": "1.18"
+       },
+       {
+        "hdp": -1,
+        "home": "4.25",
+        "away": "1.21"
+       },
+       {
+        "hdp": -0.75,
+        "home": "3.15",
+        "away": "1.35"
+       },
+       {
+        "hdp": -0.5,
+        "home": "2.55",
+        "away": "1.47"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.28",
+        "away": "1.62"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.68",
+        "away": "2.17"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.50",
+        "away": "2.43"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.38",
+        "away": "2.95"
+       },
+       {
+        "hdp": 1,
+        "home": "1.24",
+        "away": "3.95"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.20",
+        "away": "4.40"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.18",
+        "away": "4.80"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72036192,
+   "home": "Olympique Marseille",
+   "away": "Paris Saint-Germain",
+   "homeId": 1641,
+   "awayId": 1644,
+   "date": "2026-09-20T18:45:00Z",
+   "status": "pending",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "France - Ligue 1",
+    "slug": "france-ligue-1"
+   },
+   "urls": {
+    "1xbet": "https://1xbet.rs/en/line/football/750568155",
+    "Bet365": "https://www.bet365.com/#/AC/B1/C1/D8/E200549170/F3/I1/",
+    "Betfair Sportsbook": "https://www.betfair.com/betting/football/french-ligue-1/marseille-v-paris-st-g/e-36039902",
+    "ON Sharp": "N/A",
+    "SingBet": "https://www.singbet.com",
+    "Unibet": "N/A"
+   },
+   "bookmakerIds": {
+    "1xbet": "750568155",
+    "Bet365": "200549170",
+    "Bet365_4": "200549170-bot365",
+    "Betfair Sportsbook": "36039902",
+    "SingBet": "11459511",
+    "Unibet": "1027973864"
+   },
+   "bookmakers": {
+    "1xbet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T12:52:33.579Z",
+      "odds": [
+       {
+        "home": "7.5",
+        "draw": "5.49",
+        "away": "1.428"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:52:01.493Z",
+      "odds": [
+       {
+        "hdp": -0.75,
+        "home": "9.1",
+        "away": "1.024"
+       },
+       {
+        "hdp": 0.25,
+        "home": "3.82",
+        "away": "1.23"
+       },
+       {
+        "hdp": 0.75,
+        "home": "2.759",
+        "away": "1.461"
+       },
+       {
+        "hdp": 1,
+        "home": "2.44",
+        "away": "1.57"
+       },
+       {
+        "hdp": 1.25,
+        "home": "2.116",
+        "away": "1.842"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.894",
+        "away": "2.052"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.6",
+        "away": "2.166"
+       },
+       {
+        "hdp": 2,
+        "home": "1.44",
+        "away": "2.55"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.343",
+        "away": "2.826"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.285",
+        "away": "3.125"
+       },
+       {
+        "hdp": 2.75,
+        "home": "1.191",
+        "away": "3.755"
+       },
+       {
+        "hdp": 3,
+        "home": "1.104",
+        "away": "5"
+       },
+       {
+        "hdp": 3.25,
+        "home": "1.089",
+        "away": "5.35"
+       },
+       {
+        "hdp": 3.5,
+        "home": "1.074",
+        "away": "5.75"
+       },
+       {
+        "hdp": 4,
+        "home": "1.02",
+        "away": "10.5"
+       },
+       {
+        "hdp": 4.5,
+        "home": "1.01",
+        "away": "11.5"
+       }
+      ]
+     }
+    ],
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:55:33.236Z",
+      "odds": [
+       {
+        "home": "7.000",
+        "draw": "5.250",
+        "away": "1.380"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:21:19.22Z",
+      "odds": [
+       {
+        "hdp": -0.5,
+        "home": "6.600",
+        "away": "1.110"
+       },
+       {
+        "hdp": -0.25,
+        "home": "5.900",
+        "away": "1.130"
+       },
+       {
+        "hdp": 0,
+        "home": "5.500",
+        "away": "1.150"
+       },
+       {
+        "hdp": 0.25,
+        "home": "3.700",
+        "away": "1.260"
+       },
+       {
+        "hdp": 0.5,
+        "home": "2.850",
+        "away": "1.400"
+       },
+       {
+        "hdp": 0.75,
+        "home": "2.600",
+        "away": "1.475"
+       },
+       {
+        "hdp": 1,
+        "home": "2.350",
+        "away": "1.575"
+       },
+       {
+        "hdp": 1.25,
+        "home": "2.025",
+        "away": "1.775"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.850",
+        "away": "2.000"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.625",
+        "away": "2.250"
+       },
+       {
+        "hdp": 2,
+        "home": "1.450",
+        "away": "2.675"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.375",
+        "away": "3.000"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.325",
+        "away": "3.300"
+       },
+       {
+        "hdp": 2.75,
+        "home": "1.240",
+        "away": "3.900"
+       },
+       {
+        "hdp": 3,
+        "home": "1.150",
+        "away": "5.500"
+       },
+       {
+        "hdp": 3.25,
+        "home": "1.140",
+        "away": "5.750"
+       },
+       {
+        "hdp": 3.5,
+        "home": "1.125",
+        "away": "6.000"
+       }
+      ]
+     }
+    ],
+    "Betfair Sportsbook": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T08:51:58.231Z",
+      "odds": [
+       {
+        "home": "7.5",
+        "draw": "5.5",
+        "away": "1.36"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:43:38.645Z",
+      "odds": [
+       {
+        "home": "7.811",
+        "draw": "5.786",
+        "away": "1.381"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:43:33.217Z",
+      "odds": [
+       {
+        "hdp": 0.5,
+        "home": "3.364",
+        "away": "1.384"
+       },
+       {
+        "hdp": 0.75,
+        "home": "2.982",
+        "away": "1.461"
+       },
+       {
+        "hdp": 1,
+        "home": "2.588",
+        "away": "1.578"
+       },
+       {
+        "hdp": 1.25,
+        "home": "2.144",
+        "away": "1.806"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.888",
+        "away": "2.039"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.693",
+        "away": "2.329"
+       },
+       {
+        "hdp": 2,
+        "home": "1.502",
+        "away": "2.824"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.412",
+        "away": "3.208"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.349",
+        "away": "3.585"
+       }
+      ]
+     }
+    ],
+    "SingBet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T04:18:02.927Z",
+      "odds": [
+       {
+        "home": "6.90",
+        "draw": "5.30",
+        "away": "1.39"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:40:12.726Z",
+      "odds": [
+       {
+        "hdp": 1.25,
+        "home": "2.06",
+        "away": "1.82"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.84",
+        "away": "2.04"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.66",
+        "away": "2.22"
+       }
+      ]
+     }
+    ],
+    "Unibet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T11:58:19.365Z",
+      "odds": [
+       {
+        "home": "7.00",
+        "draw": "5.10",
+        "away": "1.37"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T15:59:35.055Z",
+      "odds": [
+       {
+        "hdp": -0.5,
+        "home": "6.50",
+        "away": "1.11"
+       },
+       {
+        "hdp": -0.25,
+        "home": "6.00",
+        "away": "1.12"
+       },
+       {
+        "hdp": 0.25,
+        "home": "3.85",
+        "away": "1.26"
+       },
+       {
+        "hdp": 0.5,
+        "home": "3.05",
+        "away": "1.37"
+       },
+       {
+        "hdp": 0.75,
+        "home": "2.75",
+        "away": "1.44"
+       },
+       {
+        "hdp": 1,
+        "home": "2.45",
+        "away": "1.55"
+       },
+       {
+        "hdp": 1.25,
+        "home": "2.07",
+        "away": "1.75"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.85",
+        "away": "1.95"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.67",
+        "away": "2.18"
+       },
+       {
+        "hdp": 2,
+        "home": "1.49",
+        "away": "2.60"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.41",
+        "away": "2.90"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.35",
+        "away": "3.20"
+       },
+       {
+        "hdp": 2.75,
+        "home": "1.25",
+        "away": "3.85"
+       },
+       {
+        "hdp": 3,
+        "home": "1.16",
+        "away": "5.20"
+       },
+       {
+        "hdp": 3.25,
+        "home": "1.14",
+        "away": "5.50"
+       },
+       {
+        "hdp": 3.5,
+        "home": "1.13",
+        "away": "5.80"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72478600,
+   "home": "Sevilla FC",
+   "away": "FC Barcelona",
+   "homeId": 2833,
+   "awayId": 2817,
+   "date": "2026-09-19T19:00:00Z",
+   "status": "pending",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "Spain - LaLiga",
+    "slug": "spain-laliga"
+   },
+   "urls": {
+    "1xbet": "https://1xbet.rs/en/line/football/752943375",
+    "Bet365": "https://www.bet365.com/#/AC/B1/C1/D8/E200657788/F3/I1/",
+    "Betfair Sportsbook": "https://www.betfair.com/betting/football/spanish-la-liga/sevilla-v-barcelona/e-36071858",
+    "ON Sharp": "N/A",
+    "SingBet": "https://www.singbet.com",
+    "Unibet": "N/A"
+   },
+   "bookmakerIds": {
+    "1xbet": "752943375",
+    "Bet365": "200657788",
+    "Bet365_4": "200657788-bot365",
+    "Betfair Sportsbook": "36071858",
+    "SingBet": "11455488",
+    "Unibet": "1028208871"
+   },
+   "bookmakers": {
+    "1xbet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:47:03.467Z",
+      "odds": [
+       {
+        "home": "12.4",
+        "draw": "7.41",
+        "away": "1.25"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:50:08.846Z",
+      "odds": [
+       {
+        "hdp": 0.25,
+        "home": "5.55",
+        "away": "1.11"
+       },
+       {
+        "hdp": 0.75,
+        "home": "3.75",
+        "away": "1.244"
+       },
+       {
+        "hdp": 1,
+        "home": "3.54",
+        "away": "1.27"
+       },
+       {
+        "hdp": 1.25,
+        "home": "2.812",
+        "away": "1.436"
+       },
+       {
+        "hdp": 1.5,
+        "home": "2.41",
+        "away": "1.57"
+       },
+       {
+        "hdp": 1.75,
+        "home": "2.262",
+        "away": "1.745"
+       },
+       {
+        "hdp": 2,
+        "home": "1.93",
+        "away": "1.82"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.842",
+        "away": "2.117"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.705",
+        "away": "2.333"
+       },
+       {
+        "hdp": 2.75,
+        "home": "1.451",
+        "away": "2.475"
+       },
+       {
+        "hdp": 3,
+        "home": "1.33",
+        "away": "2.93"
+       },
+       {
+        "hdp": 3.25,
+        "home": "1.272",
+        "away": "3.13"
+       },
+       {
+        "hdp": 3.5,
+        "home": "1.23",
+        "away": "3.42"
+       },
+       {
+        "hdp": 3.75,
+        "home": "1.16",
+        "away": "4.095"
+       },
+       {
+        "hdp": 4,
+        "home": "1.09",
+        "away": "5.3"
+       },
+       {
+        "hdp": 4.5,
+        "home": "1.07",
+        "away": "5.85"
+       }
+      ]
+     }
+    ],
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:54:50.415Z",
+      "odds": [
+       {
+        "home": "10.000",
+        "draw": "7.000",
+        "away": "1.222"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:55:54.897Z",
+      "odds": [
+       {
+        "hdp": 0.25,
+        "home": "5.750",
+        "away": "1.140"
+       },
+       {
+        "hdp": 0.5,
+        "home": "4.250",
+        "away": "1.210"
+       },
+       {
+        "hdp": 0.75,
+        "home": "3.900",
+        "away": "1.240"
+       },
+       {
+        "hdp": 1,
+        "home": "3.550",
+        "away": "1.275"
+       },
+       {
+        "hdp": 1.25,
+        "home": "2.850",
+        "away": "1.400"
+       },
+       {
+        "hdp": 1.5,
+        "home": "2.375",
+        "away": "1.550"
+       },
+       {
+        "hdp": 1.75,
+        "home": "2.200",
+        "away": "1.650"
+       },
+       {
+        "hdp": 2,
+        "home": "1.975",
+        "away": "1.875"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.750",
+        "away": "2.050"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.625",
+        "away": "2.250"
+       },
+       {
+        "hdp": 2.75,
+        "home": "1.475",
+        "away": "2.600"
+       },
+       {
+        "hdp": 3,
+        "home": "1.350",
+        "away": "3.100"
+       },
+       {
+        "hdp": 3.25,
+        "home": "1.300",
+        "away": "3.450"
+       },
+       {
+        "hdp": 3.5,
+        "home": "1.260",
+        "away": "3.700"
+       },
+       {
+        "hdp": 3.75,
+        "home": "1.190",
+        "away": "4.500"
+       },
+       {
+        "hdp": 4,
+        "home": "1.125",
+        "away": "6.000"
+       }
+      ]
+     }
+    ],
+    "Betfair Sportsbook": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:32:09.538Z",
+      "odds": [
+       {
+        "home": "13",
+        "draw": "7.5",
+        "away": "1.2"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:54:43.197Z",
+      "odds": [
+       {
+        "home": "14.019",
+        "draw": "8.138",
+        "away": "1.204"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:55:30.124Z",
+      "odds": [
+       {
+        "hdp": 1,
+        "home": "4.137",
+        "away": "1.285"
+       },
+       {
+        "hdp": 1.25,
+        "home": "3.062",
+        "away": "1.442"
+       },
+       {
+        "hdp": 1.5,
+        "home": "2.523",
+        "away": "1.603"
+       },
+       {
+        "hdp": 1.75,
+        "home": "2.264",
+        "away": "1.729"
+       },
+       {
+        "hdp": 2,
+        "home": "2.003",
+        "away": "1.920"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.791",
+        "away": "2.166"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.649",
+        "away": "2.417"
+       },
+       {
+        "hdp": 2.75,
+        "home": "1.487",
+        "away": "2.879"
+       },
+       {
+        "hdp": 3,
+        "home": "1.342",
+        "away": "3.640"
+       }
+      ]
+     }
+    ],
+    "SingBet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-17T12:53:56.968Z",
+      "odds": [
+       {
+        "home": "12.00",
+        "draw": "7.80",
+        "away": "1.20"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:39:58.85Z",
+      "odds": [
+       {
+        "hdp": 1.75,
+        "home": "2.21",
+        "away": "1.67"
+       },
+       {
+        "hdp": 2,
+        "home": "2.01",
+        "away": "1.87"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.82",
+        "away": "2.06"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.67",
+        "away": "2.21"
+       }
+      ]
+     }
+    ],
+    "Unibet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T17:18:17.156Z",
+      "odds": [
+       {
+        "home": "13.00",
+        "draw": "7.50",
+        "away": "1.19"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:51:43.249Z",
+      "odds": [
+       {
+        "hdp": 0.5,
+        "home": "4.60",
+        "away": "1.17"
+       },
+       {
+        "hdp": 0.75,
+        "home": "4.40",
+        "away": "1.21"
+       },
+       {
+        "hdp": 1,
+        "home": "4.00",
+        "away": "1.24"
+       },
+       {
+        "hdp": 1.25,
+        "home": "3.05",
+        "away": "1.37"
+       },
+       {
+        "hdp": 1.5,
+        "home": "2.50",
+        "away": "1.48"
+       },
+       {
+        "hdp": 1.75,
+        "home": "2.30",
+        "away": "1.61"
+       },
+       {
+        "hdp": 2,
+        "home": "2.05",
+        "away": "1.76"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.81",
+        "away": "1.98"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.63",
+        "away": "2.17"
+       },
+       {
+        "hdp": 2.75,
+        "home": "1.50",
+        "away": "2.50"
+       },
+       {
+        "hdp": 3,
+        "home": "1.37",
+        "away": "3.05"
+       },
+       {
+        "hdp": 3.25,
+        "home": "1.32",
+        "away": "3.35"
+       },
+       {
+        "hdp": 3.5,
+        "home": "1.26",
+        "away": "3.55"
+       },
+       {
+        "hdp": 3.75,
+        "home": "1.20",
+        "away": "4.40"
+       },
+       {
+        "hdp": 4,
+        "home": "1.13",
+        "away": "5.80"
+       },
+       {
+        "hdp": 4.25,
+        "home": "1.11",
+        "away": "6.25"
+       },
+       {
+        "hdp": 4.5,
+        "home": "1.08",
+        "away": "6.25"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221276,
+   "home": "Brighton & Hove Albion",
+   "away": "Arsenal FC",
+   "homeId": 30,
+   "awayId": 42,
+   "date": "2026-09-19T14:00:00Z",
+   "status": "pending",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "urls": {
+    "1xbet": "https://1xbet.rs/en/line/football/750296319",
+    "Bet365": "https://www.bet365.com/#/AC/B1/C1/D8/E200549659/F3/I1/",
+    "Betfair Sportsbook": "https://www.betfair.com/betting/football/english-premier-league/brighton-v-arsenal/e-36036463",
+    "ON Sharp": "N/A",
+    "SingBet": "https://www.singbet.com",
+    "Unibet": "N/A"
+   },
+   "bookmakerIds": {
+    "1xbet": "750296319",
+    "Bet365": "200549659",
+    "Bet365_4": "200549659-bot365",
+    "Betfair Sportsbook": "36036463",
+    "SingBet": "11447198",
+    "Unibet": "1028072785"
+   },
+   "bookmakers": {
+    "1xbet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T16:24:16.974Z",
+      "odds": [
+       {
+        "home": "4.82",
+        "draw": "4.21",
+        "away": "1.753"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T16:24:16.974Z",
+      "odds": [
+       {
+        "hdp": -1.5,
+        "home": "9.2",
+        "away": "1.01"
+       },
+       {
+        "hdp": -1,
+        "home": "8.5",
+        "away": "1.025"
+       },
+       {
+        "hdp": -0.75,
+        "home": "5.55",
+        "away": "1.103"
+       },
+       {
+        "hdp": -0.25,
+        "home": "3.835",
+        "away": "1.227"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.54",
+        "away": "1.48"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.92",
+        "away": "1.88"
+       },
+       {
+        "hdp": 1,
+        "home": "1.666",
+        "away": "2.21"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.582",
+        "away": "2.609"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.463",
+        "away": "3.015"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.274",
+        "away": "3.385"
+       },
+       {
+        "hdp": 2,
+        "home": "1.159",
+        "away": "4.6"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.127",
+        "away": "4.875"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.109",
+        "away": "5.25"
+       },
+       {
+        "hdp": 2.75,
+        "home": "1.049",
+        "away": "6.56"
+       },
+       {
+        "hdp": 3,
+        "home": "1.002",
+        "away": "9.3"
+       },
+       {
+        "hdp": 3.5,
+        "home": "1.01",
+        "away": "11.5"
+       }
+      ]
+     }
+    ],
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:55:47.54Z",
+      "odds": [
+       {
+        "home": "5.000",
+        "draw": "3.900",
+        "away": "1.666"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:40:29.675Z",
+      "odds": [
+       {
+        "hdp": -0.75,
+        "home": "6.250",
+        "away": "1.120"
+       },
+       {
+        "hdp": -0.5,
+        "home": "4.650",
+        "away": "1.180"
+       },
+       {
+        "hdp": -0.25,
+        "home": "4.150",
+        "away": "1.220"
+       },
+       {
+        "hdp": 0,
+        "home": "3.550",
+        "away": "1.275"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.600",
+        "away": "1.475"
+       },
+       {
+        "hdp": 0.5,
+        "home": "2.150",
+        "away": "1.675"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.975",
+        "away": "1.875"
+       },
+       {
+        "hdp": 1,
+        "home": "1.675",
+        "away": "2.150"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.525",
+        "away": "2.425"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.425",
+        "away": "2.750"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.300",
+        "away": "3.450"
+       },
+       {
+        "hdp": 2,
+        "home": "1.190",
+        "away": "4.500"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.170",
+        "away": "5.000"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.150",
+        "away": "5.500"
+       }
+      ]
+     }
+    ],
+    "Betfair Sportsbook": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-17T22:34:12.386Z",
+      "odds": [
+       {
+        "home": "5",
+        "draw": "3.9",
+        "away": "1.7"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:43:22.266Z",
+      "odds": [
+       {
+        "home": "5.045",
+        "draw": "4.154",
+        "away": "1.706"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:46:40.003Z",
+      "odds": [
+       {
+        "hdp": -0.25,
+        "home": "4.619",
+        "away": "1.245"
+       },
+       {
+        "hdp": 0,
+        "home": "3.970",
+        "away": "1.302"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.794",
+        "away": "1.510"
+       },
+       {
+        "hdp": 0.5,
+        "home": "2.290",
+        "away": "1.714"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.993",
+        "away": "1.929"
+       },
+       {
+        "hdp": 1,
+        "home": "1.706",
+        "away": "2.305"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.544",
+        "away": "2.685"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.430",
+        "away": "3.117"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.306",
+        "away": "3.928"
+       }
+      ]
+     }
+    ],
+    "SingBet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:17:31.637Z",
+      "odds": [
+       {
+        "home": "4.65",
+        "draw": "4.10",
+        "away": "1.72"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:19:55.543Z",
+      "odds": [
+       {
+        "hdp": 0.5,
+        "home": "2.17",
+        "away": "1.71"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.96",
+        "away": "1.92"
+       },
+       {
+        "hdp": 1,
+        "home": "1.69",
+        "away": "2.19"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.53",
+        "away": "2.35"
+       }
+      ]
+     }
+    ],
+    "Unibet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T09:56:28.618Z",
+      "odds": [
+       {
+        "home": "5.10",
+        "draw": "3.95",
+        "away": "1.67"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T09:56:28.618Z",
+      "odds": [
+       {
+        "hdp": -0.5,
+        "home": "4.50",
+        "away": "1.16"
+       },
+       {
+        "hdp": -0.25,
+        "home": "4.25",
+        "away": "1.22"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.70",
+        "away": "1.46"
+       },
+       {
+        "hdp": 0.5,
+        "home": "2.23",
+        "away": "1.64"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.98",
+        "away": "1.81"
+       },
+       {
+        "hdp": 1,
+        "home": "1.72",
+        "away": "2.10"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.56",
+        "away": "2.40"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.42",
+        "away": "2.65"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.32",
+        "away": "3.30"
+       },
+       {
+        "hdp": 2,
+        "home": "1.20",
+        "away": "4.50"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.17",
+        "away": "5.00"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.15",
+        "away": "5.40"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72513204,
+   "home": "VfB Stuttgart",
+   "away": "Borussia Dortmund",
+   "homeId": 2677,
+   "awayId": 2673,
+   "date": "2026-09-19T16:30:00Z",
+   "status": "pending",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "Germany - Bundesliga",
+    "slug": "germany-bundesliga"
+   },
+   "urls": {
+    "1xbet": "https://1xbet.rs/en/line/football/750607585",
+    "Bet365": "https://www.bet365.com/#/AC/B1/C1/D8/E200550953/F3/I1/",
+    "Betfair Sportsbook": "https://www.betfair.com/betting/football/german-bundesliga/stuttgart-v-dortmund/e-36041099",
+    "ON Sharp": "N/A",
+    "SingBet": "https://www.singbet.com",
+    "Unibet": "N/A"
+   },
+   "bookmakerIds": {
+    "1xbet": "750607585",
+    "Bet365": "200550953",
+    "Bet365_4": "200550953-bot365",
+    "Betfair Sportsbook": "36041099",
+    "SingBet": "11447537",
+    "Unibet": "1028230306"
+   },
+   "bookmakers": {
+    "1xbet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:38:19.24Z",
+      "odds": [
+       {
+        "home": "2.521",
+        "draw": "3.81",
+        "away": "2.806"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:38:19.24Z",
+      "odds": [
+       {
+        "hdp": -2.5,
+        "home": "7.2",
+        "away": "1.034"
+       },
+       {
+        "hdp": -2,
+        "home": "6.75",
+        "away": "1.052"
+       },
+       {
+        "hdp": -1.75,
+        "home": "4.98",
+        "away": "1.13"
+       },
+       {
+        "hdp": -1.5,
+        "home": "4.05",
+        "away": "1.192"
+       },
+       {
+        "hdp": -1.25,
+        "home": "3.755",
+        "away": "1.236"
+       },
+       {
+        "hdp": -1,
+        "home": "3.4",
+        "away": "1.28"
+       },
+       {
+        "hdp": -0.75,
+        "home": "2.74",
+        "away": "1.42"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.166",
+        "away": "1.807"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.59",
+        "away": "2.3"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.333",
+        "away": "3.08"
+       },
+       {
+        "hdp": 1,
+        "home": "1.22",
+        "away": "3.92"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.172",
+        "away": "4.31"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.149",
+        "away": "4.65"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.083",
+        "away": "5.72"
+       },
+       {
+        "hdp": 2,
+        "home": "1.029",
+        "away": "7.9"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.015",
+        "away": "8.4"
+       }
+      ]
+     }
+    ],
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:55:33.236Z",
+      "odds": [
+       {
+        "home": "2.450",
+        "draw": "3.750",
+        "away": "2.700"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:36:05.626Z",
+      "odds": [
+       {
+        "hdp": -1.75,
+        "home": "5.500",
+        "away": "1.150"
+       },
+       {
+        "hdp": -1.5,
+        "home": "4.250",
+        "away": "1.210"
+       },
+       {
+        "hdp": -1.25,
+        "home": "3.900",
+        "away": "1.240"
+       },
+       {
+        "hdp": -1,
+        "home": "3.550",
+        "away": "1.275"
+       },
+       {
+        "hdp": -0.75,
+        "home": "2.750",
+        "away": "1.425"
+       },
+       {
+        "hdp": -0.5,
+        "home": "2.375",
+        "away": "1.550"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.100",
+        "away": "1.700"
+       },
+       {
+        "hdp": 0,
+        "home": "1.825",
+        "away": "2.025"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.600",
+        "away": "2.300"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.475",
+        "away": "2.600"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.350",
+        "away": "3.100"
+       },
+       {
+        "hdp": 1,
+        "home": "1.230",
+        "away": "4.000"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.200",
+        "away": "4.400"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.180",
+        "away": "4.650"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.125",
+        "away": "6.000"
+       }
+      ]
+     }
+    ],
+    "Betfair Sportsbook": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T10:57:08.677Z",
+      "odds": [
+       {
+        "home": "2.4",
+        "draw": "3.9",
+        "away": "2.7"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:54:54.861Z",
+      "odds": [
+       {
+        "home": "2.456",
+        "draw": "3.923",
+        "away": "2.755"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:54:54.861Z",
+      "odds": [
+       {
+        "hdp": -1,
+        "home": "3.833",
+        "away": "1.317"
+       },
+       {
+        "hdp": -0.75,
+        "home": "2.953",
+        "away": "1.468"
+       },
+       {
+        "hdp": -0.5,
+        "home": "2.475",
+        "away": "1.624"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.167",
+        "away": "1.791"
+       },
+       {
+        "hdp": 0,
+        "home": "1.844",
+        "away": "2.094"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.636",
+        "away": "2.445"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.503",
+        "away": "2.819"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.371",
+        "away": "3.443"
+       },
+       {
+        "hdp": 1,
+        "home": "1.241",
+        "away": "4.669"
+       }
+      ]
+     }
+    ],
+    "SingBet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T12:22:28.266Z",
+      "odds": [
+       {
+        "home": "2.36",
+        "draw": "3.80",
+        "away": "2.79"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:39:52.99Z",
+      "odds": [
+       {
+        "hdp": -0.5,
+        "home": "2.27",
+        "away": "1.61"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.10",
+        "away": "1.78"
+       },
+       {
+        "hdp": 0,
+        "home": "1.79",
+        "away": "2.09"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.60",
+        "away": "2.28"
+       }
+      ]
+     }
+    ],
+    "Unibet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T17:58:23.399Z",
+      "odds": [
+       {
+        "home": "2.28",
+        "draw": "3.80",
+        "away": "2.70"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:58:23.399Z",
+      "odds": [
+       {
+        "hdp": -2.5,
+        "home": "8.00",
+        "away": "1.07"
+       },
+       {
+        "hdp": -2.25,
+        "home": "7.50",
+        "away": "1.08"
+       },
+       {
+        "hdp": -2,
+        "home": "7.50",
+        "away": "1.09"
+       },
+       {
+        "hdp": -1.75,
+        "home": "5.10",
+        "away": "1.16"
+       },
+       {
+        "hdp": -1.5,
+        "home": "3.75",
+        "away": "1.21"
+       },
+       {
+        "hdp": -1.25,
+        "home": "3.70",
+        "away": "1.27"
+       },
+       {
+        "hdp": -1,
+        "home": "3.35",
+        "away": "1.32"
+       },
+       {
+        "hdp": -0.75,
+        "home": "2.65",
+        "away": "1.47"
+       },
+       {
+        "hdp": -0.5,
+        "home": "2.18",
+        "away": "1.58"
+       },
+       {
+        "hdp": -0.25,
+        "home": "2.00",
+        "away": "1.79"
+       },
+       {
+        "hdp": 0.25,
+        "home": "1.57",
+        "away": "2.38"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.46",
+        "away": "2.65"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.34",
+        "away": "3.20"
+       },
+       {
+        "hdp": 1,
+        "home": "1.21",
+        "away": "4.30"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.19",
+        "away": "4.70"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.16",
+        "away": "5.00"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72478588,
+   "home": "Atletico Madrid",
+   "away": "Real Madrid",
+   "homeId": 2836,
+   "awayId": 2829,
+   "date": "2026-09-20T14:15:00Z",
+   "status": "pending",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "Spain - LaLiga",
+    "slug": "spain-laliga"
+   },
+   "urls": {
+    "1xbet": "https://1xbet.rs/en/line/football/752943366",
+    "Bet365": "https://www.bet365.com/#/AC/B1/C1/D8/E200657795/F3/I1/",
+    "Betfair Sportsbook": "https://www.betfair.com/betting/football/spanish-la-liga/atletico-madrid-v-real-madrid/e-36071848",
+    "ON Sharp": "N/A",
+    "SingBet": "https://www.singbet.com",
+    "Unibet": "N/A"
+   },
+   "bookmakerIds": {
+    "1xbet": "752943366",
+    "Bet365": "200657795",
+    "Bet365_4": "200657795-bot365",
+    "Betfair Sportsbook": "36071848",
+    "SingBet": "11455510",
+    "Unibet": "1028208756"
+   },
+   "bookmakers": {
+    "1xbet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:15:03.743Z",
+      "odds": [
+       {
+        "home": "3.735",
+        "draw": "3.94",
+        "away": "2.023"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:36:45.212Z",
+      "odds": [
+       {
+        "hdp": -1.75,
+        "home": "8.5",
+        "away": "1.025"
+       },
+       {
+        "hdp": -1.5,
+        "home": "6.55",
+        "away": "1.064"
+       },
+       {
+        "hdp": -1.25,
+        "home": "6.28",
+        "away": "1.085"
+       },
+       {
+        "hdp": -1,
+        "home": "5.95",
+        "away": "1.096"
+       },
+       {
+        "hdp": -0.75,
+        "home": "4.25",
+        "away": "1.193"
+       },
+       {
+        "hdp": -0.25,
+        "home": "3.345",
+        "away": "1.396"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.11",
+        "away": "1.68"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.643",
+        "away": "2.121"
+       },
+       {
+        "hdp": 1,
+        "home": "1.46",
+        "away": "2.53"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.357",
+        "away": "2.818"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.3",
+        "away": "3.1"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.204",
+        "away": "3.66"
+       },
+       {
+        "hdp": 2,
+        "home": "1.109",
+        "away": "4.95"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.08",
+        "away": "5.55"
+       },
+       {
+        "hdp": 3,
+        "home": "1.01",
+        "away": "11.5"
+       },
+       {
+        "hdp": 3.5,
+        "home": "1.04",
+        "away": "12.5"
+       }
+      ]
+     }
+    ],
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:55:33.236Z",
+      "odds": [
+       {
+        "home": "3.600",
+        "draw": "3.800",
+        "away": "1.950"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:58:34.842Z",
+      "odds": [
+       {
+        "hdp": -1.5,
+        "home": "6.800",
+        "away": "1.105"
+       },
+       {
+        "hdp": -1.25,
+        "home": "6.400",
+        "away": "1.115"
+       },
+       {
+        "hdp": -1,
+        "home": "5.900",
+        "away": "1.130"
+       },
+       {
+        "hdp": -0.75,
+        "home": "4.150",
+        "away": "1.220"
+       },
+       {
+        "hdp": -0.5,
+        "home": "3.450",
+        "away": "1.300"
+       },
+       {
+        "hdp": -0.25,
+        "home": "3.000",
+        "away": "1.375"
+       },
+       {
+        "hdp": 0,
+        "home": "2.600",
+        "away": "1.475"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.075",
+        "away": "1.725"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.850",
+        "away": "2.000"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.650",
+        "away": "2.200"
+       },
+       {
+        "hdp": 1,
+        "home": "1.450",
+        "away": "2.675"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.375",
+        "away": "3.000"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.325",
+        "away": "3.300"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.225",
+        "away": "4.100"
+       },
+       {
+        "hdp": 2,
+        "home": "1.140",
+        "away": "5.750"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.125",
+        "away": "6.000"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.110",
+        "away": "6.600"
+       }
+      ]
+     }
+    ],
+    "Betfair Sportsbook": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T16:51:49.8Z",
+      "odds": [
+       {
+        "home": "3.6",
+        "draw": "3.9",
+        "away": "1.95"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:43:22.266Z",
+      "odds": [
+       {
+        "home": "3.636",
+        "draw": "3.987",
+        "away": "2.003"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:43:58.22Z",
+      "odds": [
+       {
+        "hdp": -0.5,
+        "home": "3.845",
+        "away": "1.316"
+       },
+       {
+        "hdp": -0.25,
+        "home": "3.352",
+        "away": "1.386"
+       },
+       {
+        "hdp": 0,
+        "home": "2.807",
+        "away": "1.507"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.230",
+        "away": "1.750"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.914",
+        "away": "2.009"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.718",
+        "away": "2.284"
+       },
+       {
+        "hdp": 1,
+        "home": "1.514",
+        "away": "2.781"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.419",
+        "away": "3.170"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.354",
+        "away": "3.555"
+       }
+      ]
+     }
+    ],
+    "SingBet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T09:57:56.917Z",
+      "odds": [
+       {
+        "home": "3.40",
+        "draw": "4.10",
+        "away": "1.98"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T17:39:58.85Z",
+      "odds": [
+       {
+        "hdp": 0,
+        "home": "2.38",
+        "away": "1.50"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.16",
+        "away": "1.72"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.90",
+        "away": "1.98"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.69",
+        "away": "2.19"
+       }
+      ]
+     }
+    ],
+    "Unibet": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-18T18:17:32.164Z",
+      "odds": [
+       {
+        "home": "3.60",
+        "draw": "3.70",
+        "away": "1.96"
+       }
+      ]
+     },
+     {
+      "name": "Spread",
+      "updatedAt": "2026-09-18T18:17:32.164Z",
+      "odds": [
+       {
+        "hdp": -1.5,
+        "home": "6.50",
+        "away": "1.08"
+       },
+       {
+        "hdp": -1.25,
+        "home": "6.75",
+        "away": "1.10"
+       },
+       {
+        "hdp": -1,
+        "home": "6.25",
+        "away": "1.11"
+       },
+       {
+        "hdp": -0.75,
+        "home": "4.35",
+        "away": "1.21"
+       },
+       {
+        "hdp": -0.5,
+        "home": "3.35",
+        "away": "1.29"
+       },
+       {
+        "hdp": -0.25,
+        "home": "3.10",
+        "away": "1.37"
+       },
+       {
+        "hdp": 0.25,
+        "home": "2.14",
+        "away": "1.70"
+       },
+       {
+        "hdp": 0.5,
+        "home": "1.86",
+        "away": "1.93"
+       },
+       {
+        "hdp": 0.75,
+        "home": "1.67",
+        "away": "2.18"
+       },
+       {
+        "hdp": 1,
+        "home": "1.49",
+        "away": "2.60"
+       },
+       {
+        "hdp": 1.25,
+        "home": "1.40",
+        "away": "2.90"
+       },
+       {
+        "hdp": 1.5,
+        "home": "1.33",
+        "away": "3.10"
+       },
+       {
+        "hdp": 1.75,
+        "home": "1.24",
+        "away": "3.95"
+       },
+       {
+        "hdp": 2,
+        "home": "1.15",
+        "away": "5.40"
+       },
+       {
+        "hdp": 2.25,
+        "home": "1.13",
+        "away": "5.80"
+       },
+       {
+        "hdp": 2.5,
+        "home": "1.12",
+        "away": "6.25"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "closingLines": [
+  {
+   "id": 72221252,
+   "home": "Aston Villa",
+   "away": "Nottingham Forest",
+   "date": "2026-09-12T14:00:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 1,
+    "away": 2,
+    "periods": {
+     "ft": {
+      "home": 1,
+      "away": 2
+     },
+     "p1": {
+      "home": 0,
+      "away": 0
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "2.200",
+        "draw": "3.400",
+        "away": "3.250"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "2.273",
+        "draw": "3.527",
+        "away": "3.315"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221254,
+   "home": "AFC Bournemouth",
+   "away": "Brentford FC",
+   "date": "2026-09-12T14:00:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 2,
+    "away": 2,
+    "periods": {
+     "ft": {
+      "home": 2,
+      "away": 2
+     },
+     "p1": {
+      "home": 1,
+      "away": 1
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "2.250",
+        "draw": "3.600",
+        "away": "3.100"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "2.314",
+        "draw": "3.699",
+        "away": "3.101"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221256,
+   "home": "Chelsea FC",
+   "away": "Hull City",
+   "date": "2026-09-12T14:00:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 2,
+    "away": 2,
+    "periods": {
+     "ft": {
+      "home": 2,
+      "away": 2
+     },
+     "p1": {
+      "home": 1,
+      "away": 2
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "1.222",
+        "draw": "6.500",
+        "away": "12.000"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "1.220",
+        "draw": "7.452",
+        "away": "14.117"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221260,
+   "home": "Crystal Palace",
+   "away": "Ipswich Town",
+   "date": "2026-09-12T14:00:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 2,
+    "away": 3,
+    "periods": {
+     "ft": {
+      "home": 2,
+      "away": 3
+     },
+     "p1": {
+      "home": 1,
+      "away": 2
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "2.150",
+        "draw": "3.750",
+        "away": "3.100"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "2.207",
+        "draw": "3.706",
+        "away": "3.312"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221264,
+   "home": "Liverpool FC",
+   "away": "Fulham FC",
+   "date": "2026-09-12T14:00:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 0,
+    "away": 0,
+    "periods": {
+     "ft": {
+      "home": 0,
+      "away": 0
+     },
+     "p1": {
+      "home": 0,
+      "away": 0
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "1.500",
+        "draw": "4.500",
+        "away": "5.250"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T13:59:52.999Z",
+      "odds": [
+       {
+        "home": "1.517",
+        "draw": "4.771",
+        "away": "6.395"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221270,
+   "home": "Tottenham Hotspur",
+   "away": "Everton FC",
+   "date": "2026-09-12T16:30:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 0,
+    "away": 0,
+    "periods": {
+     "ft": {
+      "home": 0,
+      "away": 0
+     },
+     "p1": {
+      "home": 0,
+      "away": 0
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T16:29:52.902Z",
+      "odds": [
+       {
+        "home": "2.000",
+        "draw": "3.600",
+        "away": "3.500"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T16:29:52.902Z",
+      "odds": [
+       {
+        "home": "2.034",
+        "draw": "3.782",
+        "away": "3.719"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221268,
+   "home": "Sunderland AFC",
+   "away": "Arsenal FC",
+   "date": "2026-09-12T19:00:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 0,
+    "away": 2,
+    "periods": {
+     "ft": {
+      "home": 0,
+      "away": 2
+     },
+     "p1": {
+      "home": 0,
+      "away": 0
+     },
+     "p2": {
+      "home": 0,
+      "away": 0
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T18:59:55.003Z",
+      "odds": [
+       {
+        "home": "6.000",
+        "draw": "3.600",
+        "away": "1.600"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-12T18:59:55.003Z",
+      "odds": [
+       {
+        "home": "6.226",
+        "draw": "3.862",
+        "away": "1.652"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221258,
+   "home": "Coventry City",
+   "away": "Brighton & Hove Albion",
+   "date": "2026-09-13T13:00:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 0,
+    "away": 5,
+    "periods": {
+     "ft": {
+      "home": 0,
+      "away": 5
+     },
+     "p1": {
+      "home": 0,
+      "away": 1
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-13T12:59:52.178Z",
+      "odds": [
+       {
+        "home": "3.700",
+        "draw": "3.800",
+        "away": "1.909"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-13T12:59:52.178Z",
+      "odds": [
+       {
+        "home": "3.936",
+        "draw": "3.905",
+        "away": "1.942"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221266,
+   "home": "Manchester United",
+   "away": "Manchester City",
+   "date": "2026-09-13T15:30:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 0,
+    "away": 1,
+    "periods": {
+     "ft": {
+      "home": 0,
+      "away": 1
+     },
+     "p1": {
+      "home": 0,
+      "away": 0
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-13T15:29:54.112Z",
+      "odds": [
+       {
+        "home": "3.000",
+        "draw": "3.750",
+        "away": "2.200"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-13T15:29:54.112Z",
+      "odds": [
+       {
+        "home": "3.046",
+        "draw": "3.830",
+        "away": "2.296"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": 72221262,
+   "home": "Leeds United",
+   "away": "Newcastle United",
+   "date": "2026-09-14T19:00:00Z",
+   "status": "settled",
+   "sport": {
+    "name": "Football",
+    "slug": "football"
+   },
+   "league": {
+    "name": "England - Premier League",
+    "slug": "england-premier-league"
+   },
+   "scores": {
+    "home": 4,
+    "away": 1,
+    "periods": {
+     "ft": {
+      "home": 4,
+      "away": 1
+     },
+     "p1": {
+      "home": 3,
+      "away": 0
+     }
+    }
+   },
+   "urls": {},
+   "bookmakers": {
+    "Bet365": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-14T18:59:52.077Z",
+      "odds": [
+       {
+        "home": "2.300",
+        "draw": "3.500",
+        "away": "3.000"
+       }
+      ]
+     }
+    ],
+    "ON Sharp": [
+     {
+      "name": "ML",
+      "updatedAt": "2026-09-14T18:59:52.077Z",
+      "odds": [
+       {
+        "home": "2.389",
+        "draw": "3.547",
+        "away": "3.082"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "closingLinesError": null,
+ "movements": {
+  "eventId": 72221274,
+  "home": "Brentford FC",
+  "away": "Chelsea FC",
+  "kickoff": "2026-09-18T19:00:00Z",
+  "Bet365": {
+   "eventid": "72221274",
+   "bookmaker": "Bet365",
+   "movements": [
+    {
+     "timestamp": 1789232495905,
+     "home": 2.75,
+     "draw": 3.7,
+     "away": 2.25
+    },
+    {
+     "timestamp": 1789325231426,
+     "home": 2.9,
+     "draw": 3.7,
+     "away": 2.15
+    },
+    {
+     "timestamp": 1789332877907,
+     "home": 2.875,
+     "draw": 3.7,
+     "away": 2.2
+    },
+    {
+     "timestamp": 1789516799876,
+     "home": 2.875,
+     "draw": 3.7,
+     "away": 2.3
+    },
+    {
+     "timestamp": 1789576599557,
+     "home": 3,
+     "draw": 3.7,
+     "away": 2.25
+    },
+    {
+     "timestamp": 1789577706737,
+     "home": 2.9,
+     "draw": 3.7,
+     "away": 2.25
+    },
+    {
+     "timestamp": 1789577885833,
+     "home": 2.875,
+     "draw": 3.7,
+     "away": 2.3
+    },
+    {
+     "timestamp": 1789580527339,
+     "home": 2.75,
+     "draw": 3.75,
+     "away": 2.375
+    },
+    {
+     "timestamp": 1789634701973,
+     "home": 2.875,
+     "draw": 3.75,
+     "away": 2.3
+    },
+    {
+     "timestamp": 1789648314151,
+     "home": 2.875,
+     "draw": 3.7,
+     "away": 2.3
+    },
+    {
+     "timestamp": 1789679370058,
+     "home": 2.75,
+     "draw": 3.7,
+     "away": 2.4
+    },
+    {
+     "timestamp": 1789691973837,
+     "home": 2.8,
+     "draw": 3.7,
+     "away": 2.35
+    },
+    {
+     "timestamp": 1789704159269,
+     "home": 2.7,
+     "draw": 3.7,
+     "away": 2.45
+    },
+    {
+     "timestamp": 1789704441941,
+     "home": 2.7,
+     "draw": 3.7,
+     "away": 2.4
+    },
+    {
+     "timestamp": 1789705105058,
+     "home": 2.8,
+     "draw": 3.7,
+     "away": 2.35
+    },
+    {
+     "timestamp": 1789706048312,
+     "home": 2.7,
+     "draw": 3.7,
+     "away": 2.45
+    },
+    {
+     "timestamp": 1789716399076,
+     "home": 2.7,
+     "draw": 3.7,
+     "away": 2.4
+    },
+    {
+     "timestamp": 1789716640874,
+     "home": 2.65,
+     "draw": 3.8,
+     "away": 2.4
+    },
+    {
+     "timestamp": 1789726187041,
+     "home": 2.55,
+     "draw": 3.8,
+     "away": 2.45
+    },
+    {
+     "timestamp": 1789731999348,
+     "home": 2.55,
+     "draw": 3.75,
+     "away": 2.55
+    },
+    {
+     "timestamp": 1789734799572,
+     "home": 2.6,
+     "draw": 3.75,
+     "away": 2.45
+    },
+    {
+     "timestamp": 1789734949318,
+     "home": 2.55,
+     "draw": 3.75,
+     "away": 2.5
+    },
+    {
+     "timestamp": 1789749784472,
+     "home": 2.6,
+     "draw": 3.75,
+     "away": 2.5
+    },
+    {
+     "timestamp": 1789752360856,
+     "home": 2.6,
+     "draw": 3.8,
+     "away": 2.45
+    },
+    {
+     "timestamp": 1789752672084,
+     "home": 2.625,
+     "draw": 3.75,
+     "away": 2.45
+    },
+    {
+     "timestamp": 1789753931741,
+     "home": 2.625,
+     "draw": 3.6,
+     "away": 2.5
+    },
+    {
+     "timestamp": 1789754754982,
+     "home": 2.55,
+     "draw": 3.6,
+     "away": 2.55
+    },
+    {
+     "timestamp": 1789756242250,
+     "home": 2.5,
+     "draw": 3.6,
+     "away": 2.6
+    },
+    {
+     "timestamp": 1789757459280,
+     "home": 2.55,
+     "draw": 3.6,
+     "away": 2.6
+    }
+   ],
+   "opening": {
+    "timestamp": 1789232495905,
+    "home": 2.75,
+    "draw": 3.7,
+    "away": 2.25
+   }
+  },
+  "ON Sharp": {
+   "eventid": "72221274",
+   "bookmaker": "ON Sharp",
+   "movements": [
+    {
+     "timestamp": 1789747217227,
+     "home": 2.697,
+     "draw": 3.728,
+     "away": 2.591
+    },
+    {
+     "timestamp": 1789757485956,
+     "home": 2.618,
+     "draw": 3.769,
+     "away": 2.648
+    },
+    {
+     "timestamp": 1789757510002,
+     "home": 2.62,
+     "draw": 3.77,
+     "away": 2.645
+    },
+    {
+     "timestamp": 1789757543004,
+     "home": 2.611,
+     "draw": 3.771,
+     "away": 2.654
+    },
+    {
+     "timestamp": 1789757576473,
+     "home": 2.614,
+     "draw": 3.757,
+     "away": 2.658
+    },
+    {
+     "timestamp": 1789757587932,
+     "home": 2.614,
+     "draw": 3.759,
+     "away": 2.656
+    },
+    {
+     "timestamp": 1789757605550,
+     "home": 2.612,
+     "draw": 3.762,
+     "away": 2.658
+    },
+    {
+     "timestamp": 1789757608744,
+     "home": 2.603,
+     "draw": 3.768,
+     "away": 2.664
+    },
+    {
+     "timestamp": 1789757617051,
+     "home": 2.602,
+     "draw": 3.767,
+     "away": 2.666
+    },
+    {
+     "timestamp": 1789757622656,
+     "home": 2.605,
+     "draw": 3.764,
+     "away": 2.664
+    },
+    {
+     "timestamp": 1789757659568,
+     "home": 2.605,
+     "draw": 3.765,
+     "away": 2.664
+    },
+    {
+     "timestamp": 1789757694177,
+     "home": 2.605,
+     "draw": 3.765,
+     "away": 2.663
+    },
+    {
+     "timestamp": 1789757707949,
+     "home": 2.597,
+     "draw": 3.772,
+     "away": 2.668
+    },
+    {
+     "timestamp": 1789757737911,
+     "home": 2.596,
+     "draw": 3.776,
+     "away": 2.667
+    },
+    {
+     "timestamp": 1789757764781,
+     "home": 2.596,
+     "draw": 3.775,
+     "away": 2.668
+    },
+    {
+     "timestamp": 1789757773483,
+     "home": 2.596,
+     "draw": 3.774,
+     "away": 2.668
+    },
+    {
+     "timestamp": 1789757779884,
+     "home": 2.596,
+     "draw": 3.771,
+     "away": 2.669
+    },
+    {
+     "timestamp": 1789757787006,
+     "home": 2.596,
+     "draw": 3.772,
+     "away": 2.669
+    },
+    {
+     "timestamp": 1789757803301,
+     "home": 2.594,
+     "draw": 3.769,
+     "away": 2.672
+    },
+    {
+     "timestamp": 1789757821897,
+     "home": 2.593,
+     "draw": 3.773,
+     "away": 2.672
+    },
+    {
+     "timestamp": 1789757837825,
+     "home": 2.593,
+     "draw": 3.772,
+     "away": 2.672
+    },
+    {
+     "timestamp": 1789757891358,
+     "home": 2.593,
+     "draw": 3.773,
+     "away": 2.671
+    },
+    {
+     "timestamp": 1789757892694,
+     "home": 2.585,
+     "draw": 3.736,
+     "away": 2.699
+    },
+    {
+     "timestamp": 1789757909160,
+     "home": 2.585,
+     "draw": 3.732,
+     "away": 2.702
+    },
+    {
+     "timestamp": 1789757926513,
+     "home": 2.585,
+     "draw": 3.733,
+     "away": 2.701
+    },
+    {
+     "timestamp": 1789757927330,
+     "home": 2.587,
+     "draw": 3.725,
+     "away": 2.703
+    },
+    {
+     "timestamp": 1789757935412,
+     "home": 2.578,
+     "draw": 3.726,
+     "away": 2.712
+    },
+    {
+     "timestamp": 1789757936725,
+     "home": 2.578,
+     "draw": 3.728,
+     "away": 2.711
+    },
+    {
+     "timestamp": 1789757940490,
+     "home": 2.588,
+     "draw": 3.73,
+     "away": 2.699
+    },
+    {
+     "timestamp": 1789757950038,
+     "home": 2.586,
+     "draw": 3.725,
+     "away": 2.704
+    }
+   ],
+   "opening": {
+    "timestamp": 1789747217227,
+    "home": 2.697,
+    "draw": 3.728,
+    "away": 2.591
+   }
+  }
+ }
+}

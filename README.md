@@ -122,6 +122,7 @@ Check out the [`examples/`](examples/) directory for more detailed examples:
 - **[arbitrage_finder.py](examples/arbitrage_finder.py)** - Finding arbitrage opportunities
 - **[value_bets.py](examples/value_bets.py)** - Identifying value bets
 - **[odds_tracking.py](examples/odds_tracking.py)** - Tracking odds movements
+- **[fair-odds-and-closing-lines.ipynb](examples/fair-odds-and-closing-lines.ipynb)** - Notebook: devigging, bookmaker margins, EV against a sharp line and closing line value ([view on nbviewer](https://nbviewer.org/github/odds-api-io/odds-api-python/blob/main/examples/fair-odds-and-closing-lines.ipynb))
 
 ## 🔧 API Reference
 

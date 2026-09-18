@@ -80,6 +80,23 @@ Track odds movements over time:
 python odds_tracking.py
 ```
 
+### 6. Fair odds and closing lines (`fair-odds-and-closing-lines.ipynb`)
+
+A Jupyter notebook, viewable without running anything at
+[nbviewer.org/github/odds-api-io/odds-api-python/blob/main/examples/fair-odds-and-closing-lines.ipynb](https://nbviewer.org/github/odds-api-io/odds-api-python/blob/main/examples/fair-odds-and-closing-lines.ipynb):
+- Devigging with the multiplicative and power methods
+- Bookmaker margin per fixture on moneyline and spread markets, from a real `/odds/multi` snapshot of six bookmakers
+- Expected value of every soft-book price against the sharp consensus fair line
+- Closing lines for a week of settled Premier League matches from `/historical/closing-lines`
+- Closing line value and a line-movement chart from `/odds/movements`
+
+It runs with plain `requests`, `pandas` and `matplotlib` (no SDK needed). With `ODDS_API_KEY` set it fetches live data; without a key it uses the frozen snapshot in `data/snapshot-2026-09-19.json`, so every cell runs offline.
+
+```bash
+pip install jupyter requests pandas matplotlib
+jupyter notebook fair-odds-and-closing-lines.ipynb
+```
+
 ## Tips
 
 - **Rate Limits**: Be mindful of the API rate limits (5,000 requests/hour)
