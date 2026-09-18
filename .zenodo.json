@@ -1,6 +1,6 @@
 {
   "title": "odds-api-io: Official Python SDK for Odds-API.io",
-  "description": "Official Python SDK for Odds-API.io, a real-time sports betting odds API covering 265+ bookmakers, 34 sports and 12,000+ leagues. The package provides synchronous and asynchronous clients for sports, leagues, events, per-event odds, odds movements, participants, bookmaker selection, value bets and arbitrage bets. Maintained by Outlier AS. Documentation at https://docs.odds-api.io.",
+  "description": "Official Python SDK for Odds-API.io, a real-time sports betting odds API covering 365+ bookmakers, 34 sports and 12,000+ leagues. The package provides synchronous and asynchronous clients for sports, leagues, events, per-event odds, odds movements, participants, bookmaker selection, value bets and arbitrage bets. Maintained by Outlier AS. Documentation at https://docs.odds-api.io.",
   "creators": [
     { "name": "Outlier AS" }
   ],
