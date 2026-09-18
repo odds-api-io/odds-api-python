@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+title: "odds-api-io: Official Python SDK for Odds-API.io"
+version: "1.0.2"
+date-released: "2026-09-18"
+authors:
+  - name: "Outlier AS"
+    email: "hello@odds-api.io"
+    website: "https://odds-api.io"
+url: "https://odds-api.io"
+repository-code: "https://github.com/odds-api-io/odds-api-python"
+license: MIT
+keywords:
+  - "sports betting odds"
+  - "api client"
+  - "bookmakers"
