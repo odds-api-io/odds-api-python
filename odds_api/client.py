@@ -314,27 +314,32 @@ class OddsAPIClient:
         return self._get(Endpoints.GET_ODDS_FOR_MULTIPLE_EVENTS, params)
 
     def get_updated_odds_since_timestamp(
-        self, since: int, bookmaker: str, sport: str
+        self, since: int, bookmaker: str, sport: str, markets: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
         Get odds updated since a given timestamp.
 
         Args:
-            since: Unix timestamp
-            bookmaker: Bookmaker slug
-            sport: Sport identifier
+            since: Unix timestamp in seconds, no more than 90 seconds old
+            bookmaker: Bookmaker name (e.g. "Bet365")
+            sport: Sport name or slug (e.g. "football")
+            markets: Comma-separated market names (max 20), e.g. "ML,Spread,Totals".
+                Required by the API from 15 October 2026. Valid names per sport:
+                https://api.odds-api.io/v3/markets?sport=<sport>
 
         Returns:
             List of updated odds
 
         Example:
+            >>> import time
             >>> updated = client.get_updated_odds_since_timestamp(
-            ...     since=1640000000,
-            ...     bookmaker="singbet",
-            ...     sport="basketball"
+            ...     since=int(time.time()) - 20,
+            ...     bookmaker="Bet365",
+            ...     sport="football",
+            ...     markets="ML,Spread,Totals",
             ... )
         """
-        params = self._build_params(since=since, bookmaker=bookmaker, sport=sport)
+        params = self._build_params(since=since, bookmaker=bookmaker, sport=sport, markets=markets)
         return self._get(Endpoints.GET_UPDATED_ODDS_SINCE_TIMESTAMP, params)
 
     # Participants

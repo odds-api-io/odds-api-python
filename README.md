@@ -151,7 +151,7 @@ Check out the [`examples/`](examples/) directory for more detailed examples:
 | `get_event_odds(event_id, bookmakers)` | Get odds for an event | [📖](https://docs.odds-api.io/api-reference/odds/get-event-odds) |
 | `get_odds_movement(event_id, bookmaker, market)` | Track odds changes | [📖](https://docs.odds-api.io/api-reference/odds/get-odds-movements) |
 | `get_odds_for_multiple_events(event_ids, bookmakers)` | Get odds for multiple events | [📖](https://docs.odds-api.io/api-reference/odds/get-odds-for-multiple-events) |
-| `get_updated_odds_since_timestamp(since, bookmaker, sport)` | Get recently updated odds | [📖](https://docs.odds-api.io/api-reference/odds/get-updated-event-odds-since-a-given-timestamp) |
+| `get_updated_odds_since_timestamp(since, bookmaker, sport, markets)` | Get recently updated odds. `markets` is required by the API from 15 October 2026 | [📖](https://docs.odds-api.io/api-reference/odds/get-updated-event-odds-since-a-given-timestamp) |
 
 ### Participants
 
