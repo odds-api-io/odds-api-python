@@ -97,6 +97,21 @@ pip install jupyter requests pandas matplotlib
 jupyter notebook fair-odds-and-closing-lines.ipynb
 ```
 
+### 7. Bookmaker guides (`bet365_odds.py`, `betfair_exchange_odds.py`, `draftkings_odds.py`)
+
+One short script per bookmaker, each paired with a guide on the blog:
+- `bet365_odds.py`: Bet365 1X2 and the 2.5 goal line for the next Premier League fixtures ([guide](https://odds-api.io/blog/bet365-api))
+- `betfair_exchange_odds.py`: Betfair Exchange back and lay prices, the gap between them and the midpoint ([guide](https://odds-api.io/blog/betfair-api))
+- `draftkings_odds.py`: DraftKings NFL moneyline, spread and total, converted to American odds ([guide](https://odds-api.io/blog/draftkings-api))
+
+Add the bookmaker to your selected bookmakers before running its script.
+
+```bash
+python bet365_odds.py
+python betfair_exchange_odds.py
+python draftkings_odds.py
+```
+
 ## Tips
 
 - **Rate Limits**: Be mindful of the API rate limits (5,000 requests/hour)
