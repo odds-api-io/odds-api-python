@@ -1,0 +1,14 @@
+[
+  {"ref": "arsenal-ah", "eventId": 72221292, "market": "Spread", "hdp": -0.75, "side": "home"},
+  {"ref": "villa-over4", "eventId": 72221294, "market": "Totals", "hdp": 4, "side": "over"},
+  {"ref": "united-dnb", "eventId": 72221308, "market": "Draw No Bet", "side": "home"},
+  {"ref": "liverpool-btts", "eventId": 72221306, "market": "Both Teams To Score", "side": "yes"},
+  {"ref": "chelsea-corners", "eventId": 72221296, "market": "Corners Totals", "hdp": 9.5, "side": "over"},
+  {"ref": "extra-time-ml", "eventId": 74919888, "market": "ML", "side": "home"},
+  {"ref": "vegas-over", "eventId": 72908962, "market": "Totals", "hdp": 6.5, "side": "over"},
+  {"ref": "commanders-ml", "eventId": 71515886, "market": "ML", "side": "home"},
+  {"ref": "dak-td-passes", "eventId": 71515872, "market": "Player Props", "label": "Dak Prescott (TD Passes)", "hdp": 2.5, "side": "under"},
+  {"ref": "abha-ml", "eventId": 73215748, "market": "ML", "side": "home"},
+  {"ref": "chelsea-next", "eventId": 72221318, "market": "ML", "side": "away"},
+  {"ref": "cowboys-score", "eventId": 71515872, "market": "Correct Score", "label": "16-24", "side": "away"}
+]

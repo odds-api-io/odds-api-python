@@ -97,6 +97,14 @@ pip install jupyter requests pandas matplotlib
 jupyter notebook fair-odds-and-closing-lines.ipynb
 ```
 
+### 8. Bet settlement (`settle_bets.py`)
+
+Grades the stored bets in `data/bets.json` with `grade_bets` and prints one line per bet: the result, the reason, whether it is final and the score it was based on ([guide](https://odds-api.io/blog/bet-grading-api)). The sample bets cover a quarter-line handicap, a push, extra time, a shootout, a player prop, a cancelled match and a market that is not graded. Settlement needs a paid plan.
+
+```bash
+python settle_bets.py
+```
+
 ## Tips
 
 - **Rate Limits**: Be mindful of the API rate limits (5,000 requests/hour)
