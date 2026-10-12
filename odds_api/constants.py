@@ -40,3 +40,7 @@ class Endpoints:
 
     # Value Bets
     GET_VALUE_BETS = "value-bets"
+
+    # Settlement
+    GET_SETTLEMENTS = "settlements"
+    GRADE_BETS = "settlements/grade"

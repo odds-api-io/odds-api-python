@@ -95,6 +95,18 @@ class AsyncOddsAPIClient:
         except aiohttp.ClientError as e:
             raise OddsAPIError(f"Request failed: {e}") from e
 
+    async def _post(self, path: str, body: Dict[str, Any]) -> Any:
+        """Make a POST request with a JSON body to the API."""
+        url = f"{self.base_url}/{path}"
+
+        try:
+            async with self.session.post(
+                url, params={"apiKey": self.api_key}, json=body
+            ) as response:
+                return await self._handle_response(response)
+        except aiohttp.ClientError as e:
+            raise OddsAPIError(f"Request failed: {e}") from e
+
     @staticmethod
     def _build_params(**kwargs) -> Dict[str, Any]:
         """Build parameter dictionary, excluding None values and converting bools."""
@@ -496,6 +508,44 @@ class AsyncOddsAPIClient:
             includeEventDetails=include_event_details,
         )
         return await self._get(Endpoints.GET_VALUE_BETS, params)
+
+    # Settlement
+
+    async def get_settlements(self, event_ids: str) -> Dict[str, Any]:
+        """
+        Get the status, final score and `final` flag for up to 50 events.
+
+        Args:
+            event_ids: Comma-separated event IDs (max 50)
+
+        Returns:
+            Dict with `settlements` and `notFound`
+
+        Example:
+            >>> result = await client.get_settlements("72908962,72221318")
+        """
+        params = self._build_params(eventIds=event_ids)
+        return await self._get(Endpoints.GET_SETTLEMENTS, params)
+
+    async def grade_bets(self, selections: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Grade up to 50 bets as won, lost, void, half_won or half_lost.
+
+        Args:
+            selections: Bets to grade. Each needs `eventId`, `market` and `side`,
+                plus `hdp` for markets with a line and `label` for player props.
+                `ref` is your own id and is echoed back.
+
+        Returns:
+            Dict with `grades`, in the order the selections were sent
+
+        Example:
+            >>> result = await client.grade_bets([
+            ...     {"ref": "bet-1", "eventId": 72221292, "market": "Spread",
+            ...      "hdp": -0.75, "side": "home"},
+            ... ])
+        """
+        return await self._post(Endpoints.GRADE_BETS, {"selections": selections})
 
     async def close(self) -> None:
         """Close the HTTP session."""
