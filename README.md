@@ -123,6 +123,7 @@ Check out the [`examples/`](examples/) directory for more detailed examples:
 - **[async_example.py](examples/async_example.py)** - Using the async client
 - **[arbitrage_finder.py](examples/arbitrage_finder.py)** - Finding arbitrage opportunities
 - **[value_bets.py](examples/value_bets.py)** - Identifying value bets
+- **[settle_bets.py](examples/settle_bets.py)** - Grading stored bets as won, lost or void
 - **[odds_tracking.py](examples/odds_tracking.py)** - Tracking odds movements
 - **[fair-odds-and-closing-lines.ipynb](examples/fair-odds-and-closing-lines.ipynb)** - Notebook: devigging, bookmaker margins, EV against a sharp line and closing line value ([view on nbviewer](https://nbviewer.org/github/odds-api-io/odds-api-python/blob/main/examples/fair-odds-and-closing-lines.ipynb))
 
@@ -175,6 +176,13 @@ Check out the [`examples/`](examples/) directory for more detailed examples:
 |--------|-------------|------|
 | `get_arbitrage_bets(bookmakers, **options)` | Find arbitrage opportunities | [📖](https://docs.odds-api.io/api-reference/arbitrage-bets/get-arbitrage-betting-opportunities) |
 | `get_value_bets(bookmaker, **options)` | Find value bets | [📖](https://docs.odds-api.io/api-reference/value-bets/get-value-bets) |
+
+### Settlement
+
+| Method | Description | Docs |
+|--------|-------------|------|
+| `get_settlements(event_ids)` | Status, final score and `final` flag for up to 50 events | [📖](https://docs.odds-api.io/guides/settlement) |
+| `grade_bets(selections)` | Grade up to 50 bets as won, lost, void, half won or half lost | [📖](https://docs.odds-api.io/guides/settlement) |
 
 ## ⚠️ Error Handling
 

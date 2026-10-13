@@ -89,6 +89,19 @@ class OddsAPIClient:
 
         return self._handle_response(response)
 
+    def _post(self, path: str, body: Dict[str, Any]) -> Any:
+        """Make a POST request with a JSON body to the API."""
+        url = f"{self.base_url}/{path}"
+
+        try:
+            response = self.session.post(
+                url, params={"apiKey": self.api_key}, json=body, timeout=self.timeout
+            )
+        except requests.RequestException as e:
+            raise OddsAPIError(f"Request failed: {e}") from e
+
+        return self._handle_response(response)
+
     @staticmethod
     def _build_params(**kwargs) -> Dict[str, Any]:
         """Build parameter dictionary, excluding None values and converting bools."""
@@ -495,6 +508,44 @@ class OddsAPIClient:
             includeEventDetails=include_event_details,
         )
         return self._get(Endpoints.GET_VALUE_BETS, params)
+
+    # Settlement
+
+    def get_settlements(self, event_ids: str) -> Dict[str, Any]:
+        """
+        Get the status, final score and `final` flag for up to 50 events.
+
+        Args:
+            event_ids: Comma-separated event IDs (max 50)
+
+        Returns:
+            Dict with `settlements` and `notFound`
+
+        Example:
+            >>> result = client.get_settlements("72908962,72221318")
+        """
+        params = self._build_params(eventIds=event_ids)
+        return self._get(Endpoints.GET_SETTLEMENTS, params)
+
+    def grade_bets(self, selections: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Grade up to 50 bets as won, lost, void, half_won or half_lost.
+
+        Args:
+            selections: Bets to grade. Each needs `eventId`, `market` and `side`,
+                plus `hdp` for markets with a line and `label` for player props.
+                `ref` is your own id and is echoed back.
+
+        Returns:
+            Dict with `grades`, in the order the selections were sent
+
+        Example:
+            >>> result = client.grade_bets([
+            ...     {"ref": "bet-1", "eventId": 72221292, "market": "Spread",
+            ...      "hdp": -0.75, "side": "home"},
+            ... ])
+        """
+        return self._post(Endpoints.GRADE_BETS, {"selections": selections})
 
     def close(self) -> None:
         """Close the HTTP session."""
