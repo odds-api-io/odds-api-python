@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-odds--api.io-blue.svg)](https://docs.odds-api.io)
 
-Official Python SDK for [**Odds-API.io**](https://odds-api.io) - Real-time sports betting odds from 365+ bookmakers.
+Official Python SDK for [**Odds-API.io**](https://odds-api.io) - Real-time sports betting odds from 450+ bookmakers.
 
 Building with AI? See the [AI and vibe coding guide](https://docs.odds-api.io/ai-vibe-coding). Prefer JavaScript? Check out the [Node.js SDK](https://github.com/odds-api-io/odds-api-node).
 
@@ -15,7 +15,7 @@ Building with AI? See the [AI and vibe coding guide](https://docs.odds-api.io/ai
 
 - ⚡ **Fast & Reliable** - Built on requests and aiohttp for both sync and async workflows
 - 🏀 **34 Sports** - Basketball, football, tennis, baseball, and more
-- 📊 **365+ Bookmakers** - Comprehensive odds coverage from major sportsbooks worldwide
+- 📊 **450+ Bookmakers** - Comprehensive odds coverage from major sportsbooks worldwide
 - 💰 **Arbitrage Detection** - Find risk-free betting opportunities across bookmakers
 - 📈 **Value Bets** - Identify positive expected value betting opportunities
 - 🔴 **Live Events** - Real-time in-play event tracking and odds
@@ -216,7 +216,7 @@ except OddsAPIError as e:
 
 ## 🌟 Why Odds-API.io?
 
-- **✅ Most Comprehensive Coverage** - 365+ bookmakers across 34 sports and 12,000+ leagues
+- **✅ Most Comprehensive Coverage** - 450+ bookmakers across 34 sports and 12,000+ leagues
 - **✅ Near-Zero Latency** - Real-time odds updates with minimal delay
 - **✅ Direct Bet Links** - Deep links directly to bookmaker bet slips
 - **✅ Value Bet Detection** - Automatically calculated expected value
