@@ -28,7 +28,7 @@ def main():
         bookmakers = client.get_bookmakers()
         
         # Select the bookmakers you want to use for arbitrage
-        # Free tier only allows 2 bookmakers, so we'll use SingBet and Bet365
+        # Use bookmakers selected on your plan; this example uses SingBet and Bet365
         selected_bookies = "SingBet,Bet365"
         
         print(f"Using bookmakers: {selected_bookies}\n")

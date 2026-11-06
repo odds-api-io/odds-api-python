@@ -11,7 +11,7 @@ Before running the examples, make sure you have:
    pip install odds-api-io
    ```
 
-2. Obtained an API key from [odds-api.io](https://odds-api.io/#pricing)
+2. Obtained an API key from [odds-api.io](https://odds-api.io/pricing)
 
 3. Set your API key as an environment variable:
    ```bash
@@ -122,9 +122,9 @@ python settle_bets.py
 
 ## Tips
 
-- **Rate Limits**: Be mindful of the API rate limits (5,000 requests/hour)
+- **Rate Limits**: Be mindful of your plan's rate limits (see [odds-api.io/pricing](https://odds-api.io/pricing))
 - **Error Handling**: All examples use context managers for proper resource cleanup
-- **Free Tier**: Some features may be limited on the free tier (e.g., 2 bookmakers max)
+- **Bookmaker Selection**: The bookmakers you can request depend on your plan
 - **Real Data**: These examples use real API data, so results will vary
 
 ## Need Help?
