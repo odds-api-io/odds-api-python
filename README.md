@@ -31,12 +31,7 @@ pip install odds-api-io
 
 ## 🔑 Get Your API Key
 
-**[Get your free API key here →](https://odds-api.io/#pricing)**
-
-Sign up at [**odds-api.io**](https://odds-api.io) to get started. Free tier includes:
-- 100 requests/hour
-- Access to all endpoints
-- No credit card required
+You need an API key from a paid plan. **[Get your API key at odds-api.io/pricing →](https://odds-api.io/pricing)**
 
 ## 📚 Documentation
 
@@ -233,13 +228,9 @@ Build powerful betting tools and analytics:
 - 📉 Sports analytics dashboards
 - 🔔 Odds movement alerts
 
-## 🆓 Free Tier Limitations
+## 💳 Plans and Limits
 
-- Limited to 2 bookmakers selected at once
-- 100 requests per hour
-- No WebSocket access on free tier
-
-[**Upgrade for more features →**](https://odds-api.io/#pricing)
+Rate limits, bookmaker selection and WebSocket access depend on your plan. See [**odds-api.io/pricing**](https://odds-api.io/pricing) for details.
 
 ## 📋 Requirements
 
@@ -265,7 +256,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Website**: [odds-api.io](https://odds-api.io)
 - **Documentation**: [docs.odds-api.io](https://docs.odds-api.io)
-- **API Key**: [Get your API key](https://odds-api.io/#pricing)
+- **API Key**: [Get your API key](https://odds-api.io/pricing)
 - **GitHub**: [github.com/odds-api-io/odds-api-python](https://github.com/odds-api-io/odds-api-python)
 - **Issues**: [Report a bug](https://github.com/odds-api-io/odds-api-python/issues)
 - **PyPI**: [pypi.org/project/odds-api-io](https://pypi.org/project/odds-api-io/)
@@ -281,7 +272,7 @@ Need help? We're here for you:
 
 ## ⚡ Quick Links
 
-- [**Get Started →**](https://odds-api.io/#pricing)
+- [**Get Started →**](https://odds-api.io/pricing)
 - [**View Documentation →**](https://docs.odds-api.io)
 - [**See Examples →**](examples/)
 
