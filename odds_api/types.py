@@ -189,6 +189,12 @@ class OddsSummary(TypedDict, total=False):
 
 
 class ValueBet(TypedDict, total=False):
+    """A price above the fair-odds estimate.
+
+    ``expectedValue`` is bookmaker odds / fair odds x 100: 100 is fair, 103.42 is a
+    3.42% edge (edge % = ``expectedValue - 100``), below 100 is a negative edge.
+    """
+
     id: str
     eventId: int
     bookmaker: str

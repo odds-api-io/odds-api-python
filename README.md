@@ -116,7 +116,10 @@ arbs = client.get_arbitrage_bets(
     ["Bet365", "SingBet"], sport="football", markets=["ML", "Totals"], min_profit=1.0,
     include_event_details=True,
 )
+# profitMargin is already a percentage (2.48 means 2.48%)
 value = client.get_value_bets("Bet365", sport="baseball", league="usa-mlb")
+# expectedValue is bookmaker odds / fair odds x 100, so 103.42 is a 3.42% edge
+edges = [b for b in value if b["expectedValue"] - 100 >= 3]
 drops = client.get_dropping_odds(sport="football", markets=["Spread"], time_window="24h", min_drop=10)
 ```
 
@@ -276,5 +279,5 @@ MIT. See [LICENSE](LICENSE).
 If you use this package in research or a publication, please cite it. Citation metadata is in [CITATION.cff](CITATION.cff) (GitHub renders a "Cite this repository" button from it) and Zenodo metadata is in `.zenodo.json`.
 
 ```
-Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.2.0). https://github.com/odds-api-io/odds-api-python
+Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.2.1). https://github.com/odds-api-io/odds-api-python
 ```

@@ -697,6 +697,9 @@ class OddsAPIClient:
         """
         Get prices above a fair-odds estimate at one bookmaker.
 
+        ``expectedValue`` in each result is bookmaker odds / fair odds x 100, so
+        103.42 is a 3.42% edge. Edge in percent = ``expectedValue - 100``.
+
         Args:
             bookmaker: Bookmaker name
             include_event_details: Include teams, date, sport and league

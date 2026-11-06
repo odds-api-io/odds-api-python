@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1 (2026-11-06)
+
+### Fixed
+- Docs: `expectedValue` on value bets is bookmaker odds / fair odds x 100, not a fraction. 103.42 is a 3.42% edge (edge % = `expectedValue - 100`). The `ValueBet` docstring, `get_value_bets` docstrings, README and `examples/value_bets.py` now say so; the example prints and filters on `expectedValue - 100`.
+
 ## 1.2.0 (2026-11-06)
 
 Brings the SDK up to the full Odds-API.io v3 API.
