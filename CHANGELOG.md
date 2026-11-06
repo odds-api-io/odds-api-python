@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2
+
+First release published from GitHub Actions with npm/PyPI trusted publishing and provenance. No code changes.
+
 ## 1.2.1 (2026-11-06)
 
 ### Fixed
