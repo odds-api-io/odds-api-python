@@ -3,7 +3,7 @@ Odds-API.io Python SDK
 Official Python client for the Odds-API.io sports betting odds API.
 """
 
-__version__ = "1.2.1"
+__version__ = "1.2.2"
 
 from .client import OddsAPIClient
 from .async_client import AsyncOddsAPIClient

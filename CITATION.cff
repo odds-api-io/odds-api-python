@@ -1,8 +1,8 @@
-cff-version: 1.2.1
+cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata from this file."
 type: software
 title: "odds-api-io: Official Python SDK for Odds-API.io"
-version: 1.2.0
+version: 1.2.2
 date-released: "2026-11-06"
 authors:
   - name: "Outlier AS"
