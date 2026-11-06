@@ -49,7 +49,7 @@ python async_example.py
 ### 3. Arbitrage Finder (`arbitrage_finder.py`)
 
 Find arbitrage betting opportunities:
-- Discovering risk-free betting opportunities
+- Filtering by sport, market and minimum margin
 - Comparing odds across bookmakers
 - Calculating potential profits
 
@@ -119,6 +119,18 @@ Grades the stored bets in `data/bets.json` with `grade_bets` and prints one line
 ```bash
 python settle_bets.py
 ```
+
+### 9. Closing lines (`closing_lines.py`)
+
+Pulls a season's closing lines for a league with `iter_closing_lines`, flattens them into a pandas DataFrame and computes closing line value for a price. Needs `pip install "odds-api-io[pandas]"` and a paid plan.
+
+### 10. Golf outrights (`golf_outrights.py`)
+
+Lists PGA Tour tournaments, prints Winner, Top N and Make Cut prices per bookmaker and the winners of a settled tournament. Needs the Outrights add-on; without it the script prints the server's message.
+
+### 11. WebSocket stream (`odds_stream.py`)
+
+Live odds and scores with `odds_api.ws.OddsStream`, which reconnects and resumes from the last sequence number. Needs `pip install "odds-api-io[ws]"` and WebSocket access on your plan.
 
 ## Tips
 

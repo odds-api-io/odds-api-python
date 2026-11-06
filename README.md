@@ -1,289 +1,280 @@
 # Odds-API.io Python SDK
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22836643.svg)](https://doi.org/10.5281/zenodo.22836643)
-
 [![PyPI version](https://img.shields.io/pypi/v/odds-api-io.svg)](https://pypi.org/project/odds-api-io/)
 [![Python versions](https://img.shields.io/pypi/pyversions/odds-api-io.svg)](https://pypi.org/project/odds-api-io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-odds--api.io-blue.svg)](https://docs.odds-api.io)
 
-Official Python SDK for [**Odds-API.io**](https://odds-api.io) - Real-time sports betting odds from 450+ bookmakers.
+Official Python SDK for [**Odds-API.io**](https://odds-api.io), the sports betting odds API: live and pre-match odds from 450+ bookmakers across 34 sports, player props, golf outrights, closing lines, bet settlement, arbitrage, value bets and a WebSocket feed. Sync and async clients, typed responses, optional pandas helpers.
 
-Building with AI? See the [AI and vibe coding guide](https://docs.odds-api.io/ai-vibe-coding). Prefer JavaScript? Check out the [Node.js SDK](https://github.com/odds-api-io/odds-api-node).
-
-## 🚀 Features
-
-- ⚡ **Fast & Reliable** - Built on requests and aiohttp for both sync and async workflows
-- 🏀 **34 Sports** - Basketball, football, tennis, baseball, and more
-- 📊 **450+ Bookmakers** - Comprehensive odds coverage from major sportsbooks worldwide
-- 💰 **Arbitrage Detection** - Find risk-free betting opportunities across bookmakers
-- 📈 **Value Bets** - Identify positive expected value betting opportunities
-- 🔴 **Live Events** - Real-time in-play event tracking and odds
-- 🔍 **Advanced Search** - Search events, participants, and leagues
-- ✨ **Type Hints** - Full type annotations for better IDE support
-- 🐍 **Modern Python** - Supports Python 3.8+
-
-## 📦 Installation
+## Quickstart
 
 ```bash
 pip install odds-api-io
 ```
 
-## 🔑 Get Your API Key
-
-You need an API key from a paid plan. **[Get your API key at odds-api.io/pricing →](https://odds-api.io/pricing)**
-
-## 📚 Documentation
-
-Full API documentation is available at [**docs.odds-api.io**](https://docs.odds-api.io)
-
-## 🏃 Quick Start
-
-### Synchronous Client
-
 ```python
 from odds_api import OddsAPIClient
 
-# Initialize the client
-client = OddsAPIClient(api_key="your_api_key_here")
-
-# Get available sports
-sports = client.get_sports()
-print(f"Found {len(sports)} sports")
-
-# Get upcoming NBA events
-events = client.get_events(sport="basketball", league="usa-nba")
-
-# Search for specific games
-lakers_games = client.search_events(query="Lakers")
-
-# Get live basketball events
-live = client.get_live_events(sport="basketball")
-
-# Find arbitrage opportunities
-arb_bets = client.get_arbitrage_bets(
-    bookmakers="singbet,bet365",
-    limit=10,
-    include_event_details=True
-)
-
-# Close the client when done
-client.close()
+with OddsAPIClient(api_key="YOUR_API_KEY") as client:
+    events = client.get_events(sport="football", league="england-premier-league", status="pending")
+    odds = client.get_event_odds(
+        events[0]["id"],
+        bookmakers=["Bet365", "SingBet"],
+        markets=["ML", "Spread", "Totals"],
+    )
+    for bookmaker, markets in odds["bookmakers"].items():
+        for market in markets:
+            print(bookmaker, market["name"], market["odds"][0])
 ```
 
-### Asynchronous Client
+Market names are exact: `ML`, `Spread`, `Totals`, `Both Teams To Score`, `Spread HT` and so on. `client.get_markets("football")` lists every name a sport serves. Pass `markets` on odds calls so you only download what you use.
+
+## Get an API key
+
+You need an API key from a paid plan: **[get your API key at odds-api.io/pricing](https://odds-api.io/pricing?ref=pypi)**. Plans are monthly and can be cancelled anytime.
+
+## Features
+
+- **Odds**: pre-match and live odds per event or for 10 events per call, filtered to the markets you want, including player props
+- **Odds summary**: best, average, median, worst and fair price per line across bookmakers
+- **Golf outrights**: Winner, Top 5/10/20, the "(Incl. Ties)" variants and Make Cut, plus results (Outrights add-on)
+- **Historical data**: past events, stored odds and closing lines for up to 10 leagues and a full season per sweep
+- **Settlement**: final scores with a `final` flag, and grading of up to 50 bets per call (won, lost, void, half won, half lost)
+- **Analysis**: arbitrage and value bets with sport, league, market and margin filters; dropping odds from sharp bookmakers
+- **Odds movements**: pre-match price history per market line
+- **Id mappings**: our events and selections mapped to Polymarket and Kalshi ids
+- **WebSocket**: `odds_api.ws.OddsStream`, an async iterator that reconnects and resumes from the last sequence number
+- **pandas**: `to_dataframe()` for events, odds, closing lines and outright odds (`pip install "odds-api-io[pandas]"`)
+- **Errors that keep the server's message**, a `RateLimitError` with `retry_after`, and optional retries with backoff
+- **Typed responses** (`TypedDict`), sync and async (aiohttp) clients, Python 3.8+
+
+## Examples
+
+### Closing lines and CLV
+
+```python
+from odds_api import OddsAPIClient
+from odds_api.dataframes import closing_lines_to_dataframe  # pip install "odds-api-io[pandas]"
+
+client = OddsAPIClient(api_key="YOUR_API_KEY")
+rows = client.iter_closing_lines(
+    sport="football",
+    leagues=["england-premier-league", "spain-laliga"],
+    from_="2026-08-01T00:00:00Z",
+    to="2026-10-31T23:59:59Z",   # up to 366 days per request
+    markets=["ML", "Totals"],
+    bookmakers=["Bet365", "SingBet"],
+)
+df = closing_lines_to_dataframe(list(rows))
+print(df[["date", "home_team", "away_team", "bookmaker", "market", "hdp", "home", "away", "over", "under"]])
+```
+
+`get_historical_events(sport, league, from_, to)` lists finished events for one league over at most 31 days, and `get_historical_odds(event_id, bookmakers, markets=...)` returns the stored odds of one of them.
+
+### Golf outrights
+
+```python
+from odds_api import AddOnRequiredError, OddsAPIClient
+
+client = OddsAPIClient(api_key="YOUR_API_KEY")
+try:
+    tournaments = client.get_outrights(sport="golf", league="majors")
+except AddOnRequiredError as e:
+    print(e)  # the server's message, with the link to add the Outrights add-on
+else:
+    odds = client.get_outright_odds(tournaments[0]["id"], ["DraftKings", "Betfair Exchange"])
+    for bookmaker, markets in odds["bookmakers"].items():
+        for market in markets:  # Winner, Top 5, Top 5 (Incl. Ties), ..., Make Cut
+            favourite = market["odds"][0]
+            print(bookmaker, market["name"], favourite["label"], favourite.get("odds") or favourite.get("yes"))
+
+    results = client.get_outright_results(tournaments[0]["id"])
+    print(results["winners"].get("Top 10"))  # participant ids, filled once settled
+```
+
+Winner and Top N runners carry `odds` (and `layOdds` on exchanges); Make Cut runners carry `yes` and `no`.
+
+### Settle bets
+
+```python
+result = client.grade_bets([
+    {"ref": "bet-1", "eventId": 74919888, "market": "Spread", "hdp": -0.75, "side": "home"},
+    {"ref": "bet-2", "eventId": 74919888, "market": "Totals", "hdp": 2.5, "side": "over"},
+])
+for grade in result["grades"]:
+    print(grade["ref"], grade["result"], grade["reason"], grade["final"])
+```
+
+`get_settlements([ids])` returns status, final score and a `final` flag for up to 50 events. Period scores use the keys `p1`..`pN`, `ft`, `ot` and `ap`; the older keys (`period1`, `overtime`, `penalties`, `fulltime`) stop on 12 November 2026.
+
+### Arbitrage and value bets
+
+```python
+arbs = client.get_arbitrage_bets(
+    ["Bet365", "SingBet"], sport="football", markets=["ML", "Totals"], min_profit=1.0,
+    include_event_details=True,
+)
+value = client.get_value_bets("Bet365", sport="baseball", league="usa-mlb")
+drops = client.get_dropping_odds(sport="football", markets=["Spread"], time_window="24h", min_drop=10)
+```
+
+Arbitrage rows are calculated at the quoted prices. Prices move and bookmakers can void or limit bets, so check every leg before acting.
+
+### Polling for changes
+
+`/odds/updated` returns only what changed. Pass the `X-Next-Since` header back as `since`:
+
+```python
+import time
+
+since = int(time.time()) - 20
+while True:
+    changed = client.get_updated_odds_since_timestamp(since, "Bet365", "football", markets=["ML", "Totals"])
+    ...  # merge by event, bookmaker and market
+    since = int(client.last_response_headers["X-Next-Since"])
+    time.sleep(5)
+```
+
+### WebSocket
+
+```python
+import asyncio
+from odds_api.ws import OddsStream  # pip install "odds-api-io[ws]"
+
+async def main():
+    stream = OddsStream("YOUR_API_KEY", markets=["ML", "Totals"], sport="football", status="live")
+    async for message in stream:
+        if message["type"] in ("created", "updated"):
+            print(message["id"], message["bookie"], message["markets"])  # replace, do not merge
+
+asyncio.run(main())
+```
+
+The stream tracks the highest `seq` in `stream.last_seq` and reconnects with `lastSeq` after a drop or a server restart. A close because a newer connection opened with the same key raises `ConnectionReplacedError` instead of fighting it.
+
+### Async client
 
 ```python
 import asyncio
 from odds_api import AsyncOddsAPIClient
 
 async def main():
-    # Use async context manager
-    async with AsyncOddsAPIClient(api_key="your_api_key_here") as client:
-        # Get sports
-        sports = await client.get_sports()
-        
-        # Get upcoming events
-        events = await client.get_events(sport="basketball", league="usa-nba")
-        
-        # Find value bets
-        value_bets = await client.get_value_bets(
-            bookmaker="singbet",
-            include_event_details=True
+    async with AsyncOddsAPIClient(api_key="YOUR_API_KEY") as client:
+        nba, nfl = await asyncio.gather(
+            client.get_events(sport="basketball", league="usa-nba"),
+            client.get_events(sport="american-football", league="usa-nfl"),
         )
-        
-        print(f"Found {len(value_bets)} value betting opportunities")
 
-# Run async code
 asyncio.run(main())
 ```
 
-### Context Manager (Recommended)
+More in [`examples/`](examples/): [basic_usage.py](examples/basic_usage.py), [closing_lines.py](examples/closing_lines.py), [golf_outrights.py](examples/golf_outrights.py), [settle_bets.py](examples/settle_bets.py), [odds_stream.py](examples/odds_stream.py), [arbitrage_finder.py](examples/arbitrage_finder.py), [value_bets.py](examples/value_bets.py), [odds_tracking.py](examples/odds_tracking.py) and the notebook [fair-odds-and-closing-lines.ipynb](examples/fair-odds-and-closing-lines.ipynb).
+
+## Errors, rate limits and retries
+
+Every error keeps the server's own message, which often says exactly what to fix (for example which markets do have history, or which bookmakers your plan includes).
+
+| Exception | Status | When |
+|---|---|---|
+| `ValidationError` (alias `BadRequestError`) | 400 | A parameter is missing or invalid |
+| `InvalidAPIKeyError` | 401 | The key is missing or invalid |
+| `ForbiddenError` | 403 | The plan does not include this endpoint or bookmaker |
+| `AddOnRequiredError` | 403 | The key lacks an add-on such as Outrights (`.add_on == "outrights"`) |
+| `NotFoundError` | 404 | The resource does not exist |
+| `RateLimitExceededError` (alias `RateLimitError`) | 429 | Rate limit hit; `.retry_after` is the wait in seconds |
+| `ServerError` | 5xx | Server error or temporarily busy |
+| `OddsAPIError` | any | Base class; also network failures |
+
+All carry `.status_code`, `.body`, `.headers` and `.rate_limit`. After each call, `client.last_rate_limit` holds `limit`, `remaining` and `reset`.
 
 ```python
-# Sync
-with OddsAPIClient(api_key="your_api_key") as client:
-    sports = client.get_sports()
+from odds_api import OddsAPIClient, RateLimitError
 
-# Async
-async with AsyncOddsAPIClient(api_key="your_api_key") as client:
-    sports = await client.get_sports()
-```
-
-## 📖 Examples
-
-Check out the [`examples/`](examples/) directory for more detailed examples:
-
-- **[basic_usage.py](examples/basic_usage.py)** - Getting started with the SDK
-- **[async_example.py](examples/async_example.py)** - Using the async client
-- **[arbitrage_finder.py](examples/arbitrage_finder.py)** - Finding arbitrage opportunities
-- **[value_bets.py](examples/value_bets.py)** - Identifying value bets
-- **[settle_bets.py](examples/settle_bets.py)** - Grading stored bets as won, lost or void
-- **[odds_tracking.py](examples/odds_tracking.py)** - Tracking odds movements
-- **[fair-odds-and-closing-lines.ipynb](examples/fair-odds-and-closing-lines.ipynb)** - Notebook: devigging, bookmaker margins, EV against a sharp line and closing line value ([view on nbviewer](https://nbviewer.org/github/odds-api-io/odds-api-python/blob/main/examples/fair-odds-and-closing-lines.ipynb))
-
-## 🔧 API Reference
-
-### Sports & Leagues
-
-| Method | Description | Docs |
-|--------|-------------|------|
-| `get_sports()` | Get all available sports | [📖](https://docs.odds-api.io/api-reference/sports/get-sports) |
-| `get_leagues(sport)` | Get leagues for a sport | [📖](https://docs.odds-api.io/api-reference/leagues/get-leagues) |
-
-### Events
-
-| Method | Description | Docs |
-|--------|-------------|------|
-| `get_events(sport, **filters)` | Get events with filters | [📖](https://docs.odds-api.io/api-reference/events/get-events) |
-| `get_event_by_id(event_id)` | Get specific event details | [📖](https://docs.odds-api.io/api-reference/events/get-event-by-id) |
-| `get_live_events(sport)` | Get currently live events | [📖](https://docs.odds-api.io/api-reference/events/get-live-events) |
-| `search_events(query)` | Search events by keyword | [📖](https://docs.odds-api.io/api-reference/events/search-events) |
-
-### Odds
-
-| Method | Description | Docs |
-|--------|-------------|------|
-| `get_event_odds(event_id, bookmakers)` | Get odds for an event | [📖](https://docs.odds-api.io/api-reference/odds/get-event-odds) |
-| `get_odds_movement(event_id, bookmaker, market)` | Track odds changes | [📖](https://docs.odds-api.io/api-reference/odds/get-odds-movements) |
-| `get_odds_for_multiple_events(event_ids, bookmakers)` | Get odds for multiple events | [📖](https://docs.odds-api.io/api-reference/odds/get-odds-for-multiple-events) |
-| `get_updated_odds_since_timestamp(since, bookmaker, sport, markets)` | Get recently updated odds. `markets` is required by the API from 15 October 2026 | [📖](https://docs.odds-api.io/api-reference/odds/get-updated-event-odds-since-a-given-timestamp) |
-
-### Participants
-
-| Method | Description | Docs |
-|--------|-------------|------|
-| `get_participants(sport, search=None)` | Get teams/players | [📖](https://docs.odds-api.io/api-reference/participants/get-participants) |
-| `get_participant_by_id(participant_id)` | Get participant by ID | [📖](https://docs.odds-api.io/api-reference/participants/get-participant-by-id) |
-
-### Bookmakers
-
-| Method | Description | Docs |
-|--------|-------------|------|
-| `get_bookmakers()` | Get all available bookmakers | [📖](https://docs.odds-api.io/api-reference/bookmakers/get-bookmakers) |
-| `get_selected_bookmakers()` | Get your selected bookmakers | [📖](https://docs.odds-api.io/api-reference/bookmakers/get-selected-bookmakers) |
-| `select_bookmakers(bookmakers)` | Select bookmakers | [📖](https://docs.odds-api.io/api-reference/bookmakers/select-bookmakers) |
-| `clear_selected_bookmakers()` | Clear selection | [📖](https://docs.odds-api.io/api-reference/bookmakers/clear-selected-bookmakers) |
-
-### Betting Analysis
-
-| Method | Description | Docs |
-|--------|-------------|------|
-| `get_arbitrage_bets(bookmakers, **options)` | Find arbitrage opportunities | [📖](https://docs.odds-api.io/api-reference/arbitrage-bets/get-arbitrage-betting-opportunities) |
-| `get_value_bets(bookmaker, **options)` | Find value bets | [📖](https://docs.odds-api.io/api-reference/value-bets/get-value-bets) |
-
-### Settlement
-
-| Method | Description | Docs |
-|--------|-------------|------|
-| `get_settlements(event_ids)` | Status, final score and `final` flag for up to 50 events | [📖](https://docs.odds-api.io/guides/settlement) |
-| `grade_bets(selections)` | Grade up to 50 bets as won, lost, void, half won or half lost | [📖](https://docs.odds-api.io/guides/settlement) |
-
-## ⚠️ Error Handling
-
-The SDK provides custom exceptions for different error scenarios:
-
-```python
-from odds_api import (
-    OddsAPIClient,
-    OddsAPIError,
-    InvalidAPIKeyError,
-    RateLimitExceededError,
-    NotFoundError,
-    ValidationError
-)
-
-client = OddsAPIClient(api_key="your_api_key")
-
+client = OddsAPIClient(api_key="YOUR_API_KEY", max_retries=3)  # retries 429, 5xx and network errors
 try:
-    events = client.get_events(sport="basketball")
-except InvalidAPIKeyError:
-    print("Your API key is invalid")
-except RateLimitExceededError:
-    print("Rate limit exceeded - wait before retrying")
-except NotFoundError:
-    print("Resource not found")
-except ValidationError as e:
-    print(f"Invalid parameters: {e}")
-except OddsAPIError as e:
-    print(f"API error: {e}")
+    client.get_sports()
+except RateLimitError as e:
+    print(f"Rate limited, retry in {e.retry_after:.0f}s: {e}")
 ```
 
-## 🌟 Why Odds-API.io?
+Retries are off by default (`max_retries=0`). With retries on, the client honours `Retry-After` and `X-RateLimit-Reset`, backs off exponentially otherwise, and raises at once when the server asks for a wait longer than `max_retry_wait` (30 seconds by default).
 
-- **✅ Most Comprehensive Coverage** - 450+ bookmakers across 34 sports and 12,000+ leagues
-- **✅ Near-Zero Latency** - Real-time odds updates with minimal delay
-- **✅ Direct Bet Links** - Deep links directly to bookmaker bet slips
-- **✅ Value Bet Detection** - Automatically calculated expected value
-- **✅ Historical Data** - Access to past odds and results
-- **✅ Developer Friendly** - Clean API design with excellent documentation
+## Method reference
 
-## 💡 Use Cases
+Comma-separated parameters accept a string or a list. Dates accept RFC3339 strings or `datetime` objects. The async client has the same methods as coroutines.
 
-Build powerful betting tools and analytics:
-- 🎯 Arbitrage betting platforms
-- 📊 Odds comparison sites
-- 📈 Value betting calculators
-- 🤖 Automated betting systems
-- 📉 Sports analytics dashboards
-- 🔔 Odds movement alerts
+| Method | Endpoint |
+|---|---|
+| `get_sports()` | `GET /sports` |
+| `get_leagues(sport, all=None)` | `GET /leagues` |
+| `get_markets(sport=None)` | `GET /markets` |
+| `get_bookmakers()` | `GET /bookmakers` (with `status` and `reason`) |
+| `get_selected_bookmakers()`, `select_bookmakers(bookmakers)`, `clear_selected_bookmakers()` | `/bookmakers/selected` |
+| `get_events(sport, league, participant_id, status, from_/start, to/end, bookmaker, limit, skip)`, `iter_events(...)` | `GET /events` |
+| `get_event_by_id(event_id)` | `GET /events/{id}` |
+| `get_live_events(sport=None)` | `GET /events/live` |
+| `search_events(query, status=None)` | `GET /events/search` (`upcoming` or `live`) |
+| `get_event_odds(event_id, bookmakers, markets, include_seq)` | `GET /odds` |
+| `get_odds_for_multiple_events(event_ids, bookmakers, markets, include_seq)` | `GET /odds/multi` (10 events) |
+| `get_updated_odds_since_timestamp(since, bookmaker, sport, markets, limit)` | `GET /odds/updated` (`markets` required, max 40) |
+| `get_odds_movement(event_id, bookmaker, market, market_line)` | `GET /odds/movements` |
+| `get_odds_summary(event_id, ...)`, `get_odds_summary_multi(event_ids, ...)` | `GET /odds/summary`, `/odds/summary/multi` |
+| `get_value_bets(bookmaker, include_event_details, sport, league)` | `GET /value-bets` |
+| `get_arbitrage_bets(bookmakers, limit, include_event_details, sport, league, markets, min_profit, all_combinations)` | `GET /arbitrage-bets` |
+| `get_dropping_odds(sport, league, leagues, markets, time_window, sort, min_drop, limit, page, include_event_details)` | `GET /dropping-odds` |
+| `get_historical_events(sport, league, from_, to)` | `GET /historical/events` (max 31 days) |
+| `search_historical_events(query, sport, from_, to)` | `GET /historical/events/search` |
+| `get_historical_odds(event_id, bookmakers, markets)` | `GET /historical/odds` |
+| `get_closing_lines(sport, leagues, from_, to, markets, bookmakers, limit, skip)`, `iter_closing_lines(...)` | `GET /historical/closing-lines` |
+| `get_settlements(event_ids)` | `GET /settlements` |
+| `grade_bets(selections)` | `POST /settlements/grade` |
+| `get_outrights(sport="golf", league, status)` | `GET /outrights` |
+| `get_outright_odds(outright_id, bookmakers)` | `GET /outrights/odds` |
+| `get_outright_results(outright_id)` | `GET /outrights/results` |
+| `get_participants(sport, search)`, `get_participant_by_id(id)`, `get_participant_logo(id)` | `/participants` |
+| `get_mappings(bookmaker, ...)`, `iter_mappings(bookmaker, ...)` | `GET /mappings` |
 
-## 💳 Plans and Limits
+Full API documentation: [docs.odds-api.io](https://docs.odds-api.io).
 
-Rate limits, bookmaker selection and WebSocket access depend on your plan. See [**odds-api.io/pricing**](https://odds-api.io/pricing) for details.
+## Migrating from The Odds API
 
-## 📋 Requirements
+| The Odds API (v4) | Odds-API.io |
+|---|---|
+| Sport key such as `soccer_epl` | `sport="football"` plus `league="england-premier-league"` (`get_leagues`) |
+| `regions=us,uk` | `bookmakers=["DraftKings", "Bet365"]` by name (`get_bookmakers`) |
+| `markets=h2h,spreads,totals` | `markets=["ML", "Spread", "Totals"]` (`get_markets`) |
+| `oddsFormat=decimal` | Prices are always decimal strings |
+| `/v4/sports/{sport}/odds` | `get_events(...)` then `get_odds_for_multiple_events(ids, ...)`, 10 events per call |
+| `/v4/sports/{sport}/scores` | `scores` on events, or `get_settlements(ids)` |
+| Historical snapshots | `get_historical_odds()` and `get_closing_lines()` |
+| `x-requests-remaining` header | `client.last_rate_limit.remaining` |
+
+## Requirements
 
 - Python 3.8 or higher
-- `requests` library (for sync client)
-- `aiohttp` library (for async client)
+- `requests` (sync client) and `aiohttp` (async client)
+- Optional: `pandas` (`[pandas]` extra), `websockets` (`[ws]` extra), or both with `[all]`
 
-## 🤝 Contributing
+## Links
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+- Website: [odds-api.io](https://odds-api.io)
+- Documentation: [docs.odds-api.io](https://docs.odds-api.io)
+- API key: [odds-api.io/pricing](https://odds-api.io/pricing?ref=pypi)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+- Issues: [github.com/odds-api-io/odds-api-python/issues](https://github.com/odds-api-io/odds-api-python/issues)
+- Node.js SDK: [odds-api-io/odds-api-node](https://github.com/odds-api-io/odds-api-node). Building with AI? See the [AI and vibe coding guide](https://docs.odds-api.io/ai-vibe-coding).
+- Support: hello@odds-api.io
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## License
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🔗 Links
-
-- **Website**: [odds-api.io](https://odds-api.io)
-- **Documentation**: [docs.odds-api.io](https://docs.odds-api.io)
-- **API Key**: [Get your API key](https://odds-api.io/pricing)
-- **GitHub**: [github.com/odds-api-io/odds-api-python](https://github.com/odds-api-io/odds-api-python)
-- **Issues**: [Report a bug](https://github.com/odds-api-io/odds-api-python/issues)
-- **PyPI**: [pypi.org/project/odds-api-io](https://pypi.org/project/odds-api-io/)
-
-## 💬 Support
-
-Need help? We're here for you:
-
-- 📧 **Email**: hello@odds-api.io
-- 📚 **Documentation**: [docs.odds-api.io](https://docs.odds-api.io)
-- 🐛 **Issues**: [GitHub Issues](https://github.com/odds-api-io/odds-api-python/issues)
-- ⏱️ **Response Time**: Usually within 24 hours
-
-## ⚡ Quick Links
-
-- [**Get Started →**](https://odds-api.io/pricing)
-- [**View Documentation →**](https://docs.odds-api.io)
-- [**See Examples →**](examples/)
-
----
-
-Built with ❤️ by the [Odds-API.io](https://odds-api.io) team
+MIT. See [LICENSE](LICENSE).
 
 ## Citation
 
 If you use this package in research or a publication, please cite it. Citation metadata is in [CITATION.cff](CITATION.cff) (GitHub renders a "Cite this repository" button from it) and Zenodo metadata is in `.zenodo.json`.
 
 ```
-Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.0.2). https://github.com/odds-api-io/odds-api-python
+Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.2.0). https://github.com/odds-api-io/odds-api-python
 ```
