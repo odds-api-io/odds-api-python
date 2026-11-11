@@ -8,6 +8,16 @@
 
 Official Python SDK for [**Odds-API.io**](https://odds-api.io), the sports betting odds API: live and pre-match odds from 450+ bookmakers across 34 sports, player props, golf outrights, closing lines, bet settlement, arbitrage, value bets and a WebSocket feed. Sync and async clients, typed responses, optional pandas helpers.
 
+## Documentation
+
+- [Quickstart: make your first request](https://docs.odds-api.io/quickstart)
+- [Python, Node.js and R SDK guide](https://docs.odds-api.io/guides/sdks)
+- [Fetching pre-match and live odds](https://docs.odds-api.io/guides/fetching-odds)
+- [Stream live odds over WebSocket](https://docs.odds-api.io/guides/websockets)
+- [Find value bets](https://docs.odds-api.io/guides/value-bets) and [arbitrage opportunities](https://docs.odds-api.io/guides/arbitrage-bets)
+- [Historical odds and closing lines](https://docs.odds-api.io/guides/historical)
+- [Full API reference](https://docs.odds-api.io/api-reference/introduction)
+
 ## Quickstart
 
 ```bash
