@@ -16,6 +16,7 @@ from ._base import (
     format_time,
     next_retry_delay,
     parse_rate_limit,
+    to_csv,
 )
 from .constants import (
     BASE_API_URL,
@@ -946,7 +947,7 @@ class AsyncOddsAPIClient:
         """
         body = {
             "eventId": event_id,
-            "bookmakers": build_params(bookmakers=bookmakers)["bookmakers"],
+            "bookmakers": to_csv(bookmakers),
             "legs": list(legs),
         }
         return await self._post(Endpoints.SGP_QUOTE, body)

@@ -111,11 +111,11 @@ async def test_put_and_post(api, client):
 
 async def test_quote_sgp_posts_json_body(api, client):
     api.add("POST", "sgp/quote", {"eventId": 1, "quotes": []})
-    legs = [{"legId": "1|ML|||home"}, {"legId": "1|Totals|221.5||over"}]
-    assert await client.quote_sgp(1, ["DraftKings"], legs) == {"eventId": 1, "quotes": []}
+    legs = [{"legId": "1|ML|||home"}, {"legId": "1|Totals|221.5||over", "expectedPrice": "1.95"}]
+    assert await client.quote_sgp(1, ["DraftKings", "Bet365"], legs) == {"eventId": 1, "quotes": []}
     assert api.requests[-1]["json"] == {
         "eventId": 1,
-        "bookmakers": "DraftKings",
+        "bookmakers": "DraftKings,Bet365",
         "legs": legs,
     }
     assert api.requests[-1]["query"] == {"apiKey": "test-key"}
