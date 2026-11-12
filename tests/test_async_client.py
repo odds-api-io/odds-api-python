@@ -109,6 +109,18 @@ async def test_put_and_post(api, client):
     assert api.requests[-1]["query"] == {"apiKey": "test-key"}
 
 
+async def test_quote_sgp_posts_json_body(api, client):
+    api.add("POST", "sgp/quote", {"eventId": 1, "quotes": []})
+    legs = [{"legId": "1|ML|||home"}, {"legId": "1|Totals|221.5||over"}]
+    assert await client.quote_sgp(1, ["DraftKings"], legs) == {"eventId": 1, "quotes": []}
+    assert api.requests[-1]["json"] == {
+        "eventId": 1,
+        "bookmakers": "DraftKings",
+        "legs": legs,
+    }
+    assert api.requests[-1]["query"] == {"apiKey": "test-key"}
+
+
 async def test_logo_bytes(api, client):
     api.add("GET", "participants/45/logo", body=b"\x89PNG", content_type="image/png")
     assert await client.get_participant_logo(45) == b"\x89PNG"

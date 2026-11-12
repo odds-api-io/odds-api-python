@@ -349,6 +349,98 @@ class GradesResponse(TypedDict, total=False):
     grades: List[Grade]
 
 
+SgpBookmakerStatus = Literal["live", "paused", "degraded"]
+SgpQuoteStatus = Literal[
+    "ok",
+    "not_combinable",
+    "leg_unavailable",
+    "suspended",
+    "unsupported",
+    "timeout",
+    "temporarily_unavailable",
+]
+
+
+class SgpBookmaker(TypedDict, total=False):
+    name: str
+    sports: List[str]
+    maxLegs: int
+    prebuilt: bool
+    jurisdiction: str
+    status: SgpBookmakerStatus
+
+
+class SgpLegBook(TypedDict, total=False):
+    eligible: bool
+    price: str
+    updatedAt: str
+
+
+class SgpLeg(TypedDict, total=False):
+    legId: str
+    market: str
+    hdp: float
+    label: str
+    side: str
+    bookmakers: Dict[str, SgpLegBook]
+
+
+class SgpLegsResponse(TypedDict, total=False):
+    eventId: int
+    date: str
+    status: str
+    legs: List[SgpLeg]
+    hasMore: bool
+
+
+class SgpQuoteLeg(TypedDict, total=False):
+    """Give either ``legId`` or ``market``, ``hdp``, ``label`` and ``side``."""
+
+    legId: str
+    market: str
+    hdp: float
+    label: str
+    side: str
+    expectedPrice: str
+
+
+class SgpQuoteLegResult(TypedDict, total=False):
+    legId: str
+    price: str
+    hdp: float
+    priceMoved: bool
+
+
+class SgpQuoteLinks(TypedDict, total=False):
+    desktop: str
+    mobile: str
+
+
+class SgpBookQuote(TypedDict, total=False):
+    bookmaker: str
+    status: SgpQuoteStatus
+    price: str
+    legsMultiplied: str
+    priceAdjustmentPct: str
+    legs: List[SgpQuoteLegResult]
+    legIds: List[str]
+    links: SgpQuoteLinks
+    jurisdiction: str
+    durationMs: int
+    quotedAt: str
+    cached: bool
+    cacheExpiresAt: str
+    retryable: bool
+    retryAfter: int
+    nextAction: str
+    reason: str
+
+
+class SgpQuoteResponse(TypedDict, total=False):
+    eventId: int
+    quotes: List[SgpBookQuote]
+
+
 class Outright(TypedDict, total=False):
     """A tournament from ``/outrights`` (golf today)."""
 

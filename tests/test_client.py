@@ -36,6 +36,12 @@ def last_call():
 
 
 CASES = [
+    (lambda c: c.get_sgp_bookmakers("basketball"), "sgp/bookmakers", {"sport": "basketball"}),
+    (
+        lambda c: c.get_sgp_legs(1, ["DraftKings"], markets=["ML", "Totals"], limit=50, skip=10),
+        "sgp/legs",
+        {"eventId": "1", "bookmakers": "DraftKings", "markets": "ML,Totals", "limit": "50", "skip": "10"},
+    ),
     (lambda c: c.get_sports(), "sports", {}),
     (
         lambda c: c.get_leagues("football", all=True),
@@ -327,6 +333,24 @@ def test_grade_bets_posts_json_body(client):
     method, path, query, request = last_call()
     assert method == "POST" and query == {"apiKey": "test-key"}
     assert json.loads(request.body) == {"selections": selections}
+
+
+@responses.activate
+def test_quote_sgp_posts_json_body(client):
+    responses.post(
+        f"{BASE}/sgp/quote",
+        json={"eventId": 1, "quotes": [{"bookmaker": "DraftKings", "status": "ok", "price": "3.38"}]},
+    )
+    legs = [{"legId": "1|ML|||home"}, {"legId": "1|Totals|221.5||over", "expectedPrice": "1.95"}]
+    result = client.quote_sgp(1, ["DraftKings", "Bet365"], legs)
+    assert result["quotes"][0]["price"] == "3.38"
+    method, path, query, request = last_call()
+    assert method == "POST" and path == "sgp/quote" and query == {"apiKey": "test-key"}
+    assert json.loads(request.body) == {
+        "eventId": 1,
+        "bookmakers": "DraftKings,Bet365",
+        "legs": legs,
+    }
 
 
 @responses.activate

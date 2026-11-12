@@ -52,6 +52,7 @@ You need an API key from a paid plan: **[get your API key at odds-api.io/pricing
 - **Golf outrights**: Winner, Top 5/10/20, the "(Incl. Ties)" variants and Make Cut, plus results (Outrights add-on)
 - **Historical data**: past events, stored odds and closing lines for up to 10 leagues and a full season per sweep
 - **Settlement**: final scores with a `final` flag, and grading of up to 50 bets per call (won, lost, void, half won, half lost)
+- **Same game parlays**: list the legs of an event and quote 2 to 10 of them per bookmaker (enabled per key)
 - **Analysis**: arbitrage and value bets with sport, league, market and margin filters; dropping odds from sharp bookmakers
 - **Odds movements**: pre-match price history per market line
 - **Id mappings**: our events and selections mapped to Polymarket and Kalshi ids
@@ -118,6 +119,20 @@ for grade in result["grades"]:
 ```
 
 `get_settlements([ids])` returns status, final score and a `final` flag for up to 50 events. Period scores use the keys `p1`..`pN`, `ft`, `ot` and `ap`; the older keys (`period1`, `overtime`, `penalties`, `fulltime`) stop on 12 November 2026.
+
+### Same game parlays
+
+Enabled per key. List the legs of a pre-match event, then quote 2 to 10 of them. Each bookmaker answers with a price (decimal string) or a `status` and `nextAction`.
+
+```python
+legs = client.get_sgp_legs(61234567, "DraftKings", markets=["ML", "Totals"])["legs"]
+quotes = client.quote_sgp(
+    61234567,
+    "DraftKings",
+    [{"legId": leg["legId"]} for leg in legs[:2]],
+)["quotes"]
+print(quotes[0]["status"], quotes[0].get("price"), quotes[0].get("links"))
+```
 
 ### Arbitrage and value bets
 
@@ -243,6 +258,9 @@ Comma-separated parameters accept a string or a list. Dates accept RFC3339 strin
 | `get_closing_lines(sport, leagues, from_, to, markets, bookmakers, limit, skip)`, `iter_closing_lines(...)` | `GET /historical/closing-lines` |
 | `get_settlements(event_ids)` | `GET /settlements` |
 | `grade_bets(selections)` | `POST /settlements/grade` |
+| `get_sgp_bookmakers(sport)` | `GET /sgp/bookmakers` |
+| `get_sgp_legs(event_id, bookmakers, markets, limit, skip)` | `GET /sgp/legs` |
+| `quote_sgp(event_id, bookmakers, legs)` | `POST /sgp/quote` |
 | `get_outrights(sport="golf", league, status)` | `GET /outrights` |
 | `get_outright_odds(outright_id, bookmakers)` | `GET /outrights/odds` |
 | `get_outright_results(outright_id)` | `GET /outrights/results` |
