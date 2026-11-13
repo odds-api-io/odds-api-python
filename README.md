@@ -39,7 +39,7 @@ with OddsAPIClient(api_key="YOUR_API_KEY") as client:
             print(bookmaker, market["name"], market["odds"][0])
 ```
 
-Market names are exact: `ML`, `Spread`, `Totals`, `Both Teams To Score`, `Spread HT` and so on. `client.get_markets("football")` lists every name a sport serves. Pass `markets` on odds calls so you only download what you use.
+Market names are exact: `ML`, `Spread`, `Totals`, `Both Teams To Score`, `Spread HT` and so on. `client.get_markets("football")` lists every name a sport serves, and the [market reference](https://odds-api.io/markets) shows them per sport on the web (for example [football](https://odds-api.io/markets/football)). Bookmaker coverage by sport is at [odds-api.io/sportsbooks](https://odds-api.io/sportsbooks#coverage). Pass `markets` on odds calls so you only download what you use.
 
 ## Get an API key
 
