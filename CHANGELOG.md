@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.2.3 (2026-11-13)
 
 ### Docs
 - `get_markets`, `get_bookmakers`, the `markets` argument of `get_event_odds` and the README link to the market reference at https://odds-api.io/markets and bookmaker coverage at https://odds-api.io/sportsbooks#coverage.
