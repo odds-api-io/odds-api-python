@@ -289,5 +289,5 @@ MIT. See [LICENSE](LICENSE).
 If you use this package in research or a publication, please cite it. Citation metadata is in [CITATION.cff](CITATION.cff) (GitHub renders a "Cite this repository" button from it) and Zenodo metadata is in `.zenodo.json`.
 
 ```
-Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.2.2). https://github.com/odds-api-io/odds-api-python
+Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.2.3). https://github.com/odds-api-io/odds-api-python
 ```
