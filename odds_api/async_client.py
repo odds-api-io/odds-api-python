@@ -180,6 +180,8 @@ class AsyncOddsAPIClient:
     async def get_markets(self, sport: Optional[str] = None) -> Dict[str, Any]:
         """
         Get the market catalogue: the exact market names to pass to ``markets``.
+        The same catalogue is browsable per sport at https://odds-api.io/markets
+        (for example https://odds-api.io/markets/football).
 
         Args:
             sport: Sport name or slug. Omit for every sport (keyed by slug).
@@ -310,6 +312,7 @@ class AsyncOddsAPIClient:
             event_id: Event ID
             bookmakers: Bookmaker names (max 30), e.g. ["Bet365", "SingBet"]
             markets: Market names (max 40), e.g. ["ML", "Spread", "Totals"].
+                Every name per sport: https://odds-api.io/markets
                 See :meth:`get_markets`. Omit for every market.
             include_seq: True to get the WebSocket sequence number in the
                 ``X-OddsAPI-Seq`` header (``client.last_response_headers``)
@@ -626,6 +629,7 @@ class AsyncOddsAPIClient:
     async def get_bookmakers(self) -> List[Bookmaker]:
         """
         Get all bookmakers with ``status`` (ok, degraded, down) and ``reason``.
+        Coverage by sport: https://odds-api.io/sportsbooks#coverage
 
         Example:
             >>> down = [b["name"] for b in await client.get_bookmakers() if b.get("status") == "down"]

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+### Docs
+- `get_markets`, `get_bookmakers`, the `markets` argument of `get_event_odds` and the README link to the market reference at https://odds-api.io/markets and bookmaker coverage at https://odds-api.io/sportsbooks#coverage.
+
 ## 1.2.2
 
 First release published from GitHub Actions with npm/PyPI trusted publishing and provenance. No code changes.
