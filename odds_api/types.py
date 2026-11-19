@@ -381,7 +381,6 @@ class SgpBookmaker(TypedDict, total=False):
     name: str
     sports: List[str]
     maxLegs: int
-    prebuilt: bool
     jurisdiction: str
     status: SgpBookmakerStatus
 
