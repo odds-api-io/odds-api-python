@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-odds--api.io-blue.svg)](https://docs.odds-api.io)
 
-Official Python SDK for [**Odds-API.io**](https://odds-api.io), the sports betting odds API: live and pre-match odds from 450+ bookmakers across 34 sports, player props, golf outrights, closing lines, bet settlement, arbitrage, value bets and a WebSocket feed. Sync and async clients, typed responses, optional pandas helpers.
+Official Python SDK for [**Odds-API.io**](https://odds-api.io), the sports betting odds API: live and pre-match odds from 500+ bookmakers across 34 sports, player props, golf outrights, closing lines, bet settlement, arbitrage, value bets and a WebSocket feed. Sync and async clients, typed responses, optional pandas helpers.
 
 ## Documentation
 
