@@ -16,6 +16,7 @@ from ._base import (
     format_time,
     next_retry_delay,
     parse_rate_limit,
+    to_csv,
 )
 from .constants import (
     BASE_API_URL,
@@ -50,6 +51,10 @@ from .types import (
     OutrightResults,
     Participant,
     SettlementsResponse,
+    SgpBookmaker,
+    SgpLegsResponse,
+    SgpQuoteLeg,
+    SgpQuoteResponse,
     Sport,
     ValueBet,
 )
@@ -865,6 +870,92 @@ class AsyncOddsAPIClient:
         """
         check_max("selections", list(selections), MAX_SETTLEMENT_EVENTS)
         return await self._post(Endpoints.GRADE_BETS, {"selections": list(selections)})
+
+    # Same game parlays
+
+    async def get_sgp_bookmakers(self, sport: Optional[str] = None) -> List[SgpBookmaker]:
+        """
+        List the bookmakers that can quote same game parlays.
+
+        Args:
+            sport: Sport slug from ``get_sports``; keeps bookmakers that cover it
+
+        Example:
+            >>> (await client.get_sgp_bookmakers("basketball"))
+        """
+        return await self._get(Endpoints.SGP_BOOKMAKERS, build_params(sport=sport))
+
+    async def get_sgp_legs(
+        self,
+        event_id: Union[int, str],
+        bookmakers: StrList,
+        markets: Optional[StrList] = None,
+        limit: Optional[int] = None,
+        skip: Optional[int] = None,
+    ) -> SgpLegsResponse:
+        """
+        List the legs of a pre-match event that can go into a same game parlay.
+
+        Each leg has a ``legId`` to pass to ``quote_sgp`` and, per bookmaker,
+        whether it can be combined (``eligible``) and its current ``price``.
+        The top-level ``bookmakers`` says, per requested bookmaker, whether its
+        legs could be checked: when its ``status`` is not ``ok``, every leg reads
+        ``eligible: False`` there. Call again with a higher ``skip`` while
+        ``hasMore`` is true.
+
+        Args:
+            event_id: Event id from ``get_events``
+            bookmakers: Bookmaker names (max 8 per request)
+            markets: Market names to keep (max 40)
+            limit: Legs to return (default 200, max 1000)
+            skip: Legs to skip, for paging
+
+        Example:
+            >>> client.get_sgp_legs(61234567, "DraftKings", markets=["ML", "Totals"])
+        """
+        params = build_params(
+            eventId=event_id,
+            bookmakers=bookmakers,
+            markets=markets,
+            limit=limit,
+            skip=skip,
+        )
+        return await self._get(Endpoints.SGP_LEGS, params)
+
+    async def quote_sgp(
+        self,
+        event_id: Union[int, str],
+        bookmakers: StrList,
+        legs: Sequence[SgpQuoteLeg],
+    ) -> SgpQuoteResponse:
+        """
+        Quote 2 to 10 legs as a same game parlay at each bookmaker.
+
+        Every requested bookmaker gets one entry in ``quotes``, in request
+        order: ``status`` is ``ok`` with a ``price``, or explains what to do
+        through ``nextAction``. Branch on those two; ``reason`` is a sentence for
+        display. Prices are decimal strings. A quote can take up to 8 seconds,
+        and at most 2 run at once per account (a third gets a 429).
+
+        Args:
+            event_id: Event id from ``get_events``
+            bookmakers: Bookmaker names (max 8 per request)
+            legs: ``{"legId": ...}`` or ``{"market", "hdp", "label", "side"}``,
+                optionally with ``expectedPrice``
+
+        Example:
+            >>> (await client.quote_sgp(
+            ...     61234567,
+            ...     "DraftKings",
+            ...     [{"legId": "61234567|ML|||home"}, {"legId": "61234567|Totals|221.5||over"}],
+            ... ))["quotes"]
+        """
+        body = {
+            "eventId": event_id,
+            "bookmakers": to_csv(bookmakers),
+            "legs": list(legs),
+        }
+        return await self._post(Endpoints.SGP_QUOTE, body)
 
     # Outrights (add-on)
 

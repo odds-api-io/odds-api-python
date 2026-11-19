@@ -72,6 +72,10 @@ class Endpoints:
     GET_SETTLEMENTS = "settlements"
     GRADE_BETS = "settlements/grade"
 
+    SGP_BOOKMAKERS = "sgp/bookmakers"
+    SGP_LEGS = "sgp/legs"
+    SGP_QUOTE = "sgp/quote"
+
     GET_OUTRIGHTS = "outrights"
     GET_OUTRIGHT_ODDS = "outrights/odds"
     GET_OUTRIGHT_RESULTS = "outrights/results"

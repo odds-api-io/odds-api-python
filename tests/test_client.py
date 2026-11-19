@@ -36,6 +36,12 @@ def last_call():
 
 
 CASES = [
+    (lambda c: c.get_sgp_bookmakers("basketball"), "sgp/bookmakers", {"sport": "basketball"}),
+    (
+        lambda c: c.get_sgp_legs(1, ["DraftKings"], markets=["ML", "Totals"], limit=50, skip=10),
+        "sgp/legs",
+        {"eventId": "1", "bookmakers": "DraftKings", "markets": "ML,Totals", "limit": "50", "skip": "10"},
+    ),
     (lambda c: c.get_sports(), "sports", {}),
     (
         lambda c: c.get_leagues("football", all=True),
@@ -327,6 +333,54 @@ def test_grade_bets_posts_json_body(client):
     method, path, query, request = last_call()
     assert method == "POST" and query == {"apiKey": "test-key"}
     assert json.loads(request.body) == {"selections": selections}
+
+
+@responses.activate
+def test_quote_sgp_posts_json_body(client):
+    responses.post(
+        f"{BASE}/sgp/quote",
+        json={"eventId": 1, "quotes": [{"bookmaker": "DraftKings", "status": "ok", "price": "3.38"}]},
+    )
+    legs = [{"legId": "1|ML|||home"}, {"legId": "1|Totals|221.5||over", "expectedPrice": "1.95"}]
+    result = client.quote_sgp(1, ["DraftKings", "Bet365"], legs)
+    assert result["quotes"][0]["price"] == "3.38"
+    method, path, query, request = last_call()
+    assert method == "POST" and path == "sgp/quote" and query == {"apiKey": "test-key"}
+    assert json.loads(request.body) == {
+        "eventId": 1,
+        "bookmakers": "DraftKings,Bet365",
+        "legs": legs,
+    }
+
+
+@responses.activate
+def test_get_sgp_legs_returns_per_bookmaker_status(client):
+    responses.get(
+        f"{BASE}/sgp/legs",
+        json={
+            "eventId": 1,
+            "status": "pending",
+            "date": "2026-11-14T00:30:00Z",
+            "bookmakers": [
+                {"bookmaker": "DraftKings", "status": "ok"},
+                {
+                    "bookmaker": "Hard Rock",
+                    "status": "temporarily_unavailable",
+                    "retryable": True,
+                    "nextAction": "retry_later",
+                    "reason": "This bookmaker's same game parlay legs could not be read right now.",
+                    "retryAfter": 2,
+                },
+            ],
+            "legs": [],
+            "hasMore": False,
+        },
+    )
+    result = client.get_sgp_legs(1, ["DraftKings", "Hard Rock"])
+    assert [b["status"] for b in result["bookmakers"]] == ["ok", "temporarily_unavailable"]
+    assert result["bookmakers"][1]["nextAction"] == "retry_later"
+    _, path, query, _ = last_call()
+    assert path == "sgp/legs" and query["bookmakers"] == "DraftKings,Hard Rock"
 
 
 @responses.activate

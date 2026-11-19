@@ -52,6 +52,7 @@ You need an API key from a paid plan: **[get your API key at odds-api.io/pricing
 - **Golf outrights**: Winner, Top 5/10/20, the "(Incl. Ties)" variants and Make Cut, plus results (Outrights add-on)
 - **Historical data**: past events, stored odds and closing lines for up to 10 leagues and a full season per sweep
 - **Settlement**: final scores with a `final` flag, and grading of up to 50 bets per call (won, lost, void, half won, half lost)
+- **Same game parlays**: list the legs of an event and quote 2 to 10 of them per bookmaker
 - **Analysis**: arbitrage and value bets with sport, league, market and margin filters; dropping odds from sharp bookmakers
 - **Odds movements**: pre-match price history per market line
 - **Id mappings**: our events and selections mapped to Polymarket and Kalshi ids
@@ -118,6 +119,37 @@ for grade in result["grades"]:
 ```
 
 `get_settlements([ids])` returns status, final score and a `final` flag for up to 50 events. Period scores use the keys `p1`..`pN`, `ft`, `ot` and `ap`; the older keys (`period1`, `overtime`, `penalties`, `fulltime`) stop on 12 November 2026.
+
+### Same game parlays
+
+Included in all paid plans. `get_sgp_bookmakers()` (`GET /v3/sgp/bookmakers`) returns the bookmakers that quote same game parlays right now; more are being added. List the legs of a pre-match event, then quote 2 to 10 of them. Each bookmaker answers with a price (decimal string) or a `status` and `nextAction`. Branch on those two; `reason` is a sentence for display and its wording can change.
+
+```python
+event_id = 61234567
+listed = client.get_sgp_legs(event_id, ["DraftKings", "BetMGM"], markets=["ML", "Totals"])
+# A bookmaker whose legs could not be checked says why; its legs all read eligible False.
+books = [b["bookmaker"] for b in listed["bookmakers"] if b["status"] == "ok"]
+
+
+def eligible(leg):
+    return all(leg["bookmakers"].get(b, {}).get("eligible") for b in books)
+
+
+ml = next((l for l in listed["legs"] if l["market"] == "ML" and l["side"] == "home" and eligible(l)), None)
+total = next((l for l in listed["legs"] if l["market"] == "Totals" and l["side"] == "over" and eligible(l)), None)
+
+if ml and total and books:
+    quotes = client.quote_sgp(event_id, books, [{"legId": ml["legId"]}, {"legId": total["legId"]}])["quotes"]
+    for q in quotes:
+        if q["status"] == "ok":
+            print(q["bookmaker"], q["price"], "vs", q.get("legsMultiplied"), (q.get("links") or {}).get("desktop"))
+        elif q.get("nextAction") in ("retry", "retry_later"):
+            print(q["bookmaker"], f"retry in {q.get('retryAfter', 2)}s")
+        else:
+            print(q["bookmaker"], q.get("nextAction"), q.get("legIds", []), q.get("reason"))
+```
+
+`nextAction` is one of `change_legs`, `remove_leg` (drop the legs in `legIds`), `refresh_legs` (call `get_sgp_legs` again), `retry`, `retry_later` (wait `retryAfter` seconds) or `choose_other_bookmaker`. A quote can take up to 8 seconds, and at most 2 quotes run at once per account. See the [same game parlay guide](https://docs.odds-api.io/guides/sgp).
 
 ### Arbitrage and value bets
 
@@ -243,6 +275,9 @@ Comma-separated parameters accept a string or a list. Dates accept RFC3339 strin
 | `get_closing_lines(sport, leagues, from_, to, markets, bookmakers, limit, skip)`, `iter_closing_lines(...)` | `GET /historical/closing-lines` |
 | `get_settlements(event_ids)` | `GET /settlements` |
 | `grade_bets(selections)` | `POST /settlements/grade` |
+| `get_sgp_bookmakers(sport)` | `GET /sgp/bookmakers` |
+| `get_sgp_legs(event_id, bookmakers, markets, limit, skip)` | `GET /sgp/legs` |
+| `quote_sgp(event_id, bookmakers, legs)` | `POST /sgp/quote` |
 | `get_outrights(sport="golf", league, status)` | `GET /outrights` |
 | `get_outright_odds(outright_id, bookmakers)` | `GET /outrights/odds` |
 | `get_outright_results(outright_id)` | `GET /outrights/results` |
@@ -289,5 +324,5 @@ MIT. See [LICENSE](LICENSE).
 If you use this package in research or a publication, please cite it. Citation metadata is in [CITATION.cff](CITATION.cff) (GitHub renders a "Cite this repository" button from it) and Zenodo metadata is in `.zenodo.json`.
 
 ```
-Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.2.3). https://github.com/odds-api-io/odds-api-python
+Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.3.0). https://github.com/odds-api-io/odds-api-python
 ```
