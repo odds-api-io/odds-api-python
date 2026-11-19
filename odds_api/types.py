@@ -350,6 +350,8 @@ class GradesResponse(TypedDict, total=False):
 
 
 SgpBookmakerStatus = Literal["live", "paused", "degraded"]
+SgpSide = Literal["home", "away", "draw", "over", "under", "yes", "no"]
+SgpLegsBookmakerStatus = Literal["ok", "leg_unavailable", "unsupported", "temporarily_unavailable"]
 SgpQuoteStatus = Literal[
     "ok",
     "not_combinable",
@@ -359,9 +361,23 @@ SgpQuoteStatus = Literal[
     "timeout",
     "temporarily_unavailable",
 ]
+SgpNextAction = Literal[
+    "change_legs",
+    "remove_leg",
+    "refresh_legs",
+    "retry",
+    "retry_later",
+    "choose_other_bookmaker",
+]
 
 
 class SgpBookmaker(TypedDict, total=False):
+    """``jurisdiction`` is the region the parlay price applies to.
+
+    ``status`` is ``paused`` when quotes are switched off for now and
+    ``degraded`` when the status cannot be checked right now.
+    """
+
     name: str
     sports: List[str]
     maxLegs: int
@@ -371,6 +387,8 @@ class SgpBookmaker(TypedDict, total=False):
 
 
 class SgpLegBook(TypedDict, total=False):
+    """``price`` is a decimal string, left out when the bookmaker does not price the leg."""
+
     eligible: bool
     price: str
     updatedAt: str
@@ -381,14 +399,33 @@ class SgpLeg(TypedDict, total=False):
     market: str
     hdp: float
     label: str
-    side: str
+    side: SgpSide
     bookmakers: Dict[str, SgpLegBook]
 
 
+class SgpLegsBookmaker(TypedDict, total=False):
+    """Whether a requested bookmaker's legs could be checked.
+
+    When ``status`` is not ``ok`` every leg reads ``eligible: False`` at that
+    bookmaker. ``reason`` is a sentence for display; branch on ``status`` and
+    ``nextAction``. ``retryAfter`` is in seconds.
+    """
+
+    bookmaker: str
+    status: SgpLegsBookmakerStatus
+    retryable: bool
+    nextAction: Literal["retry_later", "choose_other_bookmaker"]
+    reason: str
+    retryAfter: int
+
+
 class SgpLegsResponse(TypedDict, total=False):
+    """``bookmakers`` has one entry per requested bookmaker, in request order."""
+
     eventId: int
-    date: str
     status: str
+    date: str
+    bookmakers: List[SgpLegsBookmaker]
     legs: List[SgpLeg]
     hasMore: bool
 
@@ -400,7 +437,7 @@ class SgpQuoteLeg(TypedDict, total=False):
     market: str
     hdp: float
     label: str
-    side: str
+    side: SgpSide
     expectedPrice: str
 
 
@@ -411,12 +448,24 @@ class SgpQuoteLegResult(TypedDict, total=False):
     priceMoved: bool
 
 
-class SgpQuoteLinks(TypedDict, total=False):
-    desktop: str
-    mobile: str
+class SgpQuoteLinks(TypedDict):
+    desktop: Optional[str]
+    mobile: Optional[str]
 
 
 class SgpBookQuote(TypedDict, total=False):
+    """One bookmaker's answer to ``quote_sgp``.
+
+    ``price``, ``legsMultiplied``, ``priceAdjustmentPct`` and ``links`` are only
+    set on ``ok``. Every other status carries ``retryable``, ``nextAction`` and
+    ``reason``. ``reason`` is a sentence for display whose wording can change,
+    so branch on ``status`` and ``nextAction``; on ``ok`` the only reason is the
+    code ``redundant_leg``. ``legIds`` lists the legs that made the quote fail
+    (always on ``leg_unavailable``; on ``not_combinable`` and ``suspended`` when
+    the bookmaker names them), or on ``ok`` with ``redundant_leg`` the legs the
+    bookmaker ignored as implied by the others.
+    """
+
     bookmaker: str
     status: SgpQuoteStatus
     price: str
@@ -426,14 +475,14 @@ class SgpBookQuote(TypedDict, total=False):
     legIds: List[str]
     links: SgpQuoteLinks
     jurisdiction: str
+    retryable: bool
+    nextAction: SgpNextAction
+    reason: str
+    retryAfter: int
     durationMs: int
     quotedAt: str
     cached: bool
     cacheExpiresAt: str
-    retryable: bool
-    retryAfter: int
-    nextAction: str
-    reason: str
 
 
 class SgpQuoteResponse(TypedDict, total=False):

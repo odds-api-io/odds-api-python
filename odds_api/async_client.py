@@ -898,7 +898,10 @@ class AsyncOddsAPIClient:
 
         Each leg has a ``legId`` to pass to ``quote_sgp`` and, per bookmaker,
         whether it can be combined (``eligible``) and its current ``price``.
-        Call again with a higher ``skip`` while ``hasMore`` is true.
+        The top-level ``bookmakers`` says, per requested bookmaker, whether its
+        legs could be checked: when its ``status`` is not ``ok``, every leg reads
+        ``eligible: False`` there. Call again with a higher ``skip`` while
+        ``hasMore`` is true.
 
         Args:
             event_id: Event id from ``get_events``
@@ -928,9 +931,11 @@ class AsyncOddsAPIClient:
         """
         Quote 2 to 10 legs as a same game parlay at each bookmaker.
 
-        Every requested bookmaker gets one entry in ``quotes``: ``status`` is
-        ``ok`` with a ``price``, or explains what to do through ``nextAction``.
-        Prices are decimal strings.
+        Every requested bookmaker gets one entry in ``quotes``, in request
+        order: ``status`` is ``ok`` with a ``price``, or explains what to do
+        through ``nextAction``. Branch on those two; ``reason`` is a sentence for
+        display. Prices are decimal strings. A quote can take up to 8 seconds,
+        and at most 2 run at once per account (a third gets a 429).
 
         Args:
             event_id: Event id from ``get_events``

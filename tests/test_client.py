@@ -354,6 +354,36 @@ def test_quote_sgp_posts_json_body(client):
 
 
 @responses.activate
+def test_get_sgp_legs_returns_per_bookmaker_status(client):
+    responses.get(
+        f"{BASE}/sgp/legs",
+        json={
+            "eventId": 1,
+            "status": "pending",
+            "date": "2026-11-14T00:30:00Z",
+            "bookmakers": [
+                {"bookmaker": "DraftKings", "status": "ok"},
+                {
+                    "bookmaker": "Hard Rock",
+                    "status": "temporarily_unavailable",
+                    "retryable": True,
+                    "nextAction": "retry_later",
+                    "reason": "This bookmaker's same game parlay legs could not be read right now.",
+                    "retryAfter": 2,
+                },
+            ],
+            "legs": [],
+            "hasMore": False,
+        },
+    )
+    result = client.get_sgp_legs(1, ["DraftKings", "Hard Rock"])
+    assert [b["status"] for b in result["bookmakers"]] == ["ok", "temporarily_unavailable"]
+    assert result["bookmakers"][1]["nextAction"] == "retry_later"
+    _, path, query, _ = last_call()
+    assert path == "sgp/legs" and query["bookmakers"] == "DraftKings,Hard Rock"
+
+
+@responses.activate
 def test_participant_logo_returns_bytes(client):
     responses.get(
         f"{BASE}/participants/45/logo", body=b"\x89PNG", content_type="image/png"
