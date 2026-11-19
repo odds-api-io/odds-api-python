@@ -905,7 +905,7 @@ class AsyncOddsAPIClient:
 
         Args:
             event_id: Event id from ``get_events``
-            bookmakers: Bookmaker names (max 8)
+            bookmakers: Bookmaker names (max 8 per request)
             markets: Market names to keep (max 40)
             limit: Legs to return (default 200, max 1000)
             skip: Legs to skip, for paging
@@ -939,7 +939,7 @@ class AsyncOddsAPIClient:
 
         Args:
             event_id: Event id from ``get_events``
-            bookmakers: Bookmaker names (max 8)
+            bookmakers: Bookmaker names (max 8 per request)
             legs: ``{"legId": ...}`` or ``{"market", "hdp", "label", "side"}``,
                 optionally with ``expectedPrice``
 

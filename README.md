@@ -52,7 +52,7 @@ You need an API key from a paid plan: **[get your API key at odds-api.io/pricing
 - **Golf outrights**: Winner, Top 5/10/20, the "(Incl. Ties)" variants and Make Cut, plus results (Outrights add-on)
 - **Historical data**: past events, stored odds and closing lines for up to 10 leagues and a full season per sweep
 - **Settlement**: final scores with a `final` flag, and grading of up to 50 bets per call (won, lost, void, half won, half lost)
-- **Same game parlays**: list the legs of an event and quote 2 to 10 of them per bookmaker (enabled per key)
+- **Same game parlays**: list the legs of an event and quote 2 to 10 of them per bookmaker
 - **Analysis**: arbitrage and value bets with sport, league, market and margin filters; dropping odds from sharp bookmakers
 - **Odds movements**: pre-match price history per market line
 - **Id mappings**: our events and selections mapped to Polymarket and Kalshi ids
@@ -122,7 +122,7 @@ for grade in result["grades"]:
 
 ### Same game parlays
 
-Enabled per key. List the legs of a pre-match event, then quote 2 to 10 of them. Each bookmaker answers with a price (decimal string) or a `status` and `nextAction`. Branch on those two; `reason` is a sentence for display and its wording can change.
+Included in all paid plans. `get_sgp_bookmakers()` (`GET /v3/sgp/bookmakers`) returns the bookmakers that quote same game parlays right now; more are being added. List the legs of a pre-match event, then quote 2 to 10 of them. Each bookmaker answers with a price (decimal string) or a `status` and `nextAction`. Branch on those two; `reason` is a sentence for display and its wording can change.
 
 ```python
 event_id = 61234567
