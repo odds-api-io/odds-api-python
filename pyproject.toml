@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "odds-api-io"
 version = "1.3.0"
-description = "Official Python SDK for Odds-API.io, the sports betting odds API: live and pre-match odds from 450+ bookmakers across 34 sports, player props, golf outrights, closing lines, settlement, arbitrage, value bets and WebSocket"
+description = "Official Python SDK for Odds-API.io, the sports betting odds API: live and pre-match odds from 500+ bookmakers across 34 sports, player props, golf outrights, closing lines, settlement, arbitrage, value bets and WebSocket"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
