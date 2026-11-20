@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1 (2026-11-20)
+
+### Docs
+- Coverage is now 500+ bookmakers in the package description and README.
+
 ## 1.3.0 (2026-11-19)
 
 ### Added
