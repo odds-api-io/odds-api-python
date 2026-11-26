@@ -33,35 +33,51 @@ def _closed_port():
         return s.getsockname()[1]
 
 
-def _chain(error):
-    seen, todo = [], [error]
-    while todo:
-        current = todo.pop()
-        if current is None or any(current is s for s in seen):
-            continue
-        seen.append(current)
-        todo += [current.__cause__, current.__context__]
-        todo += [a for a in current.args if isinstance(a, BaseException)]
-        todo += (
-            [getattr(current, "reason", None)]
-            if isinstance(getattr(current, "reason", None), BaseException)
-            else []
-        )
-    return seen
+def _find_key(value, path, seen, depth=0):
+    """Paths under ``value`` (attributes, items, the exception chain) that show the key."""
+    if value is None or isinstance(value, (bool, int, float)) or id(value) in seen:
+        return []
+    if depth > 8:
+        return []
+    seen.add(id(value))
+    found = []
+    try:
+        if KEY in str(value) or KEY in repr(value):
+            found.append(path)
+    except Exception:
+        found.append(path + " (str/repr raised)")
+    if isinstance(value, (str, bytes)):
+        return found
+    if isinstance(value, dict):
+        children = list(value.items())
+    elif isinstance(value, (list, tuple, set)):
+        children = list(enumerate(value))
+    else:
+        children = []
+        names = list(getattr(value, "__dict__", None) or {})
+        for cls in type(value).__mro__:
+            slots = cls.__dict__.get("__slots__", ())
+            names += [slots] if isinstance(slots, str) else list(slots)
+        for name in dict.fromkeys(names):
+            try:
+                children.append((name, getattr(value, name)))
+            except Exception:
+                pass
+        if isinstance(value, BaseException):
+            children += [
+                ("args", value.args),
+                ("__cause__", value.__cause__),
+                ("__context__", value.__context__),
+            ]
+    for name, child in children:
+        found += _find_key(child, f"{path}.{name}", seen, depth + 1)
+    return found
 
 
 def assert_no_key(error):
     text = "".join(traceback.format_exception(type(error), error, error.__traceback__))
     assert KEY not in text
-    for link in _chain(error):
-        assert KEY not in str(link)
-        assert KEY not in repr(link)
-        assert KEY not in repr(link.args)
-        for name in ("url", "body", "headers", "message"):
-            assert KEY not in str(getattr(link, name, ""))
-        for name in ("request", "response"):
-            obj = getattr(link, name, None)
-            assert KEY not in str(getattr(obj, "url", ""))
+    assert _find_key(error, "error", set()) == []
     assert "apiKey=***" in text or "apiKey" not in text
 
 
@@ -254,4 +270,64 @@ async def test_ws_handshake_refusal_hides_key():
         with pytest.raises(InvalidAPIKeyError) as info:
             async for _ in stream:
                 pass
+    assert_no_key(info.value)
+
+
+def _raised(error):
+    try:
+        raise error
+    except BaseException as e:
+        return e
+
+
+def test_read_only_url_property_is_replaced_by_a_masked_stand_in():
+    from yarl import URL
+
+    error = _raised(aiohttp.InvalidURL(URL(URL_WITH_KEY), "bad redirect"))
+    clean = scrub_exception(error, (KEY,))
+    assert "apiKey=***" in str(clean)
+    assert_no_key(clean)
+
+
+@pytest.mark.parametrize(
+    "error",
+    [
+        lambda: websockets.exceptions.InvalidHeader("Location", URL_WITH_KEY),
+        lambda: websockets.exceptions.InvalidHeaderValue("Location", URL_WITH_KEY),
+        lambda: websockets.exceptions.InvalidURI(URL_WITH_KEY, "bad"),
+    ],
+    ids=["invalid-header", "invalid-header-value", "invalid-uri"],
+)
+def test_websockets_exceptions_with_the_key_are_masked(error):
+    clean = scrub_exception(_raised(error()), (KEY,))
+    assert_no_key(clean)
+
+
+def test_nested_transport_objects_are_masked():
+    class Response:
+        def __init__(self):
+            self.body = f"echo {URL_WITH_KEY}".encode()
+            self.headers = {"Location": URL_WITH_KEY}
+
+        def __repr__(self):
+            return f"Response(body={self.body!r}, headers={self.headers!r})"
+
+    inner = _raised(OSError(f"refused {URL_WITH_KEY}"))
+    error = RuntimeError("handshake failed")
+    error.response = Response()
+    error.__cause__ = inner
+    clean = scrub_exception(_raised(error), (KEY,))
+    assert clean is error
+    assert_no_key(clean)
+
+
+async def test_ws_malformed_header_hides_key(monkeypatch):
+    def connect(url, **kwargs):
+        raise websockets.exceptions.InvalidHeaderValue("Location", url)
+
+    monkeypatch.setattr("odds_api.ws.websockets.connect", connect)
+    stream = OddsStream(KEY, markets="ML", max_reconnects=0)
+    with pytest.raises(websockets.exceptions.InvalidHeaderValue) as info:
+        async for _ in stream:
+            pass
     assert_no_key(info.value)

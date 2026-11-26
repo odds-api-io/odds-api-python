@@ -137,6 +137,7 @@ class OddsStream:
         while not self._closed:
             code: Optional[int] = None
             reason = ""
+            failure: Optional[BaseException] = None
             try:
                 async with websockets.connect(self.connect_url(), max_size=None) as ws:
                     self._ws = ws
@@ -154,21 +155,12 @@ class OddsStream:
             except OSError:
                 code = None
             except Exception as e:
-                scrub_exception(e, (self.api_key,))
-                status = _handshake_status(e)
-                if status is None:
-                    raise
-                refused = redact(f"WebSocket refused: {e}", (self.api_key,))
-                if status == 400:
-                    raise ValidationError(refused, status_code=status) from e
-                if status == 401:
-                    raise InvalidAPIKeyError(refused, status_code=status) from e
-                if status == 403:
-                    raise ForbiddenError(refused, status_code=status) from e
-                if status < 500 and status != 429:
-                    raise OddsAPIError(refused, status_code=status) from e
+                failure = self._failure(e)
             finally:
                 self._ws = None
+
+            if failure is not None:
+                raise failure
 
             if self._closed:
                 return
@@ -185,6 +177,30 @@ class OddsStream:
                 delay = max(delay, 3.0)
             attempt += 1
             await asyncio.sleep(delay)
+
+    def _failure(self, error: Exception) -> Optional[BaseException]:
+        """The masked exception to raise for ``error``, or None to reconnect."""
+        status = _handshake_status(error)
+        cause = scrub_exception(error, (self.api_key,))
+        if status is None:
+            if cause is error:
+                return error
+            wrapped = OddsAPIError(str(cause))
+            wrapped.__cause__ = cause
+            return wrapped
+        refused = redact(f"WebSocket refused: {cause}", (self.api_key,))
+        if status == 400:
+            failure: OddsAPIError = ValidationError(refused, status_code=status)
+        elif status == 401:
+            failure = InvalidAPIKeyError(refused, status_code=status)
+        elif status == 403:
+            failure = ForbiddenError(refused, status_code=status)
+        elif status < 500 and status != 429:
+            failure = OddsAPIError(refused, status_code=status)
+        else:
+            return None
+        failure.__cause__ = cause
+        return failure
 
 
 def _handshake_status(error: Exception) -> Optional[int]:

@@ -1,13 +1,16 @@
 """Keep the API key out of error messages, chained exceptions and tracebacks.
 
 The key travels as the ``apiKey`` query parameter, and HTTP libraries put the
-request URL into their exception messages. Every exception the SDK raises, and
-every exception chained to it, is scrubbed before it leaves the SDK.
+request URL into their exception messages and attributes. Every exception the
+SDK raises, and every exception chained to it, is scrubbed before it leaves the
+SDK. An exception that still shows the key afterwards (for example one whose
+``__str__`` reads a read-only property) is replaced by a masked stand-in.
 """
 
 import dataclasses
 import re
-from typing import Any, Iterable, Optional, Set
+import traceback
+from typing import Any, Iterable, List, Optional, Set, Tuple
 from urllib.parse import quote, quote_plus
 
 REDACTED = "***"
@@ -22,200 +25,205 @@ _SECRET_HEADER = re.compile(
     r"(?i)((?:x-)?api[_-]?key|authorization)(['\"]?\s*:\s*['\"]?)"
     r"(?:bearer\s+|basic\s+)?[^'\"\s,}&]+"
 )
-_URL_ATTRS = ("url", "real_url", "uri", "path", "filename", "filename2")
-_NESTED_ATTRS = ("request", "response", "reason", "original_error", "os_error")
-_MAX_DEPTH = 12
+_MAX_DEPTH = 10
+
+Secrets = Tuple[str, ...]
 
 
-def _variants(secrets: Iterable[Optional[str]]) -> Set[str]:
+class RedactedError(Exception):
+    """Stands in for an underlying exception that could not be masked in place."""
+
+
+def _variants(secrets: Iterable[Optional[str]]) -> List[str]:
     found = set()
     for secret in secrets:
-        if not secret:
-            continue
-        found.update({secret, quote(secret, safe=""), quote_plus(secret)})
-    return found
+        if secret:
+            found.update({secret, quote(secret, safe=""), quote_plus(secret)})
+    return sorted(found, key=len, reverse=True)
 
 
 def redact(text: str, secrets: Iterable[Optional[str]] = ()) -> str:
     """Mask ``secrets`` and any key-like query parameter or header in ``text``."""
-    for secret in sorted(_variants(secrets), key=len, reverse=True):
+    for secret in _variants(secrets):
         text = text.replace(secret, REDACTED)
     text = _SECRET_PARAM.sub(lambda m: f"{m.group(1)}{m.group(2)}{REDACTED}", text)
     return _SECRET_HEADER.sub(lambda m: f"{m.group(1)}{m.group(2)}{REDACTED}", text)
 
 
-def _leaks(text: str, secrets: Iterable[Optional[str]]) -> bool:
+def _leaks(text: str, secrets: Secrets) -> bool:
     return redact(text, secrets) != text
 
 
-def redact_value(value: Any, secrets: Iterable[Optional[str]]) -> Any:
-    """Return ``value`` with secrets masked in every string inside it."""
-    if isinstance(value, str):
-        return redact(value, secrets)
-    if isinstance(value, bytes):
-        text = value.decode("utf-8", errors="replace")
-        return redact(text, secrets).encode() if _leaks(text, secrets) else value
-    if isinstance(value, dict):
-        return {k: redact_value(v, secrets) for k, v in value.items()}
-    if isinstance(value, list):
-        return [redact_value(v, secrets) for v in value]
-    if isinstance(value, tuple) and not hasattr(value, "_fields"):
-        return tuple(redact_value(v, secrets) for v in value)
-    return value
+def _shows_secret(value: Any, secrets: Secrets) -> bool:
+    try:
+        return _leaks(str(value), secrets) or _leaks(repr(value), secrets)
+    except Exception:
+        return True
 
 
-def _rebuild_url(value: Any, secrets: Iterable[Optional[str]]) -> Any:
-    text = str(value)
-    if not _leaks(text, secrets):
+def _set(obj: Any, name: str, value: Any) -> bool:
+    try:
+        setattr(obj, name, value)
+        return True
+    except Exception:
+        try:
+            object.__setattr__(obj, name, value)
+            return True
+        except Exception:
+            return False
+
+
+def _attr_names(obj: Any) -> List[str]:
+    names = list(getattr(obj, "__dict__", None) or {})
+    for cls in type(obj).__mro__:
+        slots = cls.__dict__.get("__slots__", ())
+        names += [slots] if isinstance(slots, str) else list(slots)
+    return [n for n in dict.fromkeys(names) if n not in ("__dict__", "__weakref__")]
+
+
+class _Scrubber:
+    def __init__(self, secrets: Iterable[Optional[str]]):
+        self.secrets: Secrets = tuple(s for s in secrets if s)
+        self.seen: Set[int] = set()
+
+    def value(self, value: Any, depth: int) -> Any:
+        """``value`` with secrets masked; mutable objects are cleaned in place."""
+        if value is None or isinstance(value, (bool, int, float)):
+            return value
+        if isinstance(value, str):
+            return redact(value, self.secrets)
+        if isinstance(value, (bytes, bytearray)):
+            text = bytes(value).decode("utf-8", errors="replace")
+            if not _leaks(text, self.secrets):
+                return value
+            return redact(text, self.secrets).encode()
+        if depth > _MAX_DEPTH:
+            return REDACTED if _shows_secret(value, self.secrets) else value
+        if isinstance(value, BaseException):
+            return self.exception(value, depth + 1)
+        if isinstance(value, dict):
+            return {
+                self.value(k, depth + 1): self.value(v, depth + 1)
+                for k, v in value.items()
+            }
+        if isinstance(value, list):
+            return [self.value(v, depth + 1) for v in value]
+        if isinstance(value, tuple) and not hasattr(value, "_fields"):
+            return tuple(self.value(v, depth + 1) for v in value)
+        if id(value) in self.seen:
+            return value
+        if not _shows_secret(value, self.secrets) and not self._holds_secret(value):
+            return value
+        record = self._record(value, depth)
+        if record is not None:
+            return record
+        rebuilt = self._rebuild(value)
+        if rebuilt is not None:
+            return rebuilt
+        self.object(value, depth + 1)
+        if _shows_secret(value, self.secrets):
+            return redact(str(value), self.secrets)
         return value
-    clean = redact(text, secrets)
-    try:
-        return type(value)(clean)
-    except Exception:
-        return clean
 
-
-def _scrub_object(
-    obj: Any, secrets: Iterable[Optional[str]], seen: Set[int], depth: int
-) -> None:
-    if obj is None or id(obj) in seen or depth > _MAX_DEPTH:
-        return
-    if isinstance(obj, (str, bytes, int, float, bool)):
-        return
-    if isinstance(obj, BaseException):
-        scrub_exception(obj, secrets, seen, depth)
-        return
-    seen.add(id(obj))
-    _scrub_attrs(obj, secrets, seen, depth)
-
-
-def _set_clean(obj: Any, name: str, secrets: Iterable[Optional[str]]) -> None:
-    try:
-        value = getattr(obj, name, None)
-    except Exception:
-        return
-    if value is None or isinstance(value, (int, float, bool, BaseException)):
-        return
-    if isinstance(value, (str, bytes, dict, list, tuple)):
-        clean = redact_value(value, secrets)
-    else:
-        clean = _rebuild_url(value, secrets)
-    if clean is value:
-        return
-    try:
-        setattr(obj, name, clean)
-    except Exception:
+    def _holds_secret(self, obj: Any) -> bool:
         try:
-            object.__setattr__(obj, name, clean)
+            return any(
+                _shows_secret(getattr(obj, name, None), self.secrets)
+                for name in _attr_names(obj)
+            )
+        except Exception:
+            return True
+
+    def _rebuild(self, value: Any) -> Any:
+        """A URL-like value (yarl.URL, a str subclass) rebuilt from its masked text."""
+        if not isinstance(value, str) and type(value).__name__ != "URL":
+            return None
+        try:
+            rebuilt = type(value)(redact(str(value), self.secrets))
+        except Exception:
+            return None
+        return None if _shows_secret(rebuilt, self.secrets) else rebuilt
+
+    def _record(self, value: Any, depth: int) -> Any:
+        """A copy of a namedtuple or dataclass with its fields masked."""
+        try:
+            if hasattr(value, "_fields") and hasattr(value, "_replace"):
+                fields = list(value._fields)
+                changes = {f: self.value(getattr(value, f), depth + 1) for f in fields}
+                clean = value._replace(**changes)
+            elif dataclasses.is_dataclass(value) and not isinstance(value, type):
+                fields = [f.name for f in dataclasses.fields(value) if f.init]
+                changes = {f: self.value(getattr(value, f), depth + 1) for f in fields}
+                clean = dataclasses.replace(value, **changes)
+            else:
+                return None
+        except Exception:
+            return None
+        return None if _shows_secret(clean, self.secrets) else clean
+
+    def object(self, obj: Any, depth: int) -> None:
+        if id(obj) in self.seen:
+            return
+        self.seen.add(id(obj))
+        for name in _attr_names(obj):
+            try:
+                current = getattr(obj, name)
+            except Exception:
+                continue
+            clean = self.value(current, depth)
+            if clean is not current:
+                _set(obj, name, clean)
+
+    def exception(self, error: BaseException, depth: int = 0) -> BaseException:
+        """``error`` masked in place, or a masked stand-in when that is not enough."""
+        if id(error) in self.seen:
+            return error
+        self.seen.add(id(error))
+        try:
+            error.args = tuple(self.value(a, depth + 1) for a in error.args)
         except Exception:
             pass
+        for name in _attr_names(error):
+            try:
+                current = getattr(error, name)
+            except Exception:
+                continue
+            clean = self.value(current, depth + 1)
+            if clean is not current:
+                _set(error, name, clean)
+        if error.__cause__ is not None:
+            error.__cause__ = self.exception(error.__cause__, depth + 1)
+        if error.__context__ is not None:
+            error.__context__ = self.exception(error.__context__, depth + 1)
+        if self._exception_leaks(error):
+            return self._stand_in(error)
+        return error
 
-
-def _scrub_request_info(obj: Any, secrets: Iterable[Optional[str]]) -> None:
-    info = getattr(obj, "request_info", None)
-    clean = _clean_record(info, secrets) if info is not None else None
-    if clean is not None:
+    def _exception_leaks(self, error: BaseException) -> bool:
         try:
-            obj.request_info = clean
+            text = "".join(traceback.format_exception_only(type(error), error))
         except Exception:
-            pass
+            return True
+        return _leaks(text, self.secrets) or _shows_secret(error, self.secrets)
 
-
-def _clean_record(obj: Any, secrets: Iterable[Optional[str]]) -> Any:
-    """A copy of a namedtuple or dataclass with its leaking fields masked, else None."""
-    if dataclasses.is_dataclass(obj) and not isinstance(obj, type):
-        names = [f.name for f in dataclasses.fields(obj)]
-    elif hasattr(obj, "_fields") and hasattr(obj, "_replace"):
-        names = list(obj._fields)
-    else:
-        return None
-    changes = {}
-    for name in names:
-        value = getattr(obj, name, None)
-        if value is None or not _leaks(repr(value), secrets):
-            continue
-        if isinstance(value, (str, bytes, dict, list, tuple)):
-            changes[name] = redact_value(value, secrets)
-        else:
-            changes[name] = _rebuild_url(value, secrets)
-    if not changes:
-        return obj
-    try:
-        if hasattr(obj, "_replace"):
-            return obj._replace(**changes)
-        return dataclasses.replace(obj, **changes)
-    except Exception:
-        return None
-
-
-def _scrubbed(
-    obj: Any, secrets: Iterable[Optional[str]], seen: Set[int], depth: int
-) -> Any:
-    _scrub_object(obj, secrets, seen, depth + 1)
-    return obj if not _leaks(repr(obj), secrets) else redact(str(obj), secrets)
+    def _stand_in(self, error: BaseException) -> BaseException:
+        try:
+            text = str(error)
+        except Exception:
+            text = ""
+        name = f"{type(error).__module__}.{type(error).__qualname__}"
+        stand_in = RedactedError(redact(f"{name}: {text}", self.secrets))
+        stand_in.__cause__ = error.__cause__
+        stand_in.__suppress_context__ = True
+        return stand_in
 
 
 def scrub_exception(
-    error: BaseException,
-    secrets: Iterable[Optional[str]],
-    seen: Optional[Set[int]] = None,
-    depth: int = 0,
+    error: BaseException, secrets: Iterable[Optional[str]]
 ) -> BaseException:
-    """Mask secrets in ``error`` and everything chained to it, in place."""
-    secrets = tuple(secrets)
-    seen = set() if seen is None else seen
-    if id(error) in seen or depth > _MAX_DEPTH:
-        return error
-    seen.add(id(error))
+    """Mask secrets in ``error`` and its whole chain.
 
-    clean_args = []
-    for arg in error.args:
-        if isinstance(arg, BaseException):
-            scrub_exception(arg, secrets, seen, depth + 1)
-            clean_args.append(arg)
-        elif isinstance(arg, (str, bytes, dict, list)) or (
-            isinstance(arg, tuple) and not hasattr(arg, "_fields")
-        ):
-            clean_args.append(redact_value(arg, secrets))
-        elif arg is not None and _leaks(repr(arg), secrets):
-            clean_args.append(
-                _clean_record(arg, secrets) or _scrubbed(arg, secrets, seen, depth)
-            )
-        else:
-            clean_args.append(arg)
-    try:
-        error.args = tuple(clean_args)
-    except Exception:
-        pass
-
-    for name in ("msg", "message", "strerror", "reason", "body", "headers"):
-        _set_clean(error, name, secrets)
-    _scrub_attrs(error, secrets, seen, depth)
-
-    notes = getattr(error, "__notes__", None)
-    if isinstance(notes, list):
-        clean_notes = [redact(n, secrets) if isinstance(n, str) else n for n in notes]
-        setattr(error, "__notes__", clean_notes)
-
-    for linked in (error.__cause__, error.__context__):
-        if linked is not None:
-            scrub_exception(linked, secrets, seen, depth + 1)
-    return error
-
-
-def _scrub_attrs(
-    obj: Any, secrets: Iterable[Optional[str]], seen: Set[int], depth: int
-) -> None:
-    for name in _URL_ATTRS:
-        _set_clean(obj, name, secrets)
-    for name in _NESTED_ATTRS:
-        try:
-            value = getattr(obj, name, None)
-        except Exception:
-            continue
-        _scrub_object(value, secrets, seen, depth + 1)
-    _scrub_request_info(obj, secrets)
-    history = getattr(obj, "history", None)
-    if isinstance(history, (list, tuple)):
-        for item in history:
-            _scrub_object(item, secrets, seen, depth + 1)
+    Returns ``error`` itself, or a :class:`RedactedError` stand-in when the
+    exception would still show a secret.
+    """
+    return _Scrubber(secrets).exception(error)
