@@ -10,7 +10,7 @@ SDK. An exception that still shows the key afterwards (for example one whose
 import dataclasses
 import re
 import traceback
-from typing import Any, Iterable, List, Optional, Set, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 from urllib.parse import quote, quote_plus
 
 REDACTED = "***"
@@ -24,6 +24,10 @@ _SECRET_PARAM = re.compile(
 _SECRET_HEADER = re.compile(
     r"(?i)((?:x-)?api[_-]?key|authorization)(['\"]?\s*:\s*['\"]?)"
     r"(?:bearer\s+|basic\s+)?[^'\"\s,}&]+"
+)
+_SECRET_FIELD = re.compile(
+    r"(?i)^(?:x-)?(?:api[_-]?key|access[_-]?token|auth[_-]?token|token|secret"
+    r"|password|authorization|proxy-authorization)$"
 )
 _MAX_DEPTH = 10
 
@@ -85,6 +89,7 @@ class _Scrubber:
     def __init__(self, secrets: Iterable[Optional[str]]):
         self.secrets: Secrets = tuple(s for s in secrets if s)
         self.seen: Set[int] = set()
+        self.done: Dict[int, BaseException] = {}
 
     def value(self, value: Any, depth: int) -> Any:
         """``value`` with secrets masked; mutable objects are cleaned in place."""
@@ -103,7 +108,11 @@ class _Scrubber:
             return self.exception(value, depth + 1)
         if isinstance(value, dict):
             return {
-                self.value(k, depth + 1): self.value(v, depth + 1)
+                self.value(k, depth + 1): (
+                    REDACTED
+                    if isinstance(k, str) and _SECRET_FIELD.match(k) and v
+                    else self.value(v, depth + 1)
+                )
                 for k, v in value.items()
             }
         if isinstance(value, list):
@@ -176,9 +185,9 @@ class _Scrubber:
 
     def exception(self, error: BaseException, depth: int = 0) -> BaseException:
         """``error`` masked in place, or a masked stand-in when that is not enough."""
-        if id(error) in self.seen:
-            return error
-        self.seen.add(id(error))
+        if id(error) in self.done:
+            return self.done[id(error)]
+        self.done[id(error)] = error
         try:
             error.args = tuple(self.value(a, depth + 1) for a in error.args)
         except Exception:
@@ -196,8 +205,8 @@ class _Scrubber:
         if error.__context__ is not None:
             error.__context__ = self.exception(error.__context__, depth + 1)
         if self._exception_leaks(error):
-            return self._stand_in(error)
-        return error
+            self.done[id(error)] = self._stand_in(error)
+        return self.done[id(error)]
 
     def _exception_leaks(self, error: BaseException) -> bool:
         try:

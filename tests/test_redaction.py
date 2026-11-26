@@ -331,3 +331,26 @@ async def test_ws_malformed_header_hides_key(monkeypatch):
         async for _ in stream:
             pass
     assert_no_key(info.value)
+
+
+def test_an_exception_reached_twice_gets_the_same_stand_in():
+    from yarl import URL
+
+    shared = _raised(aiohttp.InvalidURL(URL(URL_WITH_KEY), "bad redirect"))
+    outer = RuntimeError("outer")
+    outer.reason = shared
+    outer.__cause__ = shared
+    clean = scrub_exception(_raised(outer), (KEY,))
+    assert clean.reason is clean.__cause__
+    assert_no_key(clean)
+
+
+def test_credential_fields_in_mappings_are_masked():
+    error = OddsAPIError(
+        "boom",
+        body={"apiKey": "other-key", "detail": "x"},
+        headers={"Authorization": "Bearer other-token", "Content-Type": "json"},
+    )
+    clean = scrub_exception(error, (KEY,))
+    assert clean.body == {"apiKey": "***", "detail": "x"}
+    assert clean.headers == {"Authorization": "***", "Content-Type": "json"}
