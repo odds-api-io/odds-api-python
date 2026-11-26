@@ -354,3 +354,29 @@ def test_credential_fields_in_mappings_are_masked():
     clean = scrub_exception(error, (KEY,))
     assert clean.body == {"apiKey": "***", "detail": "x"}
     assert clean.headers == {"Authorization": "***", "Content-Type": "json"}
+
+
+def test_live_transport_objects_are_not_modified():
+    class Pool:
+        def __init__(self):
+            self.proxy_headers = {"Proxy-Authorization": "Basic cHJveHk6c2VjcmV0"}
+            self.url = URL_WITH_KEY
+
+    pool = Pool()
+    headers = pool.proxy_headers
+    error = RuntimeError("connection failed")
+    error.pool = pool
+    clean = scrub_exception(_raised(error), (KEY,))
+    assert_no_key(clean)
+    assert pool.proxy_headers is headers
+    assert headers == {"Proxy-Authorization": "Basic cHJveHk6c2VjcmV0"}
+    assert pool.url == URL_WITH_KEY
+    assert clean.pool is not pool
+
+
+def test_requests_prepared_request_is_not_modified():
+    prepared = requests.Request("GET", URL_WITH_KEY).prepare()
+    error = requests.ConnectionError("refused", request=prepared)
+    clean = scrub_exception(_raised(error), (KEY,))
+    assert_no_key(clean)
+    assert prepared.url == URL_WITH_KEY

@@ -7,10 +7,11 @@ SDK. An exception that still shows the key afterwards (for example one whose
 ``__str__`` reads a read-only property) is replaced by a masked stand-in.
 """
 
+import copy
 import dataclasses
 import re
 import traceback
-from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Tuple
 from urllib.parse import quote, quote_plus
 
 REDACTED = "***"
@@ -88,7 +89,7 @@ def _attr_names(obj: Any) -> List[str]:
 class _Scrubber:
     def __init__(self, secrets: Iterable[Optional[str]]):
         self.secrets: Secrets = tuple(s for s in secrets if s)
-        self.seen: Set[int] = set()
+        self.copies: Dict[int, Any] = {}
         self.done: Dict[int, BaseException] = {}
 
     def value(self, value: Any, depth: int) -> Any:
@@ -119,8 +120,8 @@ class _Scrubber:
             return [self.value(v, depth + 1) for v in value]
         if isinstance(value, tuple) and not hasattr(value, "_fields"):
             return tuple(self.value(v, depth + 1) for v in value)
-        if id(value) in self.seen:
-            return value
+        if id(value) in self.copies:
+            return self.copies[id(value)]
         if not _shows_secret(value, self.secrets) and not self._holds_secret(value):
             return value
         record = self._record(value, depth)
@@ -129,10 +130,7 @@ class _Scrubber:
         rebuilt = self._rebuild(value)
         if rebuilt is not None:
             return rebuilt
-        self.object(value, depth + 1)
-        if _shows_secret(value, self.secrets):
-            return redact(str(value), self.secrets)
-        return value
+        return self._detached(value, depth + 1)
 
     def _holds_secret(self, obj: Any) -> bool:
         try:
@@ -170,10 +168,18 @@ class _Scrubber:
             return None
         return None if _shows_secret(clean, self.secrets) else clean
 
-    def object(self, obj: Any, depth: int) -> None:
-        if id(obj) in self.seen:
-            return
-        self.seen.add(id(obj))
+    def _detached(self, obj: Any, depth: int) -> Any:
+        """A masked shallow copy of ``obj``; the original, which may be live transport
+        state such as a connection pool, is never modified."""
+        try:
+            clone = copy.copy(obj)
+        except Exception:
+            clone = None
+        if clone is None or clone is obj:
+            masked = redact(str(obj), self.secrets)
+            self.copies[id(obj)] = masked
+            return masked
+        self.copies[id(obj)] = clone
         for name in _attr_names(obj):
             try:
                 current = getattr(obj, name)
@@ -181,7 +187,10 @@ class _Scrubber:
                 continue
             clean = self.value(current, depth)
             if clean is not current:
-                _set(obj, name, clean)
+                _set(clone, name, clean)
+        if _shows_secret(clone, self.secrets):
+            self.copies[id(obj)] = redact(str(obj), self.secrets)
+        return self.copies[id(obj)]
 
     def exception(self, error: BaseException, depth: int = 0) -> BaseException:
         """``error`` masked in place, or a masked stand-in when that is not enough."""
