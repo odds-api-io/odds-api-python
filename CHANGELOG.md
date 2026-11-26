@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.3 (2026-11-26)
+
+### Docs
+- Coverage is now 37 sports in the package description and README.
+
 ## 1.3.2 (2026-11-26)
 
 ### Security
