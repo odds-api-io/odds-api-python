@@ -18,6 +18,7 @@ from ._base import (
     parse_rate_limit,
     to_csv,
 )
+from ._redact import redact, scrub_exception
 from .constants import (
     BASE_API_URL,
     DEFAULT_TIMEOUT,
@@ -129,8 +130,8 @@ class OddsAPIClient:
                     method, url, params=query, json=body, timeout=self.timeout
                 )
             except requests.RequestException as e:
-                cause = e
-                error = OddsAPIError(f"Request failed: {e}")
+                cause = scrub_exception(e, (self.api_key,))
+                error = OddsAPIError(redact(f"Request failed: {e}", (self.api_key,)))
             else:
                 headers: Mapping[str, str] = response.headers
                 self.last_response_headers = dict(headers)
@@ -138,6 +139,7 @@ class OddsAPIClient:
                 if response.ok:
                     return response.content if raw else decode_body(response.content)
                 error = build_error(response.status_code, response.content, headers)
+                scrub_exception(error, (self.api_key,))
 
             delay = next_retry_delay(
                 attempt, error, self.max_retries, self.max_retry_wait
