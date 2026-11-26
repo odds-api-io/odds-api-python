@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-odds--api.io-blue.svg)](https://docs.odds-api.io)
 
-Official Python SDK for [**Odds-API.io**](https://odds-api.io), the sports betting odds API: live and pre-match odds from 500+ bookmakers across 34 sports, player props, golf outrights, closing lines, bet settlement, arbitrage, value bets and a WebSocket feed. Sync and async clients, typed responses, optional pandas helpers.
+Official Python SDK for [**Odds-API.io**](https://odds-api.io), the sports betting odds API: live and pre-match odds from 500+ bookmakers across 37 sports, player props, golf outrights, closing lines, bet settlement, arbitrage, value bets and a WebSocket feed. Sync and async clients, typed responses, optional pandas helpers.
 
 ## Documentation
 
@@ -324,5 +324,5 @@ MIT. See [LICENSE](LICENSE).
 If you use this package in research or a publication, please cite it. Citation metadata is in [CITATION.cff](CITATION.cff) (GitHub renders a "Cite this repository" button from it) and Zenodo metadata is in `.zenodo.json`.
 
 ```
-Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.3.2). https://github.com/odds-api-io/odds-api-python
+Outlier AS. odds-api-io: Official Python SDK for Odds-API.io (version 1.3.3). https://github.com/odds-api-io/odds-api-python
 ```
