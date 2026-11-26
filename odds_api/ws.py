@@ -30,6 +30,7 @@ except ImportError as e:  # pragma: no cover
     ) from e
 
 from ._base import to_csv
+from ._redact import redact, scrub_exception
 from .constants import WEBSOCKET_URL
 from .exceptions import (
     ForbiddenError,
@@ -153,25 +154,19 @@ class OddsStream:
             except OSError:
                 code = None
             except Exception as e:
+                scrub_exception(e, (self.api_key,))
                 status = _handshake_status(e)
                 if status is None:
                     raise
+                refused = redact(f"WebSocket refused: {e}", (self.api_key,))
                 if status == 400:
-                    raise ValidationError(
-                        f"WebSocket refused: {e}", status_code=status
-                    ) from e
+                    raise ValidationError(refused, status_code=status) from e
                 if status == 401:
-                    raise InvalidAPIKeyError(
-                        f"WebSocket refused: {e}", status_code=status
-                    ) from e
+                    raise InvalidAPIKeyError(refused, status_code=status) from e
                 if status == 403:
-                    raise ForbiddenError(
-                        f"WebSocket refused: {e}", status_code=status
-                    ) from e
+                    raise ForbiddenError(refused, status_code=status) from e
                 if status < 500 and status != 429:
-                    raise OddsAPIError(
-                        f"WebSocket refused: {e}", status_code=status
-                    ) from e
+                    raise OddsAPIError(refused, status_code=status) from e
             finally:
                 self._ws = None
 

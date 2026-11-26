@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.2 (2026-11-26)
+
+### Security
+- Errors no longer contain the API key. The key is sent as the `apiKey` query parameter, and in 1.3.1 and earlier a connection error, timeout or invalid request body from `OddsAPIClient` carried the full request URL in its message and in the chained `requests`/`urllib3` exception, so the key showed up in `str(error)` and in printed tracebacks. The key, and any key-like query parameter or header, is now masked as `***` in the SDK error, in every chained exception (`__cause__`, `__context__`, `args`, `request.url`, `response.url`, aiohttp `request_info`), in error bodies that echo the URL, and in `OddsStream` WebSocket errors. If you have shared a traceback from an older version, regenerate the key in your dashboard settings at https://odds-api.io/dashboard/settings.
+
 ## 1.3.1 (2026-11-20)
 
 ### Docs

@@ -18,6 +18,7 @@ from ._base import (
     parse_rate_limit,
     to_csv,
 )
+from ._redact import redact, scrub_exception
 from .constants import (
     BASE_API_URL,
     DEFAULT_TIMEOUT,
@@ -133,9 +134,10 @@ class AsyncOddsAPIClient:
                     if 200 <= response.status < 300:
                         return content if raw else decode_body(content)
                     error = build_error(response.status, content, headers)
+                    scrub_exception(error, (self.api_key,))
             except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-                cause = e
-                error = OddsAPIError(f"Request failed: {e!r}")
+                cause = scrub_exception(e, (self.api_key,))
+                error = OddsAPIError(redact(f"Request failed: {e!r}", (self.api_key,)))
 
             delay = next_retry_delay(
                 attempt, error, self.max_retries, self.max_retry_wait
