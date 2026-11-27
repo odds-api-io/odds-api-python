@@ -1,7 +1,7 @@
 """
 DraftKings NFL odds example.
 
-Guide: https://odds-api.io/blog/draftkings-api
+Guide: https://odds-api.io/sportsbooks/draftkings
 
 Lists the next NFL games DraftKings prices, then prints the moneyline,
 spread and total for ten of them, converted from decimal to American odds.
