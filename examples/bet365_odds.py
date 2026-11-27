@@ -1,7 +1,7 @@
 """
 Bet365 odds example.
 
-Guide: https://odds-api.io/blog/bet365-api
+Guide: https://odds-api.io/sportsbooks/bet365
 
 Lists the next Premier League fixtures Bet365 prices, then prints the
 1X2 (ML) and the 2.5 goal line (Totals) for ten of them.
